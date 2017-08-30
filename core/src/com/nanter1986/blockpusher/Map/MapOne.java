@@ -21,10 +21,10 @@ public class MapOne {
 
     public MapOne(DisplayToolkit tool) {
         blocksize=tool.universalWidthFactor;
-        mapX=25*blocksize;
-        mapY=25*blocksize;
-        for(int i=0;i<50;i++){
-            for(int j=0;j<50;j++){
+        mapX=MAP_WIDTH_IN_BLOCKS/2*blocksize;
+        mapY=MAP_HEIGHT_IN_BLOCKS/2*blocksize;
+        for(int i=0;i<MAP_WIDTH_IN_BLOCKS;i++){
+            for(int j=0;j<MAP_HEIGHT_IN_BLOCKS;j++){
                 int anInteger=RANDOM.nextInt(100);
                 if(anInteger<50){
                     mapArray[i][j]=new BlockGeneral(i*blocksize,j*blocksize, BlockGeneral.Blocktypes.AIR);
@@ -44,6 +44,11 @@ public class MapOne {
     }
 
     public void updatePosition(SpriteBatch b){
+        for(int i=0;i<50;i++) {
+            for (int j = 0; j < 50; j++) {
+                b.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX,mapArray[i][j].blockY,blocksize,blocksize);
+            }
+        }
 
     }
 }

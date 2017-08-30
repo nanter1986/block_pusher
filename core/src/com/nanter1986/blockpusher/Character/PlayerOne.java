@@ -26,19 +26,19 @@ public class PlayerOne extends MovableCharacter {
         Gdx.app.log("drwdir",dir.toString());
         switch (dir){
             case UP:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,playerOne.getWidth(),playerOne.getHeight(),1f,1f,90f,true);
+                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,90f,true);
                 //b.draw(playerOne,characterX,characterY,characterW,characterH);
                 break;
             case DOWN:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,playerOne.getWidth(),playerOne.getHeight(),1f,1f,-90f,true);
+                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,-90f,true);
                 break;
             case LEFT:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,playerOne.getWidth(),playerOne.getHeight(),1f,1f,0f,false);
+                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,0f,false);
 
                 break;
 
             case RIGHT:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,playerOne.getWidth(),playerOne.getHeight(),1f,1f,0f,true);
+                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,0f,true);
 
                 break;
 

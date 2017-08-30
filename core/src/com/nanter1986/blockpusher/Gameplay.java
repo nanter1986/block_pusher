@@ -47,6 +47,7 @@ class Gameplay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
+        theMap.updatePosition(tool.batch);
         playerone.updatePosition(tool.batch);
         tool.batch.end();
 
