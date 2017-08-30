@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nanter1986.blockpusher.DisplayToolkit;
+import com.nanter1986.blockpusher.Map.MapOne;
 
 /**
  * Created by user on 29/8/2017.
@@ -23,7 +24,6 @@ public class PlayerOne extends MovableCharacter {
 
     @Override
     public void updatePosition(SpriteBatch b) {
-        Gdx.app.log("drwdir",dir.toString());
         switch (dir){
             case UP:
                 b.draw(playerOne,characterX,characterY,characterW,characterH,0,0,64,64,false,false);
@@ -45,9 +45,10 @@ public class PlayerOne extends MovableCharacter {
         }
     }
 
-    public boolean reachedTopWall(){
+    public boolean reachedTopWall(int mapH){
         boolean reached=false;
-        if(characterX<=0){
+        if(characterY>=mapH*characterH-characterH){
+            characterY=mapH*characterH-characterH;
             reached=true;
         }
         return reached;
@@ -55,7 +56,8 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedBottomWall(){
         boolean reached=false;
-        if(characterX>=50*characterW){
+        if(characterY<=0){
+            characterY=0;
             reached=true;
         }
         return reached;
@@ -63,17 +65,26 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedLeftWall(){
         boolean reached=false;
-        if(characterY<=0){
+        if(characterX<=0){
+            characterX=0;
             reached=true;
         }
         return reached;
     }
 
-    public boolean reachedRightWall(){
+    public boolean reachedRightWall(int mapW){
         boolean reached=false;
-        if(characterX>=50*characterW){
+        if(characterX>= mapW*characterW-characterW){
+            characterX=50*characterW-characterW;
             reached=true;
         }
         return reached;
+    }
+
+    public void keepPlayerInBounds(int mapW,int mapH){
+        reachedLeftWall();
+        reachedBottomWall();
+        reachedRightWall(mapW);
+        reachedTopWall(mapH);
     }
 }

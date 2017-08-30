@@ -3,6 +3,7 @@ package com.nanter1986.blockpusher;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,8 +16,9 @@ import com.nanter1986.blockpusher.Map.MapOne;
  * Created by user on 29/8/2017.
  */
 
-class Gameplay implements Screen {
+class Gameplay implements Screen,InputProcessor {
 
+    public final int SPEED_DECREASER=200;
     static Preferences prefs = Gdx.app.getPreferences("Pusher");
     MainClass game;
     DisplayToolkit tool;
@@ -33,6 +35,7 @@ class Gameplay implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         theMap=new MapOne(tool);
         playerone=new PlayerOne(tool);
     }
@@ -80,21 +83,79 @@ class Gameplay implements Screen {
 
     public void updatePosition(){
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.reachedLeftWall()==false) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 playerone.dir= MovableCharacter.Direction.LEFT;
-                playerone.characterX -= tool.scW / 100;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerone.reachedRightWall()==false) {
+                playerone.characterX -= tool.scW / SPEED_DECREASER;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 playerone.dir= MovableCharacter.Direction.RIGHT;
-                playerone.characterX += tool.scW / 100;
-            }else if (Gdx.input.isKeyPressed(Input.Keys.UP) && playerone.reachedTopWall()==false) {
+                playerone.characterX += tool.scW / SPEED_DECREASER;
+            }else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 playerone.dir= MovableCharacter.Direction.UP;
-                playerone.characterY += tool.scW / 100;
-            }else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && playerone.reachedBottomWall()==false) {
+                playerone.characterY += tool.scW / SPEED_DECREASER;
+            }else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 playerone.dir= MovableCharacter.Direction.DOWN;
-                playerone.characterY -= tool.scW / 100;
+                playerone.characterY -= tool.scW / SPEED_DECREASER;
             }
 
+            playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS,theMap.MAP_HEIGHT_IN_BLOCKS);
+
         }
-        Gdx.app.log("pldir",playerone.dir.toString());
+
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        Gdx.app.log("key up?","yes!"+keycode);
+        switch (keycode){
+            case Input.Keys.UP:
+                playerone.characterY+=playerone.characterH-playerone.characterY%playerone.characterH;
+                break;
+            case Input.Keys.DOWN:
+                playerone.characterY -= playerone.characterY%playerone.characterH;
+                break;
+            case Input.Keys.LEFT:
+                playerone.characterX -= playerone.characterX%playerone.characterW;
+                break;
+            case Input.Keys.RIGHT:
+                playerone.characterX += playerone.characterW-playerone.characterX%playerone.characterW;
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
