@@ -39,7 +39,7 @@ class Gameplay implements Screen {
 
     @Override
     public void render(float delta) {
-
+        tool.camera.position.set(playerone.characterX,playerone.characterY,0);
         tool.camera.update();
         updatePosition();
         Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
