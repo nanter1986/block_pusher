@@ -80,16 +80,16 @@ class Gameplay implements Screen {
 
     public void updatePosition(){
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.reachedLeftWall()==false) {
                 playerone.dir= MovableCharacter.Direction.LEFT;
                 playerone.characterX -= tool.scW / 100;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerone.reachedRightWall()==false) {
                 playerone.dir= MovableCharacter.Direction.RIGHT;
                 playerone.characterX += tool.scW / 100;
-            }else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            }else if (Gdx.input.isKeyPressed(Input.Keys.UP) && playerone.reachedTopWall()==false) {
                 playerone.dir= MovableCharacter.Direction.UP;
                 playerone.characterY += tool.scW / 100;
-            }else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            }else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && playerone.reachedBottomWall()==false) {
                 playerone.dir= MovableCharacter.Direction.DOWN;
                 playerone.characterY -= tool.scW / 100;
             }

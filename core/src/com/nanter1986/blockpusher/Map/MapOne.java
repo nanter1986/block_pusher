@@ -2,6 +2,7 @@ package com.nanter1986.blockpusher.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
+import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 import java.util.Random;
@@ -51,4 +52,6 @@ public class MapOne {
         }
 
     }
+
+
 }

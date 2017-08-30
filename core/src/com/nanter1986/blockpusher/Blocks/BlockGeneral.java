@@ -7,6 +7,12 @@ import com.badlogic.gdx.graphics.Texture;
  */
 
 public class BlockGeneral {
+    private static final Texture airT=new Texture("air.png");
+    private static final Texture woodT=new Texture("wood.png");
+    private static final Texture waterT=new Texture("water.png");
+    private static final Texture foodT=new Texture("food.png");
+    private static final Texture stoneT=new Texture("stone.png");
+    private static final Texture rockT=new Texture("rock.png");
     public int blockX;
     public int blockY;
     public Blocktypes type;
@@ -18,15 +24,16 @@ public class BlockGeneral {
     }
 
     public enum Blocktypes{
-        AIR(new Texture("air.png"),true),
-        WOOD(new Texture("wood.png"),false),
-        STONE(new Texture("stone.png"),false),
-        ROCK(new Texture("rock.png"),false),
-        WATER(new Texture("water.png"),false),
-        FOOD(new Texture("food.png"),false);
+        AIR(airT,true),
+        WOOD(woodT,false),
+        STONE(stoneT,false),
+        ROCK(rockT,false),
+        WATER(waterT,false),
+        FOOD(foodT,false);
 
         private Texture tile;
         private boolean passThrough;
+
 
         Blocktypes(Texture t,boolean pTh){
             this.tile=t;

@@ -26,7 +26,7 @@ public class PlayerOne extends MovableCharacter {
         Gdx.app.log("drwdir",dir.toString());
         switch (dir){
             case UP:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,90f,true);
+                b.draw(new TextureRegion(playerOne),characterX-characterW,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,90f,true);
                 //b.draw(playerOne,characterX,characterY,characterW,characterH);
                 break;
             case DOWN:
@@ -38,10 +38,42 @@ public class PlayerOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                b.draw(new TextureRegion(playerOne),characterX,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,0f,true);
+                b.draw(new TextureRegion(playerOne),characterX-characterW,characterY,playerOne.getWidth()/2.0f,playerOne.getHeight()/2.0f,characterW,characterH,1f,1f,0f,true);
 
                 break;
 
         }
+    }
+
+    public boolean reachedTopWall(){
+        boolean reached=false;
+        if(characterX<=0){
+            reached=true;
+        }
+        return reached;
+    }
+
+    public boolean reachedBottomWall(){
+        boolean reached=false;
+        if(characterX>=50*characterW){
+            reached=true;
+        }
+        return reached;
+    }
+
+    public boolean reachedLeftWall(){
+        boolean reached=false;
+        if(characterY<=0){
+            reached=true;
+        }
+        return reached;
+    }
+
+    public boolean reachedRightWall(){
+        boolean reached=false;
+        if(characterX>=50*characterW){
+            reached=true;
+        }
+        return reached;
     }
 }
