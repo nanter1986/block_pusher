@@ -30,7 +30,7 @@ public class DisplayToolkit {
 
         font=new BitmapFont();
         font.setColor(0.5f, 0.5f, 0.5f, 1.0f);
-
+        Gdx.app.log("display toolkit created:","scW:"+scW+" scH:"+scH+" universal width factor:"+universalWidthFactor+" camera position:"+camera.position);
 
 
     }

@@ -1,10 +1,13 @@
 package com.nanter1986.blockpusher.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
+import com.nanter1986.blockpusher.FieldPrinter;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -39,6 +42,7 @@ public class MapOne {
                 }
             }
         }
+        logSelf();
     }
 
     public void updatePosition(SpriteBatch b){
@@ -47,7 +51,25 @@ public class MapOne {
                 b.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX*blocksize,mapArray[i][j].blockY*blocksize,blocksize,blocksize);
             }
         }
+        //logSelf();
 
+    }
+
+    public void logSelf(){
+        String toLog="";
+        Gdx.app.log("map one was created. ", "---MAP_WIDTH_IN_BLOCKS:"+MAP_WIDTH_IN_BLOCKS+
+                "---MAP_HEIGHT_IN_BLOCKS:"+MAP_HEIGHT_IN_BLOCKS+
+                "---blocksize:"+blocksize+
+                "---RANDOM"+RANDOM.toString()+
+                "---mapArray:");
+        for(int k=0;k<MAP_WIDTH_IN_BLOCKS;k++){
+            for( int l=0;l<MAP_HEIGHT_IN_BLOCKS;l++){
+                toLog+="---block x:"+mapArray[k][l].blockX+
+                        "---block y:"+mapArray[k][l].blockY+
+                        "---block type:"+mapArray[k][l].type+"\n";
+            }
+        }
+        Gdx.app.log("mapArray:",toLog);
     }
 
 

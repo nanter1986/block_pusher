@@ -37,6 +37,7 @@ class Gameplay implements Screen,InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
+        Gdx.app.log("input processor set to:",Gdx.input.getInputProcessor().toString());
         theMap=new MapOne(tool);
         playerone=new PlayerOne(tool,theMap);
         theMap.mapArray[playerone.characterX][playerone.characterY].type= BlockGeneral.Blocktypes.AIR;
