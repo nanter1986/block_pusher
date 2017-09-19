@@ -12,7 +12,6 @@ public abstract class MovableCharacter {
     public int characterW;
     public int characterH;
 
-
     public Direction dir;
 
 
