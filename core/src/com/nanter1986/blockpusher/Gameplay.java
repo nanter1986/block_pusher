@@ -65,7 +65,7 @@ class Gameplay implements Screen, InputProcessor {
             }
         }else{
             if (moveReducer > 0) {
-                moveReducer -= 1;
+                moveReducer -=1;
             } else {
                 updatePosition();
                 tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
