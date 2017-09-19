@@ -23,11 +23,13 @@ import java.util.ArrayList;
 class Gameplay implements Screen, InputProcessor {
 
     public int moveReducer = 0;
+    public int pauseReducer = 0;
     static Preferences prefs = Gdx.app.getPreferences("Pusher");
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
     ArrayList<EnemyOne>enemiesArraylist=new ArrayList<EnemyOne>();
+    boolean gamePaused=false;
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
     private PlayerOne playerone;
@@ -54,34 +56,44 @@ class Gameplay implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-
-        if (moveReducer > 0) {
-            moveReducer -= 1;
-        } else {
-            updatePosition();
-            tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
-            tool.camera.update();
-
-            Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
-                    BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            tool.batch.setProjectionMatrix(tool.camera.combined);
-            tool.batch.begin();
-            theMap.updatePosition(tool.batch);
-            playerone.updatePosition(tool.batch);
-            Gdx.app.log("render----------------------------------------------------------------------\n",
-                    "camera position:" + tool.camera.position.toString() +
-                            "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
-                            "\nplayer direction:" + playerone.dir);
-            for(EnemyOne e:enemiesArraylist){
-                e.updatePosition(tool.batch);
-                Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+
-                                "\n----------------------------------------------------------------------------------");
+        if(gamePaused && pauseReducer ==0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            gamePaused=false;
+            Gdx.app.log("game paused","false");
+        }else if(gamePaused){
+            if(pauseReducer>0){
+                pauseReducer--;
             }
+        }else{
+            if (moveReducer > 0) {
+                moveReducer -= 1;
+            } else {
+                updatePosition();
+                tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+                tool.camera.update();
 
-            tool.batch.end();
+                Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
+                        BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                tool.batch.setProjectionMatrix(tool.camera.combined);
+                tool.batch.begin();
+                theMap.updatePosition(tool.batch);
+                playerone.updatePosition(tool.batch);
+                Gdx.app.log("render----------------------------------------------------------------------\n",
+                        "camera position:" + tool.camera.position.toString() +
+                                "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
+                                "\nplayer direction:" + playerone.dir);
+                for(EnemyOne e:enemiesArraylist){
+                    e.updatePosition(tool.batch);
+                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+
+                            "\n----------------------------------------------------------------------------------");
+                }
 
+                tool.batch.end();
+
+            }
         }
+
+
 
 
     }
@@ -153,6 +165,12 @@ class Gameplay implements Screen, InputProcessor {
                         theMap.mapArray[playerone.characterX][playerone.characterY - 1].type = theMap.mapArray[playerone.characterX][playerone.characterY].type;
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
+
+                }else if(gamePaused==false && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+
+                        gamePaused=true;
+                        pauseReducer=8;
+                        Gdx.app.log("game paused","true");
 
                 }
 
