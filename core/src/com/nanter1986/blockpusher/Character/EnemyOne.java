@@ -41,6 +41,7 @@ public class EnemyOne extends MovableCharacter {
     public void moveEnemy(MapOne map){
         if(moveReducer>0){
             moveReducer--;
+            Gdx.app.log("reduce moveReducer",moveReducer+"");
         }else{
             if(checkIfBlockAtTheFront(map)){
                 switch (dir){
@@ -78,9 +79,6 @@ public class EnemyOne extends MovableCharacter {
                 getRandomDirection();
             }
             moveReducer=8;
-            Gdx.app.log("new enemy direction:",dir.toString()+
-                    "\nnew enemy x:"+characterX+
-                    "\nnew enemy y:"+characterY);
         }
 
     }

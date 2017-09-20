@@ -100,7 +100,8 @@ class Gameplay implements Screen, InputProcessor {
                                 "\nplayer direction:" + playerone.dir);
                 for(EnemyOne e:enemiesArraylist){
                     e.updatePosition(tool.batch);
-                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+e.dir.toString()+
+                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+
+                                    e.dir.toString()+" move reducer:"+e.moveReducer+
                             "\n----------------------------------------------------------------------------------");
                 }
 
