@@ -68,6 +68,9 @@ class Gameplay implements Screen, InputProcessor {
                 moveReducer -=1;
             } else {
                 updatePosition();
+                for(EnemyOne e:enemiesArraylist){
+                    e.moveEnemy(theMap);
+                }
                 tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
                 tool.camera.update();
 

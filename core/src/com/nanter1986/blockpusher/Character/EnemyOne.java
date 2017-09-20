@@ -38,6 +38,71 @@ public class EnemyOne extends MovableCharacter {
         "\nat y:"+this.characterY);
     }
 
+    public void moveEnemy(MapOne map){
+        if(moveReducer>0){
+            moveReducer--;
+        }else{
+            if(checkIfBlockAtTheFront(map)){
+                switch (dir){
+                    case UP:
+                        if(characterY<map.MAP_HEIGHT_IN_BLOCKS){
+                            characterY+=1;
+                        }else{
+                            getRandomDirection();
+                        }
+                        break;
+                    case DOWN:
+                        if(characterY>1){
+                            characterY-=1;
+                        }else{
+                            getRandomDirection();
+                        }
+                        break;
+                    case LEFT:
+                        if(characterY>1){
+                            characterX-=1;
+                        }else{
+                            getRandomDirection();
+                        }
+                        break;
+                    case RIGHT:
+                        if(characterY<map.MAP_WIDTH_IN_BLOCKS){
+                            characterX+=1;
+                        }else{
+                            getRandomDirection();
+                        }
+                        break;
+
+                }
+            }else{
+                getRandomDirection();
+            }
+            moveReducer=8;
+            Gdx.app.log("new enemy direction:",dir.toString()+
+                    "\nnew enemy x:"+characterX+
+                    "\nnew enemy y:"+characterY);
+        }
+
+    }
+
+    private void getRandomDirection() {
+        switch (new Random().nextInt(4)){
+            case 0:
+                dir=Direction.LEFT;
+                break;
+            case 1:
+                dir=Direction.UP;
+                break;
+            case 2:
+                dir=Direction.RIGHT;
+                break;
+            case 3:
+                dir=Direction.DOWN;
+                break;
+        }
+        Gdx.app.log("enemy switched direction to:",dir.toString());
+    }
+
     @Override
     public void updatePosition(SpriteBatch b) {
         switch (dir){
@@ -51,7 +116,6 @@ public class EnemyOne extends MovableCharacter {
                 b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,128,64,64,false,false);
 
                 break;
-
             case RIGHT:
                 b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,64,64,64,false,false);
 
