@@ -64,6 +64,7 @@ class Gameplay implements Screen, InputProcessor {
                 pauseReducer--;
             }
         }else{
+            playerone.checkIfAlive(enemiesArraylist);
             if (moveReducer > 0) {
                 moveReducer -=1;
             } else {
@@ -99,7 +100,7 @@ class Gameplay implements Screen, InputProcessor {
                                 "\nplayer direction:" + playerone.dir);
                 for(EnemyOne e:enemiesArraylist){
                     e.updatePosition(tool.batch);
-                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+
+                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+e.dir.toString()+
                             "\n----------------------------------------------------------------------------------");
                 }
 
@@ -139,7 +140,7 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     public void updatePosition() {
-        if (moveReducer == 0) {
+        if (moveReducer == 0 && playerone.stillAlive) {
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
                 if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.characterX > 0) {
                     playerone.dir = MovableCharacter.Direction.LEFT;

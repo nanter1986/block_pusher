@@ -45,7 +45,7 @@ public class EnemyOne extends MovableCharacter {
             if(checkIfBlockAtTheFront(map)){
                 switch (dir){
                     case UP:
-                        if(characterY<map.MAP_HEIGHT_IN_BLOCKS){
+                        if(characterY<map.MAP_HEIGHT_IN_BLOCKS-1){
                             characterY+=1;
                         }else{
                             getRandomDirection();
@@ -59,14 +59,14 @@ public class EnemyOne extends MovableCharacter {
                         }
                         break;
                     case LEFT:
-                        if(characterY>1){
+                        if(characterX>1){
                             characterX-=1;
                         }else{
                             getRandomDirection();
                         }
                         break;
                     case RIGHT:
-                        if(characterY<map.MAP_WIDTH_IN_BLOCKS){
+                        if(characterX<map.MAP_WIDTH_IN_BLOCKS-1){
                             characterX+=1;
                         }else{
                             getRandomDirection();

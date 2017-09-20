@@ -8,12 +8,15 @@ import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
 
+import java.util.ArrayList;
+
 /**
  * Created by user on 29/8/2017.
  */
 
 public class PlayerOne extends MovableCharacter {
     public Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+    public  boolean stillAlive;
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
         this.characterX=map.MAP_WIDTH_IN_BLOCKS/2;
@@ -21,28 +24,40 @@ public class PlayerOne extends MovableCharacter {
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
         this.dir=Direction.UP;
+        stillAlive=true;
+    }
+
+    public void checkIfAlive(ArrayList<EnemyOne>eArray){
+        for(EnemyOne e:eArray){
+            if(stillAlive && this.characterX==e.characterX && this.characterY==e.characterY){
+                stillAlive=false;
+                Gdx.app.log("player status:","DEAD");
+            }
+        }
     }
 
     @Override
     public void updatePosition(SpriteBatch b) {
-        switch (dir){
-            case UP:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,64,64,false,false);
-                break;
-            case DOWN:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,192,64,64,false,false);
-                break;
-            case LEFT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,128,64,64,false,false);
+        if(stillAlive){
+            switch (dir){
+                case UP:
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,64,64,false,false);
+                    break;
+                case DOWN:
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,192,64,64,false,false);
+                    break;
+                case LEFT:
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,128,64,64,false,false);
 
-                break;
+                    break;
+                case RIGHT:
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,64,64,64,false,false);
 
-            case RIGHT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,64,64,64,false,false);
+                    break;
 
-                break;
-
+            }
         }
+
     }
 
     public boolean reachedTopWall(int mapH){
