@@ -85,6 +85,18 @@ public class EnemyOne extends MovableCharacter {
 
     }
 
+    public boolean checkIfcrushed(MapOne map){
+        boolean crushed=false;
+        if(map.mapArray[characterX][characterY].type!=BlockGeneral.Blocktypes.AIR){
+            crushed=true;
+            Gdx.app.log("enemy crushed:",crushed+" is dead");
+        }else{
+            Gdx.app.log("enemy crushed:",crushed+" still alive");
+        }
+
+        return crushed;
+    }
+
     private void getRandomDirection() {
         switch (new Random().nextInt(4)){
             case 0:

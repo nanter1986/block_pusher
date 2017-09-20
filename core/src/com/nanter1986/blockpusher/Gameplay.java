@@ -68,6 +68,18 @@ class Gameplay implements Screen, InputProcessor {
                 moveReducer -=1;
             } else {
                 updatePosition();
+                ArrayList<EnemyOne>toRemoveIfCrushed=new ArrayList<EnemyOne>();
+                for(EnemyOne e:enemiesArraylist){
+                    if(e.checkIfcrushed(theMap)){
+                        toRemoveIfCrushed.add(e);
+                    }
+                }
+                for(EnemyOne e:toRemoveIfCrushed){
+                    Gdx.app.log("enemy number",enemiesArraylist.size()+"");
+                    Gdx.app.log("removing enemy",e.toString());
+                    enemiesArraylist.remove(e);
+                    Gdx.app.log("enemy number",enemiesArraylist.size()+"");
+                }
                 for(EnemyOne e:enemiesArraylist){
                     e.moveEnemy(theMap);
                 }
