@@ -13,6 +13,8 @@ import com.nanter1986.blockpusher.Character.EnemyOne;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.PowerUps.Bomb;
+import com.nanter1986.blockpusher.PowerUps.Item;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ class Gameplay implements Screen, InputProcessor {
     DisplayToolkit tool;
     MapOne theMap;
     ArrayList<EnemyOne>enemiesArraylist=new ArrayList<EnemyOne>();
+    ArrayList<Item>itemsArraylist=new ArrayList<Item>();
     boolean gamePaused=false;
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
@@ -49,6 +52,7 @@ class Gameplay implements Screen, InputProcessor {
         playerone = new PlayerOne(tool, theMap);
         for(int i=0;i<5;i++){
             enemiesArraylist.add(new EnemyOne(tool, theMap));
+            itemsArraylist.add(new Bomb(tool,theMap));
         }
 
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
@@ -65,9 +69,12 @@ class Gameplay implements Screen, InputProcessor {
             }
         }else{
             playerone.checkIfAlive(enemiesArraylist);
+            playerone.collectItems(itemsArraylist);
             if (moveReducer > 0) {
                 moveReducer -=1;
             } else {
+                moveReducer=8;
+                Gdx.app.log("new frame created fps :",(1/delta)+"");
                 updatePosition();
                 ArrayList<EnemyOne>toRemoveIfCrushed=new ArrayList<EnemyOne>();
                 for(EnemyOne e:enemiesArraylist){
@@ -81,9 +88,8 @@ class Gameplay implements Screen, InputProcessor {
                     enemiesArraylist.remove(e);
                     Gdx.app.log("enemy number",enemiesArraylist.size()+"");
                 }
-                for(EnemyOne e:enemiesArraylist){
-                    e.moveEnemy(theMap);
-                }
+
+
                 tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
                 tool.camera.update();
 
@@ -93,11 +99,20 @@ class Gameplay implements Screen, InputProcessor {
                 tool.batch.setProjectionMatrix(tool.camera.combined);
                 tool.batch.begin();
                 theMap.updatePosition(tool.batch);
+                for(Item item:itemsArraylist){
+                    item.updatePosition(tool.batch);
+                }
+                for(EnemyOne e:enemiesArraylist){
+                    e.moveEnemy(theMap);
+                }
                 playerone.updatePosition(tool.batch);
                 Gdx.app.log("render----------------------------------------------------------------------\n",
                         "camera position:" + tool.camera.position.toString() +
                                 "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
                                 "\nplayer direction:" + playerone.dir);
+                for(Item item:playerone.collectedItems){
+                    Gdx.app.log("item in inventory",item.getClass().toString());
+                }
                 for(EnemyOne e:enemiesArraylist){
                     e.updatePosition(tool.batch);
                     Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+
@@ -141,7 +156,7 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     public void updatePosition() {
-        if (moveReducer == 0 && playerone.stillAlive) {
+        if (playerone.stillAlive) {
             if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
                 if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.characterX > 0) {
                     playerone.dir = MovableCharacter.Direction.LEFT;
@@ -192,7 +207,7 @@ class Gameplay implements Screen, InputProcessor {
                 }
 
                 playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
-                moveReducer = 8;
+                //moveReducer = 8;
             }
 
         }

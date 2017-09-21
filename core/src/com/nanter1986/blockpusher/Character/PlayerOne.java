@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.PowerUps.Item;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class PlayerOne extends MovableCharacter {
     public Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
     public  boolean stillAlive;
+    public ArrayList<Item>collectedItems=new ArrayList<Item>();
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
         this.characterX=map.MAP_WIDTH_IN_BLOCKS/2;
@@ -25,6 +27,20 @@ public class PlayerOne extends MovableCharacter {
         this.characterH=tool.universalWidthFactor;
         this.dir=Direction.UP;
         stillAlive=true;
+    }
+
+    public void collectItems(ArrayList<Item>allItems){
+        ArrayList<Item>toMoveToInventory=new ArrayList<Item>();
+        for(Item item:allItems){
+            if(characterX==item.itemX && characterY==item.itemY){
+                toMoveToInventory.add(item);
+            }
+        }
+        for(Item itemCollected:toMoveToInventory){
+            allItems.remove(itemCollected);
+            collectedItems.add(itemCollected);
+            Gdx.app.log("item collected at:",itemCollected.itemX+"/"+itemCollected.itemY+"/"+itemCollected.getClass().toString());
+        }
     }
 
     public void checkIfAlive(ArrayList<EnemyOne>eArray){
