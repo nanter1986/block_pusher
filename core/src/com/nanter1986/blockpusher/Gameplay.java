@@ -203,7 +203,8 @@ class Gameplay implements Screen, InputProcessor {
                         gamePaused=true;
                         pauseReducer=8;
                         Gdx.app.log("game paused","true");
-
+                }else if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size()>0){
+                    useBombOnBlock();
                 }
 
                 playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
@@ -212,6 +213,52 @@ class Gameplay implements Screen, InputProcessor {
 
         }
 
+    }
+
+    private void checkIfBlockRemovableAndRemove(int xToCheck,int yToCheck){
+        Gdx.app.log("checking if block removable at: ",xToCheck+"/"+yToCheck);
+        if(theMap.mapArray[xToCheck][yToCheck].type!= BlockGeneral.Blocktypes.AIR
+                && theMap.mapArray[xToCheck][yToCheck].type!= BlockGeneral.Blocktypes.WATER){
+            Gdx.app.log("block destroying:","at x/y "+xToCheck+"/"+yToCheck+
+                    " from "+theMap.mapArray[xToCheck][yToCheck].type.toString()+" to "+ BlockGeneral.Blocktypes.AIR.toString());
+            theMap.mapArray[xToCheck][yToCheck].type=BlockGeneral.Blocktypes.AIR;
+            playerone.collectedItems.remove(0);
+            for(Item i:playerone.collectedItems){
+                Gdx.app.log("remaining inventory: ",i.getClass().toString());
+            }
+
+        }
+    }
+
+    private void useBombOnBlock() {
+        switch (playerone.dir){
+            case UP:
+                int blockY=playerone.characterY+1;
+                Gdx.app.log("upward y coord:",blockY+"");
+                boolean yLessThanTop=playerone.characterY+1<=49;
+                Gdx.app.log("is less than top:",yLessThanTop+"");
+                if(yLessThanTop){
+                    checkIfBlockRemovableAndRemove(playerone.characterX,playerone.characterY+1);
+                }
+                break;
+            case DOWN:
+                int blockYdown=playerone.characterY+1;
+                Gdx.app.log("downward y coord:",blockYdown+"");
+                boolean yMoreThanBottom=playerone.characterY-1>=0;
+                Gdx.app.log("is more than bottom:",yMoreThanBottom+"");
+                if(yMoreThanBottom){
+                    checkIfBlockRemovableAndRemove(playerone.characterX,playerone.characterY-1);
+                }
+
+                break;
+            case LEFT:
+                checkIfBlockRemovableAndRemove(playerone.characterX-1,playerone.characterY);
+                break;
+            case RIGHT:
+                checkIfBlockRemovableAndRemove(playerone.characterX+1,playerone.characterY);
+                break;
+
+        }
     }
 
     @Override
