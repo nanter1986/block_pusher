@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 
 class Gameplay implements Screen, InputProcessor {
-
+    boolean winConditionsMet;
     public int moveReducer = 0;
     public int pauseReducer = 0;
     static Preferences prefs = Gdx.app.getPreferences("Pusher");
@@ -33,6 +33,8 @@ class Gameplay implements Screen, InputProcessor {
     ArrayList<EnemyOne>enemiesArraylist=new ArrayList<EnemyOne>();
     ArrayList<Item>itemsArraylist=new ArrayList<Item>();
     boolean gamePaused=false;
+
+
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
     private PlayerOne playerone;
@@ -53,6 +55,7 @@ class Gameplay implements Screen, InputProcessor {
         for(int i=0;i<5;i++){
             enemiesArraylist.add(new EnemyOne(tool, theMap));
             itemsArraylist.add(new Bomb(tool,theMap));
+            winConditionsMet=false;
         }
 
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
@@ -60,7 +63,11 @@ class Gameplay implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        if(gamePaused && pauseReducer ==0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        if(winConditionsMet){
+            WinScreen win=new WinScreen(game);
+            Gdx.app.log("setting new screen to game: ",win.toString());
+            game.setScreen(win);
+        }else if(gamePaused && pauseReducer ==0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
             gamePaused=false;
             Gdx.app.log("game paused","false");
         }else if(gamePaused){
@@ -68,6 +75,7 @@ class Gameplay implements Screen, InputProcessor {
                 pauseReducer--;
             }
         }else{
+            checkIfWinConditionsAreMet();
             playerone.checkIfAlive(enemiesArraylist);
             playerone.collectItems(itemsArraylist);
             if (moveReducer > 0) {
@@ -128,6 +136,17 @@ class Gameplay implements Screen, InputProcessor {
 
 
 
+    }
+
+    private void checkIfWinConditionsAreMet() {
+        int enemiesLeft=enemiesArraylist.size();
+        boolean wonGame=enemiesArraylist.size()==0;
+        if(wonGame){
+            winConditionsMet=true;
+
+        }
+        Gdx.app.log("won game: ",wonGame+"");
+        Gdx.app.log("enemies left: ",enemiesLeft+"");
     }
 
     @Override
@@ -249,13 +268,24 @@ class Gameplay implements Screen, InputProcessor {
                 if(yMoreThanBottom){
                     checkIfBlockRemovableAndRemove(playerone.characterX,playerone.characterY-1);
                 }
-
                 break;
             case LEFT:
-                checkIfBlockRemovableAndRemove(playerone.characterX-1,playerone.characterY);
+                int blockXleft=playerone.characterX-1;
+                Gdx.app.log("left x coord:",blockXleft+"");
+                boolean xMoreThanLeftLimit=playerone.characterX-1>=0;
+                Gdx.app.log("is more than left limit:",xMoreThanLeftLimit+"");
+                if(xMoreThanLeftLimit){
+                    checkIfBlockRemovableAndRemove(playerone.characterX-1,playerone.characterY);
+                }
                 break;
             case RIGHT:
-                checkIfBlockRemovableAndRemove(playerone.characterX+1,playerone.characterY);
+                int blockXright=playerone.characterX+1;
+                Gdx.app.log("right x coord:",blockXright+"");
+                boolean xLessThanRightLimit=playerone.characterX+1<=49;
+                Gdx.app.log("is less than right limit:",xLessThanRightLimit+"");
+                if(xLessThanRightLimit){
+                    checkIfBlockRemovableAndRemove(playerone.characterX+1,playerone.characterY);
+                }
                 break;
 
         }
