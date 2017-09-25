@@ -45,10 +45,18 @@ public class MapOne {
         logSelf();
     }
 
-    public void updatePosition(SpriteBatch b){
+    public void updatePosition(DisplayToolkit tool){
+
         for(int i=0;i<50;i++) {
             for (int j = 0; j < 50; j++) {
-                b.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX*blocksize,mapArray[i][j].blockY*blocksize,blocksize,blocksize);
+                boolean showExplosion=mapArray[i][j].explodedStart && mapArray[i][j].explodedEnd==false;
+                if(showExplosion){
+
+                    Gdx.app.log("show explosion: ",showExplosion+"( ' )");
+                    mapArray[i][j].explode(tool);
+                }else{
+                    tool.batch.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX*blocksize,mapArray[i][j].blockY*blocksize,blocksize,blocksize);
+                }
             }
         }
         //logSelf();
@@ -56,20 +64,20 @@ public class MapOne {
     }
 
     public void logSelf(){
-        String toLog="";
+        //String toLog="";
         Gdx.app.log("map one was created. ", "---MAP_WIDTH_IN_BLOCKS:"+MAP_WIDTH_IN_BLOCKS+
                 "---MAP_HEIGHT_IN_BLOCKS:"+MAP_HEIGHT_IN_BLOCKS+
                 "---blocksize:"+blocksize+
                 "---RANDOM"+RANDOM.toString()+
-                "---mapArray:");
-        for(int k=0;k<MAP_WIDTH_IN_BLOCKS;k++){
+                "---mapArray:"+mapArray.toString());
+        /*for(int k=0;k<MAP_WIDTH_IN_BLOCKS;k++){
             for( int l=0;l<MAP_HEIGHT_IN_BLOCKS;l++){
                 toLog+="---block x:"+mapArray[k][l].blockX+
                         "---block y:"+mapArray[k][l].blockY+
                         "---block type:"+mapArray[k][l].type+"\n";
             }
-        }
-        Gdx.app.log("mapArray:",toLog);
+        }*/
+        /*Gdx.app.log("mapArray:",toLog);*/
     }
 
 

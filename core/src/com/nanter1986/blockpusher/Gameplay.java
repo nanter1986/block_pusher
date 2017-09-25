@@ -57,7 +57,7 @@ class Gameplay implements Screen, InputProcessor {
             itemsArraylist.add(new Bomb(tool,theMap));
             winConditionsMet=false;
         }
-
+        playerone.collectedItems.add(new Bomb(tool,theMap));
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
     }
 
@@ -106,7 +106,7 @@ class Gameplay implements Screen, InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 tool.batch.setProjectionMatrix(tool.camera.combined);
                 tool.batch.begin();
-                theMap.updatePosition(tool.batch);
+                theMap.updatePosition(tool);
                 for(Item item:itemsArraylist){
                     item.updatePosition(tool.batch);
                 }
@@ -240,6 +240,8 @@ class Gameplay implements Screen, InputProcessor {
                 && theMap.mapArray[xToCheck][yToCheck].type!= BlockGeneral.Blocktypes.WATER){
             Gdx.app.log("block destroying:","at x/y "+xToCheck+"/"+yToCheck+
                     " from "+theMap.mapArray[xToCheck][yToCheck].type.toString()+" to "+ BlockGeneral.Blocktypes.AIR.toString());
+            theMap.mapArray[xToCheck][yToCheck].explodedStart=true;
+            Gdx.app.log("explosion started: ",theMap.mapArray[xToCheck][yToCheck].explodedStart+"");
             theMap.mapArray[xToCheck][yToCheck].type=BlockGeneral.Blocktypes.AIR;
             playerone.collectedItems.remove(0);
             for(Item i:playerone.collectedItems){
