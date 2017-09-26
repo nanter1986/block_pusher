@@ -8,11 +8,13 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.EnemyOne;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
 
@@ -26,12 +28,14 @@ class Gameplay implements Screen, InputProcessor {
     boolean winConditionsMet;
     public int moveReducer = 0;
     public int pauseReducer = 0;
-    static Preferences prefs = Gdx.app.getPreferences("Pusher");
+    public int numOfSteps = 0;
+    public static Preferences prefs = Gdx.app.getPreferences("Pusher");
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
     ArrayList<EnemyOne>enemiesArraylist=new ArrayList<EnemyOne>();
     ArrayList<Item>itemsArraylist=new ArrayList<Item>();
+    InfoPatch infoPatch;
     boolean gamePaused=false;
 
 
@@ -50,6 +54,8 @@ class Gameplay implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
+        infoPatch=new InfoPatch(tool);
+        Gdx.app.log("info patch dimensions:", infoPatch.height+"/"+infoPatch.width);
         theMap = new MapOne(tool);
         playerone = new PlayerOne(tool, theMap);
         for(int i=0;i<5;i++){
@@ -61,9 +67,13 @@ class Gameplay implements Screen, InputProcessor {
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
     }
 
+
     @Override
     public void render(float delta) {
         if(winConditionsMet){
+            int numOfBombs=itemsArraylist.size();
+            prefs.putInteger("numOfBombs",numOfBombs);
+            Gdx.app.log("bombs left:",numOfBombs+"");
             WinScreen win=new WinScreen(game);
             Gdx.app.log("setting new screen to game: ",win.toString());
             game.setScreen(win);
@@ -99,6 +109,8 @@ class Gameplay implements Screen, InputProcessor {
 
 
                 tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+                infoPatch.stealPosition(tool);
+                Gdx.app.log("info patch position:", infoPatch.positionX+"/"+infoPatch.positionY);
                 tool.camera.update();
 
                 Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
@@ -114,6 +126,7 @@ class Gameplay implements Screen, InputProcessor {
                     e.moveEnemy(theMap);
                 }
                 playerone.updatePosition(tool.batch);
+                infoPatch.drawSelf(tool,enemiesArraylist,playerone.collectedItems);
                 Gdx.app.log("render----------------------------------------------------------------------\n",
                         "camera position:" + tool.camera.position.toString() +
                                 "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
@@ -181,8 +194,10 @@ class Gameplay implements Screen, InputProcessor {
                     playerone.dir = MovableCharacter.Direction.LEFT;
                     if (playerone.checkIfBlockAtTheFront(theMap)) {
                         playerone.characterX -= 1;
+                        addOneStep();
                     } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX > 1) {
                         playerone.characterX -= 1;
+                        addOneStep();
                         theMap.mapArray[playerone.characterX - 1][playerone.characterY].type = theMap.mapArray[playerone.characterX][playerone.characterY].type;
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
@@ -191,8 +206,10 @@ class Gameplay implements Screen, InputProcessor {
                     playerone.dir = MovableCharacter.Direction.RIGHT;
                     if (playerone.checkIfBlockAtTheFront(theMap)) {
                         playerone.characterX += 1;
+                        addOneStep();
                     } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 2) {
                         playerone.characterX += 1;
+                        addOneStep();
                         theMap.mapArray[playerone.characterX + 1][playerone.characterY].type = theMap.mapArray[playerone.characterX][playerone.characterY].type;
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
@@ -200,9 +217,11 @@ class Gameplay implements Screen, InputProcessor {
                     playerone.dir = MovableCharacter.Direction.UP;
                     if (playerone.checkIfBlockAtTheFront(theMap)) {
                         playerone.characterY += 1;
+                        addOneStep();
 
                     } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 2) {
                         playerone.characterY += 1;
+                        addOneStep();
                         theMap.mapArray[playerone.characterX][playerone.characterY + 1].type = theMap.mapArray[playerone.characterX][playerone.characterY].type;
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
@@ -210,9 +229,11 @@ class Gameplay implements Screen, InputProcessor {
                     playerone.dir = MovableCharacter.Direction.DOWN;
                     if (playerone.checkIfBlockAtTheFront(theMap)) {
                         playerone.characterY -= 1;
+                        addOneStep();
 
                     } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY > 1) {
                         playerone.characterY -= 1;
+                        addOneStep();
                         theMap.mapArray[playerone.characterX][playerone.characterY - 1].type = theMap.mapArray[playerone.characterX][playerone.characterY].type;
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
@@ -232,6 +253,11 @@ class Gameplay implements Screen, InputProcessor {
 
         }
 
+    }
+
+    private void addOneStep() {
+        numOfSteps++;
+        Gdx.app.log("total number of steps:",numOfSteps+"");
     }
 
     private void checkIfBlockRemovableAndRemove(int xToCheck,int yToCheck){

@@ -29,7 +29,7 @@ public class DisplayToolkit {
         camera.position.set(screenWidth / 2, screenHeight / 2, 0);
 
         font=new BitmapFont();
-        font.setColor(0.5f, 0.5f, 0.5f, 1.0f);
+        font.setColor(0.9f, 0.1f, 0.1f, 1.0f);
         Gdx.app.log("display toolkit created:","scW:"+scW+" scH:"+scH+" universal width factor:"+universalWidthFactor+" camera position:"+camera.position);
 
 
