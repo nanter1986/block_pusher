@@ -26,7 +26,6 @@ import java.util.ArrayList;
 
 class Gameplay implements Screen, InputProcessor {
     boolean winConditionsMet;
-    public int moveReducer = 0;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     public static Preferences prefs = Gdx.app.getPreferences("Pusher");
@@ -88,15 +87,17 @@ class Gameplay implements Screen, InputProcessor {
             checkIfWinConditionsAreMet();
             playerone.checkIfAlive(enemiesArraylist);
             playerone.collectItems(itemsArraylist);
-            if (moveReducer > 0) {
-                moveReducer -=1;
+            if (playerone.moveReducer>0) {
+                playerone.moveReducer -=1;
             } else {
-                moveReducer=8;
+                playerone.moveReducer=8;
                 Gdx.app.log("new frame created fps :",(1/delta)+"");
                 updatePosition();
                 ArrayList<EnemyOne>toRemoveIfCrushed=new ArrayList<EnemyOne>();
                 for(EnemyOne e:enemiesArraylist){
-                    if(e.checkIfcrushed(theMap)){
+                    boolean crushedAndAnimatedBlood=e.checkIfcrushed(theMap) && e.explodedEnd==true;
+                    Gdx.app.log("crushed and blood:",crushedAndAnimatedBlood+"");
+                    if(crushedAndAnimatedBlood){
                         toRemoveIfCrushed.add(e);
                     }
                 }
@@ -118,6 +119,14 @@ class Gameplay implements Screen, InputProcessor {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 tool.batch.setProjectionMatrix(tool.camera.combined);
                 tool.batch.begin();
+                for(EnemyOne e:enemiesArraylist){
+                    boolean exploding=e.explodedStarted && e.explodedEnd==false;
+                    Gdx.app.log("enemy exploding",e.characterX+"/"+e.characterY+"/"+exploding);
+                    if(exploding){
+                        e.bloodAnimation(tool);
+                    }
+
+                }
                 theMap.updatePosition(tool);
                 for(Item item:itemsArraylist){
                     item.updatePosition(tool.batch);
@@ -135,10 +144,13 @@ class Gameplay implements Screen, InputProcessor {
                     Gdx.app.log("item in inventory",item.getClass().toString());
                 }
                 for(EnemyOne e:enemiesArraylist){
-                    e.updatePosition(tool.batch);
-                    Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+
-                                    e.dir.toString()+" move reducer:"+e.moveReducer+
-                            "\n----------------------------------------------------------------------------------");
+                    if(e.explodedStarted==false){
+                        e.updatePosition(tool.batch);
+                        Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+
+                                e.dir.toString()+" move reducer:"+e.moveReducer+
+                                "\n----------------------------------------------------------------------------------");
+                    }
+
                 }
 
                 tool.batch.end();

@@ -76,6 +76,11 @@ public class PlayerOne extends MovableCharacter {
 
     }
 
+    @Override
+    public void bloodAnimation(DisplayToolkit tool) {
+
+    }
+
     public boolean reachedTopWall(int mapH){
         boolean reached=false;
         if(characterY>=mapH*characterH-characterH){

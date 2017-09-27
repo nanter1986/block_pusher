@@ -54,7 +54,9 @@ public class MapOne {
 
                     Gdx.app.log("show explosion: ",showExplosion+"( ' )");
                     mapArray[i][j].explode(tool);
-                }else{
+                }else if(mapArray[i][j].type== BlockGeneral.Blocktypes.AIR){
+
+                } else{
                     tool.batch.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX*blocksize,mapArray[i][j].blockY*blocksize,blocksize,blocksize);
                 }
             }

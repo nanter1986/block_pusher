@@ -15,8 +15,13 @@ import java.util.Random;
 
 public class EnemyOne extends MovableCharacter {
 
-    public Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+    public final Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+    public final Texture blood = new Texture(Gdx.files.internal("playerone.png"));
     public int moveReducer;
+    private int bloodAnimationX;
+    private int bloodAnimationY;
+    public boolean explodedStarted;
+    public boolean explodedEnd;
 
     public EnemyOne(DisplayToolkit tool, MapOne map) {
         boolean freeBlockFound=false;
@@ -28,6 +33,10 @@ public class EnemyOne extends MovableCharacter {
                 this.characterX=theX;
                 this.characterY=theY;
                 moveReducer=0;
+                bloodAnimationX=0;
+                bloodAnimationY=0;
+                explodedEnd=false;
+                explodedStarted=false;
             }
 
         }
@@ -87,6 +96,7 @@ public class EnemyOne extends MovableCharacter {
         boolean crushed=false;
         if(map.mapArray[characterX][characterY].type!=BlockGeneral.Blocktypes.AIR){
             crushed=true;
+            explodedStarted=true;
             Gdx.app.log("enemy crushed:",crushed+" is dead");
         }else{
             Gdx.app.log("enemy crushed:",crushed+" still alive");
@@ -132,6 +142,28 @@ public class EnemyOne extends MovableCharacter {
                 break;
 
         }
+    }
+
+    @Override
+    public void bloodAnimation(DisplayToolkit tool) {
+        int widthOfBlood=3*tool.universalWidthFactor;
+        int whereToExplodeX=characterX*tool.universalWidthFactor-widthOfBlood/2;
+        int whereToExplodeY=characterY*tool.universalWidthFactor-widthOfBlood/2;
+
+        Gdx.app.log("blood animation:",whereToExplodeX+"/"+whereToExplodeY+"/"+widthOfBlood);
+        tool.batch.draw(blood,whereToExplodeX,whereToExplodeY,widthOfBlood,widthOfBlood,bloodAnimationX*500,1500-bloodAnimationY*500,500,500,false,false);
+        bloodAnimationX++;
+        if(bloodAnimationX==3){
+            bloodAnimationX=0;
+            bloodAnimationY++;
+        }
+        Gdx.app.log("showing explosion:",bloodAnimationX+" "+bloodAnimationY+" "+blood.toString()+
+                " at "+whereToExplodeX+"/"+whereToExplodeY+" width:"+widthOfBlood);
+        if(bloodAnimationY==4){
+            explodedEnd=true;
+            Gdx.app.log("explosion ended: ",explodedEnd+"");
+        }
+
     }
 
     public boolean checkIfBlockAtTheFront(MapOne map){
