@@ -32,11 +32,10 @@ class Gameplay implements Screen, InputProcessor {
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
-    ArrayList<EnemyOne>enemiesArraylist=new ArrayList<EnemyOne>();
-    ArrayList<Item>itemsArraylist=new ArrayList<Item>();
+    ArrayList<EnemyOne> enemiesArraylist = new ArrayList<EnemyOne>();
+    ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     InfoPatch infoPatch;
-    boolean gamePaused=false;
-
+    boolean gamePaused = false;
 
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
@@ -53,125 +52,128 @@ class Gameplay implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
-        infoPatch=new InfoPatch(tool);
-        Gdx.app.log("info patch dimensions:", infoPatch.height+"/"+infoPatch.width);
+        infoPatch = new InfoPatch(tool);
+        Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         theMap = new MapOne(tool);
         playerone = new PlayerOne(tool, theMap);
-        for(int i=0;i<5;i++){
+        for (int i = 0; i < 5; i++) {
             enemiesArraylist.add(new EnemyOne(tool, theMap));
-            itemsArraylist.add(new Bomb(tool,theMap));
-            winConditionsMet=false;
+            itemsArraylist.add(new Bomb(tool, theMap));
+            winConditionsMet = true;
         }
-        playerone.collectedItems.add(new Bomb(tool,theMap));
+        playerone.collectedItems.add(new Bomb(tool, theMap));
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
     }
 
 
     @Override
     public void render(float delta) {
-        if(winConditionsMet){
-            int numOfBombs=itemsArraylist.size();
-            prefs.putInteger("numOfBombs",numOfBombs);
-            Gdx.app.log("bombs left:",numOfBombs+"");
-            WinScreen win=new WinScreen(game);
-            Gdx.app.log("setting new screen to game: ",win.toString());
+        if (winConditionsMet) {
+            int numOfBombs = playerone.collectedItems.size();
+            prefs.putInteger("numOfBombs", numOfBombs);
+            Gdx.app.log("bombs left:", numOfBombs + "");
+            prefs.putInteger("numberOfSteps",numOfSteps);
+            Gdx.app.log("total steps:", numOfSteps + "");
+            WinScreen win = new WinScreen(game);
+            Gdx.app.log("setting new screen to game: ", win.toString());
             game.setScreen(win);
-        }else if(gamePaused && pauseReducer ==0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            gamePaused=false;
-            Gdx.app.log("game paused","false");
-        }else if(gamePaused){
-            if(pauseReducer>0){
+        } else if (gamePaused && pauseReducer == 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            gamePaused = false;
+            Gdx.app.log("game paused", "false");
+        } else if (gamePaused) {
+            if (pauseReducer > 0) {
                 pauseReducer--;
             }
-        }else{
+        } else {
             checkIfWinConditionsAreMet();
             playerone.checkIfAlive(enemiesArraylist);
             playerone.collectItems(itemsArraylist);
-            if (playerone.moveReducer>0) {
-                playerone.moveReducer -=1;
+            if (playerone.moveReducer > 0) {
+                playerone.moveReducer -= 1;
             } else {
-                playerone.moveReducer=8;
-                Gdx.app.log("new frame created fps :",(1/delta)+"");
+                playerone.moveReducer = 8;
+                Gdx.app.log("new frame created fps :", (1 / delta) + "");
                 updatePosition();
-                ArrayList<EnemyOne>toRemoveIfCrushed=new ArrayList<EnemyOne>();
-                for(EnemyOne e:enemiesArraylist){
-                    boolean crushedAndAnimatedBlood=e.checkIfcrushed(theMap) && e.explodedEnd==true;
-                    Gdx.app.log("crushed and blood:",crushedAndAnimatedBlood+"");
-                    if(crushedAndAnimatedBlood){
-                        toRemoveIfCrushed.add(e);
-                    }
+            }
+            ArrayList<EnemyOne> toRemoveIfCrushed = new ArrayList<EnemyOne>();
+            for (EnemyOne e : enemiesArraylist) {
+                boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd ;
+                Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
+                if (crushedAndAnimatedBlood) {
+                    toRemoveIfCrushed.add(e);
                 }
-                for(EnemyOne e:toRemoveIfCrushed){
-                    Gdx.app.log("enemy number",enemiesArraylist.size()+"");
-                    Gdx.app.log("removing enemy",e.toString());
-                    enemiesArraylist.remove(e);
-                    Gdx.app.log("enemy number",enemiesArraylist.size()+"");
-                }
+            }
+            for (EnemyOne e : toRemoveIfCrushed) {
+                Gdx.app.log("enemy number", enemiesArraylist.size() + "");
+                Gdx.app.log("removing enemy", e.toString());
+                enemiesArraylist.remove(e);
+                Gdx.app.log("enemy number", enemiesArraylist.size() + "");
+            }
 
 
-                tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
-                infoPatch.stealPosition(tool);
-                Gdx.app.log("info patch position:", infoPatch.positionX+"/"+infoPatch.positionY);
-                tool.camera.update();
+            tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+            infoPatch.stealPosition(tool);
+            Gdx.app.log("info patch position:", infoPatch.positionX + "/" + infoPatch.positionY);
+            tool.camera.update();
 
-                Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
-                        BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
-                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-                tool.batch.setProjectionMatrix(tool.camera.combined);
-                tool.batch.begin();
-                for(EnemyOne e:enemiesArraylist){
-                    boolean exploding=e.explodedStarted && e.explodedEnd==false;
-                    Gdx.app.log("enemy exploding",e.characterX+"/"+e.characterY+"/"+exploding);
-                    if(exploding){
-                        e.bloodAnimation(tool);
-                    }
-
+            Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
+                    BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            tool.batch.setProjectionMatrix(tool.camera.combined);
+            tool.batch.begin();
+            for (EnemyOne e : enemiesArraylist) {
+                boolean exploding = e.explodedStarted && e.explodedEnd == false;
+                Gdx.app.log("enemy exploding", e.characterX + "/" + e.characterY + "/" + exploding);
+                if (exploding) {
+                    e.bloodAnimation(tool);
                 }
-                theMap.updatePosition(tool);
-                for(Item item:itemsArraylist){
-                    item.updatePosition(tool.batch);
-                }
-                for(EnemyOne e:enemiesArraylist){
-                    e.moveEnemy(theMap);
-                }
-                playerone.updatePosition(tool.batch);
-                infoPatch.drawSelf(tool,enemiesArraylist,playerone.collectedItems);
-                Gdx.app.log("render----------------------------------------------------------------------\n",
-                        "camera position:" + tool.camera.position.toString() +
-                                "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
-                                "\nplayer direction:" + playerone.dir);
-                for(Item item:playerone.collectedItems){
-                    Gdx.app.log("item in inventory",item.getClass().toString());
-                }
-                for(EnemyOne e:enemiesArraylist){
-                    if(e.explodedStarted==false){
-                        e.updatePosition(tool.batch);
-                        Gdx.app.log("enemy position:",e.characterX+" "+e.characterY+" "+
-                                e.dir.toString()+" move reducer:"+e.moveReducer+
-                                "\n----------------------------------------------------------------------------------");
-                    }
-
-                }
-
-                tool.batch.end();
 
             }
+            theMap.updatePosition(tool);
+            for (Item item : itemsArraylist) {
+                item.updatePosition(tool.batch);
+            }
+            for (EnemyOne e : enemiesArraylist) {
+                boolean enemyAlive=e.explodedStarted==false;
+                if(enemyAlive){
+                    e.moveEnemy(theMap);
+                }
+
+            }
+            playerone.updatePosition(tool.batch);
+
+            Gdx.app.log("render----------------------------------------------------------------------\n",
+                    "camera position:" + tool.camera.position.toString() +
+                            "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
+                            "\nplayer direction:" + playerone.dir);
+            for (Item item : playerone.collectedItems) {
+                Gdx.app.log("item in inventory", item.getClass().toString());
+            }
+            for (EnemyOne e : enemiesArraylist) {
+                if (e.explodedStarted == false) {
+                    e.updatePosition(tool.batch);
+                    Gdx.app.log("enemy position:", e.characterX + " " + e.characterY + " " +
+                            e.dir.toString() + " move reducer:" + e.moveReducer +
+                            "\n----------------------------------------------------------------------------------");
+                }
+
+            }
+            infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems);
+            tool.batch.end();
+
         }
-
-
-
-
     }
 
+
     private void checkIfWinConditionsAreMet() {
-        int enemiesLeft=enemiesArraylist.size();
-        boolean wonGame=enemiesArraylist.size()==0;
-        if(wonGame){
-            winConditionsMet=true;
+        int enemiesLeft = enemiesArraylist.size();
+        boolean wonGame = enemiesArraylist.size() == 0;
+        if (wonGame) {
+            winConditionsMet = true;
 
         }
-        Gdx.app.log("won game: ",wonGame+"");
-        Gdx.app.log("enemies left: ",enemiesLeft+"");
+        Gdx.app.log("won game: ", wonGame + "");
+        Gdx.app.log("enemies left: ", enemiesLeft + "");
     }
 
     @Override
@@ -250,12 +252,12 @@ class Gameplay implements Screen, InputProcessor {
                         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
                     }
 
-                }else if(gamePaused==false && Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+                } else if (gamePaused == false && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 
-                        gamePaused=true;
-                        pauseReducer=8;
-                        Gdx.app.log("game paused","true");
-                }else if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size()>0){
+                    gamePaused = true;
+                    pauseReducer = 8;
+                    Gdx.app.log("game paused", "true");
+                } else if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size() > 0) {
                     useBombOnBlock();
                 }
 
@@ -269,62 +271,62 @@ class Gameplay implements Screen, InputProcessor {
 
     private void addOneStep() {
         numOfSteps++;
-        Gdx.app.log("total number of steps:",numOfSteps+"");
+        Gdx.app.log("total number of steps:", numOfSteps + "");
     }
 
-    private void checkIfBlockRemovableAndRemove(int xToCheck,int yToCheck){
-        Gdx.app.log("checking if block removable at: ",xToCheck+"/"+yToCheck);
-        if(theMap.mapArray[xToCheck][yToCheck].type!= BlockGeneral.Blocktypes.AIR
-                && theMap.mapArray[xToCheck][yToCheck].type!= BlockGeneral.Blocktypes.WATER){
-            Gdx.app.log("block destroying:","at x/y "+xToCheck+"/"+yToCheck+
-                    " from "+theMap.mapArray[xToCheck][yToCheck].type.toString()+" to "+ BlockGeneral.Blocktypes.AIR.toString());
-            theMap.mapArray[xToCheck][yToCheck].explodedStart=true;
-            Gdx.app.log("explosion started: ",theMap.mapArray[xToCheck][yToCheck].explodedStart+"");
-            theMap.mapArray[xToCheck][yToCheck].type=BlockGeneral.Blocktypes.AIR;
+    private void checkIfBlockRemovableAndRemove(int xToCheck, int yToCheck) {
+        Gdx.app.log("checking if block removable at: ", xToCheck + "/" + yToCheck);
+        if (theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.AIR
+                && theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.WATER) {
+            Gdx.app.log("block destroying:", "at x/y " + xToCheck + "/" + yToCheck +
+                    " from " + theMap.mapArray[xToCheck][yToCheck].type.toString() + " to " + BlockGeneral.Blocktypes.AIR.toString());
+            theMap.mapArray[xToCheck][yToCheck].explodedStart = true;
+            Gdx.app.log("explosion started: ", theMap.mapArray[xToCheck][yToCheck].explodedStart + "");
+            theMap.mapArray[xToCheck][yToCheck].type = BlockGeneral.Blocktypes.AIR;
             playerone.collectedItems.remove(0);
-            for(Item i:playerone.collectedItems){
-                Gdx.app.log("remaining inventory: ",i.getClass().toString());
+            for (Item i : playerone.collectedItems) {
+                Gdx.app.log("remaining inventory: ", i.getClass().toString());
             }
 
         }
     }
 
     private void useBombOnBlock() {
-        switch (playerone.dir){
+        switch (playerone.dir) {
             case UP:
-                int blockY=playerone.characterY+1;
-                Gdx.app.log("upward y coord:",blockY+"");
-                boolean yLessThanTop=playerone.characterY+1<=49;
-                Gdx.app.log("is less than top:",yLessThanTop+"");
-                if(yLessThanTop){
-                    checkIfBlockRemovableAndRemove(playerone.characterX,playerone.characterY+1);
+                int blockY = playerone.characterY + 1;
+                Gdx.app.log("upward y coord:", blockY + "");
+                boolean yLessThanTop = playerone.characterY + 1 <= 49;
+                Gdx.app.log("is less than top:", yLessThanTop + "");
+                if (yLessThanTop) {
+                    checkIfBlockRemovableAndRemove(playerone.characterX, playerone.characterY + 1);
                 }
                 break;
             case DOWN:
-                int blockYdown=playerone.characterY+1;
-                Gdx.app.log("downward y coord:",blockYdown+"");
-                boolean yMoreThanBottom=playerone.characterY-1>=0;
-                Gdx.app.log("is more than bottom:",yMoreThanBottom+"");
-                if(yMoreThanBottom){
-                    checkIfBlockRemovableAndRemove(playerone.characterX,playerone.characterY-1);
+                int blockYdown = playerone.characterY + 1;
+                Gdx.app.log("downward y coord:", blockYdown + "");
+                boolean yMoreThanBottom = playerone.characterY - 1 >= 0;
+                Gdx.app.log("is more than bottom:", yMoreThanBottom + "");
+                if (yMoreThanBottom) {
+                    checkIfBlockRemovableAndRemove(playerone.characterX, playerone.characterY - 1);
                 }
                 break;
             case LEFT:
-                int blockXleft=playerone.characterX-1;
-                Gdx.app.log("left x coord:",blockXleft+"");
-                boolean xMoreThanLeftLimit=playerone.characterX-1>=0;
-                Gdx.app.log("is more than left limit:",xMoreThanLeftLimit+"");
-                if(xMoreThanLeftLimit){
-                    checkIfBlockRemovableAndRemove(playerone.characterX-1,playerone.characterY);
+                int blockXleft = playerone.characterX - 1;
+                Gdx.app.log("left x coord:", blockXleft + "");
+                boolean xMoreThanLeftLimit = playerone.characterX - 1 >= 0;
+                Gdx.app.log("is more than left limit:", xMoreThanLeftLimit + "");
+                if (xMoreThanLeftLimit) {
+                    checkIfBlockRemovableAndRemove(playerone.characterX - 1, playerone.characterY);
                 }
                 break;
             case RIGHT:
-                int blockXright=playerone.characterX+1;
-                Gdx.app.log("right x coord:",blockXright+"");
-                boolean xLessThanRightLimit=playerone.characterX+1<=49;
-                Gdx.app.log("is less than right limit:",xLessThanRightLimit+"");
-                if(xLessThanRightLimit){
-                    checkIfBlockRemovableAndRemove(playerone.characterX+1,playerone.characterY);
+                int blockXright = playerone.characterX + 1;
+                Gdx.app.log("right x coord:", blockXright + "");
+                boolean xLessThanRightLimit = playerone.characterX + 1 <= 49;
+                Gdx.app.log("is less than right limit:", xLessThanRightLimit + "");
+                if (xLessThanRightLimit) {
+                    checkIfBlockRemovableAndRemove(playerone.characterX + 1, playerone.characterY);
                 }
                 break;
 

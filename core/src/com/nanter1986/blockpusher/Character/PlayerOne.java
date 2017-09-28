@@ -45,7 +45,7 @@ public class PlayerOne extends MovableCharacter {
 
     public void checkIfAlive(ArrayList<EnemyOne>eArray){
         for(EnemyOne e:eArray){
-            if(stillAlive && this.characterX==e.characterX && this.characterY==e.characterY){
+            if(e.explodedStarted==false && stillAlive && this.characterX==e.characterX && this.characterY==e.characterY){
                 stillAlive=false;
                 Gdx.app.log("player status:","DEAD");
             }

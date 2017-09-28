@@ -16,12 +16,13 @@ import java.util.Random;
 public class EnemyOne extends MovableCharacter {
 
     public final Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
-    public final Texture blood = new Texture(Gdx.files.internal("playerone.png"));
+    public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
     public int moveReducer;
     private int bloodAnimationX;
     private int bloodAnimationY;
     public boolean explodedStarted;
     public boolean explodedEnd;
+    public int bloodDelayNumber;
 
     public EnemyOne(DisplayToolkit tool, MapOne map) {
         boolean freeBlockFound=false;
@@ -35,6 +36,7 @@ public class EnemyOne extends MovableCharacter {
                 moveReducer=0;
                 bloodAnimationX=0;
                 bloodAnimationY=0;
+                bloodDelayNumber=0;
                 explodedEnd=false;
                 explodedStarted=false;
             }
@@ -50,7 +52,7 @@ public class EnemyOne extends MovableCharacter {
     public void moveEnemy(MapOne map){
         if(moveReducer>0){
             moveReducer--;
-            Gdx.app.log("reduce moveReducer",moveReducer+"");
+            Gdx.app.log("reduce enemy moveReducer",moveReducer+"");
         }else{
             if(checkIfBlockAtTheFront(map)){
                 switch (dir){
@@ -84,10 +86,11 @@ public class EnemyOne extends MovableCharacter {
                         break;
 
                 }
+                Gdx.app.log("enemy walked to:",+characterX+"/"+characterY);
             }else{
                 getRandomDirection();
             }
-            moveReducer=8;
+            moveReducer=64;
         }
 
     }
@@ -146,23 +149,35 @@ public class EnemyOne extends MovableCharacter {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
-        int widthOfBlood=3*tool.universalWidthFactor;
+        int widthOfBlood=6*tool.universalWidthFactor;
         int whereToExplodeX=characterX*tool.universalWidthFactor-widthOfBlood/2;
         int whereToExplodeY=characterY*tool.universalWidthFactor-widthOfBlood/2;
 
-        Gdx.app.log("blood animation:",whereToExplodeX+"/"+whereToExplodeY+"/"+widthOfBlood);
-        tool.batch.draw(blood,whereToExplodeX,whereToExplodeY,widthOfBlood,widthOfBlood,bloodAnimationX*500,1500-bloodAnimationY*500,500,500,false,false);
-        bloodAnimationX++;
-        if(bloodAnimationX==3){
-            bloodAnimationX=0;
-            bloodAnimationY++;
+        if(bloodDelayNumber>0){
+            bloodDelayNumber--;
+        }else{
+
+
+            Gdx.app.log("blood animation:",whereToExplodeX+"/"+whereToExplodeY+"/"+widthOfBlood);
+            bloodAnimationX++;
+            if(bloodAnimationX==2){
+                bloodAnimationX=0;
+                bloodAnimationY++;
+            }
+            Gdx.app.log("showing explosion:",bloodAnimationX+" "+bloodAnimationY+" "+blood.toString()+
+                    " at "+whereToExplodeX+"/"+whereToExplodeY+" width:"+widthOfBlood);
+            if(bloodAnimationY==3){
+                explodedEnd=true;
+                Gdx.app.log("explosion ended: ",explodedEnd+"");
+            }
+            bloodDelayNumber=64;
         }
-        Gdx.app.log("showing explosion:",bloodAnimationX+" "+bloodAnimationY+" "+blood.toString()+
-                " at "+whereToExplodeX+"/"+whereToExplodeY+" width:"+widthOfBlood);
-        if(bloodAnimationY==4){
-            explodedEnd=true;
-            Gdx.app.log("explosion ended: ",explodedEnd+"");
-        }
+        int sourceX=bloodAnimationX*500;
+        int sourceY=bloodAnimationY*500;
+        Gdx.app.log("blood source at:",sourceX+"/"+sourceY);
+        tool.batch.draw(blood,whereToExplodeX,whereToExplodeY,widthOfBlood,widthOfBlood,sourceX,sourceY,500,500,false,false);
+
+
 
     }
 
@@ -172,7 +187,7 @@ public class EnemyOne extends MovableCharacter {
             case UP:
                 int xToCheckUp=(characterX);
                 int yToCheckUp=characterY+1;
-                if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<map.MAP_HEIGHT_IN_BLOCKS && xToCheckUp>=0){
+                if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<(map.MAP_HEIGHT_IN_BLOCKS-2) && yToCheckUp>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -184,7 +199,7 @@ public class EnemyOne extends MovableCharacter {
             case DOWN:
                 int xToCheckDown=characterX;
                 int yToCheckDown=characterY-1;
-                if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && xToCheckDown>=0){
+                if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown>0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -196,7 +211,7 @@ public class EnemyOne extends MovableCharacter {
             case LEFT:
                 int xToCheckLeft=characterX-1;
                 int yToCheckLeft=characterY;
-                if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>=0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && xToCheckLeft>=0){
+                if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -211,7 +226,7 @@ public class EnemyOne extends MovableCharacter {
                 int xToCheckRight=characterX+1;
                 int yToCheckRight=characterY;
 
-                if(xToCheckRight<map.MAP_WIDTH_IN_BLOCKS && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && xToCheckRight>=0){
+                if(xToCheckRight<(map.MAP_WIDTH_IN_BLOCKS-2) && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){

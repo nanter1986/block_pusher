@@ -13,6 +13,7 @@ public class WinScreen implements Screen{
 
     MainClass game;
     DisplayToolkit tool;
+    int screenLineHeight;
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
 
@@ -21,8 +22,10 @@ public class WinScreen implements Screen{
     public WinScreen(MainClass game) {
         this.game = game;
         this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        screenLineHeight=tool.scH/10;
         this.tool.camera.update();
         Gdx.app.log("win screen created for game: ",game.toString());
+        Gdx.app.log("screen line height:",screenLineHeight+"");
     }
 
     @Override
@@ -37,7 +40,10 @@ public class WinScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
-
+        int numOfBombs=Gameplay.prefs.getInteger("numOfBombs");
+        int numOfSteps=Gameplay.prefs.getInteger("numOfsteps");
+        tool.font.draw(tool.batch,"bombs:"+numOfBombs+"",0,1*screenLineHeight);
+        tool.font.draw(tool.batch,"steps:"+numOfSteps+"",0,2*screenLineHeight);
         tool.batch.end();
     }
 
