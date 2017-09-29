@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class PlayerOne extends MovableCharacter {
-    public Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+    public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public  boolean stillAlive;
     public ArrayList<Item>collectedItems=new ArrayList<Item>();
 
@@ -57,17 +57,17 @@ public class PlayerOne extends MovableCharacter {
         if(stillAlive){
             switch (dir){
                 case UP:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,64,64,false,false);
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,500,500,false,false);
                     break;
                 case DOWN:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,192,64,64,false,false);
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1500,500,500,false,false);
                     break;
                 case LEFT:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,128,64,64,false,false);
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1000,500,500,false,false);
 
                     break;
                 case RIGHT:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,64,64,64,false,false);
+                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,500,500,500,false,false);
 
                     break;
 

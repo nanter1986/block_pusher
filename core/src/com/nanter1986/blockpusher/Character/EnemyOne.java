@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class EnemyOne extends MovableCharacter {
 
-    public final Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+    public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
     public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
     public int moveReducer;
     private int bloodAnimationX;
@@ -130,17 +130,17 @@ public class EnemyOne extends MovableCharacter {
     public void updatePosition(SpriteBatch b) {
         switch (dir){
             case UP:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,64,64,false,false);
+                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,500,500,false,false);
                 break;
             case DOWN:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,192,64,64,false,false);
+                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1500,500,500,false,false);
                 break;
             case LEFT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,128,64,64,false,false);
+                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1000,500,500,false,false);
 
                 break;
             case RIGHT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,64,64,64,false,false);
+                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,500,500,500,false,false);
 
                 break;
 
