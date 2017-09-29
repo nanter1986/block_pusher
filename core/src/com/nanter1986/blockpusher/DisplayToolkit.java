@@ -26,7 +26,7 @@ public class DisplayToolkit {
         universalWidthFactor=screenWidth/20;
         batch = new SpriteBatch();
         camera = new OrthographicCamera(screenWidth, screenHeight);
-        camera.position.set(screenWidth / 2, screenHeight / 2, 0);
+        camera.position.set(screenWidth / 2, screenHeight / 2, 100);
 
         font=new BitmapFont();
         font.setColor(0.9f, 0.1f, 0.1f, 1.0f);

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
+import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Character.EnemyOne;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
@@ -32,6 +33,7 @@ class Gameplay implements Screen, InputProcessor {
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
+    OutsideWall theWall;
     ArrayList<EnemyOne> enemiesArraylist = new ArrayList<EnemyOne>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     InfoPatch infoPatch;
@@ -55,11 +57,12 @@ class Gameplay implements Screen, InputProcessor {
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         theMap = new MapOne(tool);
+        theWall= new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
         for (int i = 0; i < 5; i++) {
             enemiesArraylist.add(new EnemyOne(tool, theMap));
             itemsArraylist.add(new Bomb(tool, theMap));
-            winConditionsMet = true;
+            winConditionsMet = false;
         }
         playerone.collectedItems.add(new Bomb(tool, theMap));
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
@@ -130,6 +133,7 @@ class Gameplay implements Screen, InputProcessor {
 
             }
             theMap.updatePosition(tool);
+            theWall.drawSelf(theMap);
             for (Item item : itemsArraylist) {
                 item.updatePosition(tool.batch);
             }

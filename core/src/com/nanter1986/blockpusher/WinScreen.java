@@ -40,8 +40,8 @@ public class WinScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
-        int numOfBombs=Gameplay.prefs.getInteger("numOfBombs");
-        int numOfSteps=Gameplay.prefs.getInteger("numOfsteps");
+        int numOfBombs=tool.prefs.getInteger("numOfBombs");
+        int numOfSteps=tool.prefs.getInteger("numOfsteps");
         tool.font.draw(tool.batch,"bombs:"+numOfBombs+"",0,1*screenLineHeight);
         tool.font.draw(tool.batch,"steps:"+numOfSteps+"",0,2*screenLineHeight);
         tool.batch.end();
