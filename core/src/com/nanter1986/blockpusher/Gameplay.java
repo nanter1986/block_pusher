@@ -29,7 +29,11 @@ class Gameplay implements Screen, InputProcessor {
     boolean winConditionsMet;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
-    public static Preferences prefs = Gdx.app.getPreferences("Pusher");
+    public final int STEPS_MULTIPLIER = 50;
+    int enemiesToGenerate;
+    int bombsToGenerate;
+    int stepsGoingToBonus;
+    //public static Preferences prefs = Gdx.app.getPreferences("Pusher");
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
@@ -42,6 +46,8 @@ class Gameplay implements Screen, InputProcessor {
 
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
     private PlayerOne playerone;
+    private int enemyLocatorIndex;
+    private boolean cameraFollowPlayer;
 
 
     public Gameplay(MainClass game) {
@@ -56,16 +62,24 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
+        enemiesToGenerate = 30;
+        bombsToGenerate = 5;
+        stepsGoingToBonus = enemiesToGenerate * STEPS_MULTIPLIER;
         theMap = new MapOne(tool);
-        theWall= new OutsideWall(tool);
+        theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < enemiesToGenerate; i++) {
             enemiesArraylist.add(new EnemyOne(tool, theMap));
+        }
+        for (int i = 0; i < bombsToGenerate; i++) {
             itemsArraylist.add(new Bomb(tool, theMap));
-            winConditionsMet = false;
         }
         playerone.collectedItems.add(new Bomb(tool, theMap));
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
+        winConditionsMet = false;
+        cameraFollowPlayer=true;
+        //tool.camera.zoom=5f;
+        Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
     }
 
 
@@ -73,10 +87,12 @@ class Gameplay implements Screen, InputProcessor {
     public void render(float delta) {
         if (winConditionsMet) {
             int numOfBombs = playerone.collectedItems.size();
-            prefs.putInteger("numOfBombs", numOfBombs);
+            tool.prefs.putInteger("numOfBombs", numOfBombs);
             Gdx.app.log("bombs left:", numOfBombs + "");
-            prefs.putInteger("numberOfSteps",numOfSteps);
+            tool.prefs.putInteger("numberOfSteps", numOfSteps);
             Gdx.app.log("total steps:", numOfSteps + "");
+            tool.prefs.putInteger("stepsToBonus", stepsGoingToBonus);
+            Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
             WinScreen win = new WinScreen(game);
             Gdx.app.log("setting new screen to game: ", win.toString());
             game.setScreen(win);
@@ -100,7 +116,7 @@ class Gameplay implements Screen, InputProcessor {
             }
             ArrayList<EnemyOne> toRemoveIfCrushed = new ArrayList<EnemyOne>();
             for (EnemyOne e : enemiesArraylist) {
-                boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd ;
+                boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd;
                 Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
                 if (crushedAndAnimatedBlood) {
                     toRemoveIfCrushed.add(e);
@@ -113,8 +129,10 @@ class Gameplay implements Screen, InputProcessor {
                 Gdx.app.log("enemy number", enemiesArraylist.size() + "");
             }
 
+            if(cameraFollowPlayer){
+                tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
 
-            tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+            }
             infoPatch.stealPosition(tool);
             Gdx.app.log("info patch position:", infoPatch.positionX + "/" + infoPatch.positionY);
             tool.camera.update();
@@ -138,9 +156,9 @@ class Gameplay implements Screen, InputProcessor {
                 item.updatePosition(tool.batch);
             }
             for (EnemyOne e : enemiesArraylist) {
-                boolean enemyAlive=e.explodedStarted==false;
-                if(enemyAlive){
-                    e.moveEnemy(theMap);
+                boolean enemyAlive = e.explodedStarted == false;
+                if (enemyAlive) {
+                    e.moveEnemy(theMap, enemiesArraylist);
                 }
 
             }
@@ -162,7 +180,7 @@ class Gameplay implements Screen, InputProcessor {
                 }
 
             }
-            infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems);
+            infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
             tool.batch.end();
 
         }
@@ -263,6 +281,19 @@ class Gameplay implements Screen, InputProcessor {
                     Gdx.app.log("game paused", "true");
                 } else if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size() > 0) {
                     useBombOnBlock();
+                } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
+                    cameraFollowPlayer=false;
+                    if (enemyLocatorIndex > enemiesArraylist.size()) {
+                        enemyLocatorIndex = 0;
+                    }
+                    tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).characterX * tool.universalWidthFactor,
+                            enemiesArraylist.get(enemyLocatorIndex).characterY * tool.universalWidthFactor,
+                            0);
+                    enemyLocatorIndex++;
+
+
+                }else if (Gdx.input.isKeyPressed(Input.Keys.G)) {
+                    cameraFollowPlayer=true;
                 }
 
                 playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
@@ -275,7 +306,9 @@ class Gameplay implements Screen, InputProcessor {
 
     private void addOneStep() {
         numOfSteps++;
+        stepsGoingToBonus--;
         Gdx.app.log("total number of steps:", numOfSteps + "");
+        Gdx.app.log("number of steps to bonus:", stepsGoingToBonus + "");
     }
 
     private void checkIfBlockRemovableAndRemove(int xToCheck, int yToCheck) {

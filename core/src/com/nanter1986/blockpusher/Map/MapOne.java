@@ -31,14 +31,8 @@ public class MapOne {
                     mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.AIR);
                 }else if(anInteger<60){
                     mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.WATER);
-                }else if(anInteger<70){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.STONE);
-                }else if(anInteger<80){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.WOOD);
-                }else if(anInteger<90){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.ROCK);
                 }else if(anInteger<100){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.FOOD);
+                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.STONE);
                 }
             }
         }

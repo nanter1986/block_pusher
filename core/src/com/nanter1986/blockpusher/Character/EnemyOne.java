@@ -7,6 +7,7 @@ import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -49,12 +50,12 @@ public class EnemyOne extends MovableCharacter {
         "\nat y:"+this.characterY);
     }
 
-    public void moveEnemy(MapOne map){
+    public void moveEnemy(MapOne map,ArrayList<EnemyOne>enemies){
         if(moveReducer>0){
             moveReducer--;
             Gdx.app.log("reduce enemy moveReducer",moveReducer+"");
         }else{
-            if(checkIfBlockAtTheFront(map)){
+            if(checkIfBlockAtTheFront(map,enemies)){
                 switch (dir){
                     case UP:
                         if(characterY<map.MAP_HEIGHT_IN_BLOCKS-1){
@@ -181,7 +182,7 @@ public class EnemyOne extends MovableCharacter {
 
     }
 
-    public boolean checkIfBlockAtTheFront(MapOne map){
+    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<EnemyOne>enemies){
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
@@ -192,7 +193,15 @@ public class EnemyOne extends MovableCharacter {
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
+                    }else{
+                        for(EnemyOne e:enemies){
+                            if(e.characterX==this.characterX && e.characterY==this.characterY+1){
+                                isFreeToPass=false;
+                                Gdx.app.log("enemy in front,","direction UP");
+                            }
+                        }
                     }
+
                 }
 
                 break;
@@ -204,6 +213,13 @@ public class EnemyOne extends MovableCharacter {
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
+                    }else{
+                        for(EnemyOne e:enemies){
+                            if(e.characterX==this.characterX && e.characterY==this.characterY-1){
+                                isFreeToPass=false;
+                                Gdx.app.log("enemy in front,","direction DOWN");
+                            }
+                        }
                     }
                 }
 
@@ -216,6 +232,13 @@ public class EnemyOne extends MovableCharacter {
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
+                    }else{
+                        for(EnemyOne e:enemies){
+                            if(e.characterX==this.characterX-1 && e.characterY==this.characterY){
+                                isFreeToPass=false;
+                                Gdx.app.log("enemy in front,","direction LEFT");
+                            }
+                        }
                     }
                 }
 
@@ -231,6 +254,13 @@ public class EnemyOne extends MovableCharacter {
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
+                    }else{
+                        for(EnemyOne e:enemies){
+                            if(e.characterX==this.characterX+1 && e.characterY==this.characterY){
+                                isFreeToPass=false;
+                                Gdx.app.log("enemy in front,","direction RIGHT");
+                            }
+                        }
                     }
                 }
 

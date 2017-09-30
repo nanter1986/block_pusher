@@ -23,7 +23,7 @@ public class OutsideWall {
             for(int yLeft=-3;yLeft<53;yLeft++){
                 int xLeftWithWidth=xLeft*tool.universalWidthFactor;
                 int yLeftWithWidth=yLeft*tool.universalWidthFactor;
-                Gdx.app.log("xLeft/yLeft:",xLeftWithWidth+"/"+yLeftWithWidth);
+                //Gdx.app.log("xLeft/yLeft:",xLeftWithWidth+"/"+yLeftWithWidth);
                 tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
@@ -34,7 +34,7 @@ public class OutsideWall {
             for(int yRight=-3;yRight<53;yRight++){
                 int xRightWithWidth=xRight*tool.universalWidthFactor;
                 int yRightWithWidth=yRight*tool.universalWidthFactor;
-                Gdx.app.log("xRight/yRight:",xRightWithWidth+"/"+yRightWithWidth);
+                //Gdx.app.log("xRight/yRight:",xRightWithWidth+"/"+yRightWithWidth);
                 tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
@@ -45,7 +45,7 @@ public class OutsideWall {
             for(int yTop=50;yTop<=52;yTop++){
                 int xTopWithWidth=xTop*tool.universalWidthFactor;
                 int yTopWithWidth=yTop*tool.universalWidthFactor;
-                Gdx.app.log("xTop/yTop:",xTopWithWidth+"/"+yTopWithWidth);
+                //Gdx.app.log("xTop/yTop:",xTopWithWidth+"/"+yTopWithWidth);
                 tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
@@ -56,7 +56,7 @@ public class OutsideWall {
             for(int yBottom=-1;yBottom>=-3;yBottom--){
                 int xBottomWithWidth=xBottom*tool.universalWidthFactor;
                 int yBottomWithWidth=yBottom*tool.universalWidthFactor;
-                Gdx.app.log("xTop/yTop:",xBottomWithWidth+"/"+yBottomWithWidth);
+                //Gdx.app.log("xTop/yTop:",xBottomWithWidth+"/"+yBottomWithWidth);
                 tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
                 tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);

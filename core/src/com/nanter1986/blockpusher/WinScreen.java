@@ -42,8 +42,10 @@ public class WinScreen implements Screen{
         tool.batch.begin();
         int numOfBombs=tool.prefs.getInteger("numOfBombs");
         int numOfSteps=tool.prefs.getInteger("numOfsteps");
+        int stepsToBonus=tool.prefs.getInteger("stepsToBonus");
         tool.font.draw(tool.batch,"bombs:"+numOfBombs+"",0,1*screenLineHeight);
         tool.font.draw(tool.batch,"steps:"+numOfSteps+"",0,2*screenLineHeight);
+        tool.font.draw(tool.batch,"steps to bonus:"+stepsToBonus+"",0,3*screenLineHeight);
         tool.batch.end();
     }
 

@@ -3,6 +3,7 @@ package com.nanter1986.blockpusher.MenuFragments;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Character.EnemyOne;
+import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.PowerUps.Item;
 
@@ -17,12 +18,16 @@ public class InfoPatch {
     public final Texture bomb = new Texture(Gdx.files.internal("bomb.png"));
     public int height;
     public int width;
+    public int cellHeight;
+    public int cellWidth;
     public float positionX;
     public float positionY;
 
     public InfoPatch(DisplayToolkit tool) {
         this.height=tool.scH/8;
         this.width=tool.scW;
+        this.cellHeight=height/5;
+        this.cellWidth=width/2;
 
     }
 
@@ -31,15 +36,15 @@ public class InfoPatch {
         this.positionY=tool.camera.position.y-tool.scH/2;
     }
 
-    public void drawSelf(DisplayToolkit tool, ArrayList<EnemyOne>enemies, ArrayList<Item>items){
+    public void drawSelf(DisplayToolkit tool, ArrayList<EnemyOne>enemies, ArrayList<Item>items, PlayerOne player){
         tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
-        tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+height/3);
-
+        tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
+        tool.font.draw(tool.batch,"x:"+player.characterX+"/y:"+player.characterY,positionX+cellWidth,positionY+3*cellHeight);
         int iterator=0;
         for(Item b:items){
-            float displayWidthInPatch=height/3;
+            float displayWidthInPatch=height/5;
             float theX=positionX+iterator*displayWidthInPatch;
-            float theY=positionY+(2*height)/3;
+            float theY=positionY+3*cellHeight;
             tool.batch.draw(bomb,theX,theY,displayWidthInPatch,displayWidthInPatch);
             Gdx.app.log("bomb drawn:",theX+"/"+theY+"/"+displayWidthInPatch);
             iterator++;
