@@ -34,6 +34,7 @@ public class InfoPatch {
     public void stealPosition(DisplayToolkit tool){
         this.positionX=tool.camera.position.x-tool.scW/2;
         this.positionY=tool.camera.position.y-tool.scH/2;
+        Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
     }
 
     public void drawSelf(DisplayToolkit tool, ArrayList<EnemyOne>enemies, ArrayList<Item>items, PlayerOne player){

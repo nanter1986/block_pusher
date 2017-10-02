@@ -17,15 +17,12 @@ import java.util.Random;
 public class EnemyOne extends MovableCharacter {
 
     public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
-    public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
+
     public int moveReducer;
-    private int bloodAnimationX;
-    private int bloodAnimationY;
-    public boolean explodedStarted;
-    public boolean explodedEnd;
-    public int bloodDelayNumber;
+
 
     public EnemyOne(DisplayToolkit tool, MapOne map) {
+        this.texture=playerOne;
         boolean freeBlockFound=false;
         while (freeBlockFound==false){
             int theX=new Random().nextInt(50);
@@ -138,7 +135,6 @@ public class EnemyOne extends MovableCharacter {
                 break;
             case LEFT:
                 b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1000,500,500,false,false);
-
                 break;
             case RIGHT:
                 b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,500,500,500,false,false);

@@ -86,16 +86,8 @@ class Gameplay implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         if (winConditionsMet) {
-            int numOfBombs = playerone.collectedItems.size();
-            tool.prefs.putInteger("numOfBombs", numOfBombs);
-            Gdx.app.log("bombs left:", numOfBombs + "");
-            tool.prefs.putInteger("numberOfSteps", numOfSteps);
-            Gdx.app.log("total steps:", numOfSteps + "");
-            tool.prefs.putInteger("stepsToBonus", stepsGoingToBonus);
-            Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
-            WinScreen win = new WinScreen(game);
-            Gdx.app.log("setting new screen to game: ", win.toString());
-            game.setScreen(win);
+            doAfterWinConditionsHaveMet();
+
         } else if (gamePaused && pauseReducer == 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             gamePaused = false;
             Gdx.app.log("game paused", "false");
@@ -107,82 +99,110 @@ class Gameplay implements Screen, InputProcessor {
             checkIfWinConditionsAreMet();
             playerone.checkIfAlive(enemiesArraylist);
             playerone.collectItems(itemsArraylist);
-            if (playerone.moveReducer > 0) {
-                playerone.moveReducer -= 1;
-            } else {
-                playerone.moveReducer = 8;
-                Gdx.app.log("new frame created fps :", (1 / delta) + "");
-                updatePosition();
-            }
-            ArrayList<EnemyOne> toRemoveIfCrushed = new ArrayList<EnemyOne>();
-            for (EnemyOne e : enemiesArraylist) {
-                boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd;
-                Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
-                if (crushedAndAnimatedBlood) {
-                    toRemoveIfCrushed.add(e);
-                }
-            }
-            for (EnemyOne e : toRemoveIfCrushed) {
-                Gdx.app.log("enemy number", enemiesArraylist.size() + "");
-                Gdx.app.log("removing enemy", e.toString());
-                enemiesArraylist.remove(e);
-                Gdx.app.log("enemy number", enemiesArraylist.size() + "");
-            }
-
-            if(cameraFollowPlayer){
-                tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
-
-            }
+            getPlayerInputIfMoveReducerIsZero(delta);
+            removeEnemies();
+            cameraOnPlayer();
             infoPatch.stealPosition(tool);
-            Gdx.app.log("info patch position:", infoPatch.positionX + "/" + infoPatch.positionY);
-            tool.camera.update();
+            drawEverythingHere();
 
-            Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
-                    BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            tool.batch.setProjectionMatrix(tool.camera.combined);
-            tool.batch.begin();
-            for (EnemyOne e : enemiesArraylist) {
-                boolean exploding = e.explodedStarted && e.explodedEnd == false;
-                Gdx.app.log("enemy exploding", e.characterX + "/" + e.characterY + "/" + exploding);
-                if (exploding) {
-                    e.bloodAnimation(tool);
-                }
 
+
+        }
+    }
+
+    private void doAfterWinConditionsHaveMet() {
+        int numOfBombs = playerone.collectedItems.size();
+        tool.prefs.putInteger("numOfBombs", numOfBombs);
+        Gdx.app.log("bombs left:", numOfBombs + "");
+        tool.prefs.putInteger("numberOfSteps", numOfSteps);
+        Gdx.app.log("total steps:", numOfSteps + "");
+        tool.prefs.putInteger("stepsToBonus", stepsGoingToBonus);
+        Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
+        WinScreen win = new WinScreen(game);
+        Gdx.app.log("setting new screen to game: ", win.toString());
+        game.setScreen(win);
+    }
+
+    private void drawEverythingHere() {
+        Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
+                BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        tool.batch.setProjectionMatrix(tool.camera.combined);
+        tool.batch.begin();
+        for (EnemyOne e : enemiesArraylist) {
+            boolean exploding = e.explodedStarted && e.explodedEnd == false;
+            Gdx.app.log("enemy exploding", e.characterX + "/" + e.characterY + "/" + exploding);
+            if (exploding) {
+                e.bloodAnimation(tool);
             }
-            theMap.updatePosition(tool);
-            theWall.drawSelf(theMap);
-            for (Item item : itemsArraylist) {
-                item.updatePosition(tool.batch);
-            }
-            for (EnemyOne e : enemiesArraylist) {
-                boolean enemyAlive = e.explodedStarted == false;
-                if (enemyAlive) {
-                    e.moveEnemy(theMap, enemiesArraylist);
-                }
 
+        }
+        theMap.updatePosition(tool);
+        theWall.drawSelf(theMap);
+        for (Item item : itemsArraylist) {
+            item.updatePosition(tool.batch);
+        }
+        for (EnemyOne e : enemiesArraylist) {
+            boolean enemyAlive = e.explodedStarted == false;
+            if (enemyAlive) {
+                e.moveEnemy(theMap, enemiesArraylist);
             }
-            playerone.updatePosition(tool.batch);
 
-            Gdx.app.log("render----------------------------------------------------------------------\n",
-                    "camera position:" + tool.camera.position.toString() +
-                            "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
-                            "\nplayer direction:" + playerone.dir);
-            for (Item item : playerone.collectedItems) {
-                Gdx.app.log("item in inventory", item.getClass().toString());
+        }
+        playerone.updatePosition(tool.batch);
+
+        Gdx.app.log("render----------------------------------------------------------------------\n",
+                "camera position:" + tool.camera.position.toString() +
+                        "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
+                        "\nplayer direction:" + playerone.dir);
+        for (Item item : playerone.collectedItems) {
+            Gdx.app.log("item in inventory", item.getClass().toString());
+        }
+        for (EnemyOne e : enemiesArraylist) {
+            if (e.explodedStarted == false) {
+                e.updatePosition(tool.batch);
+                Gdx.app.log("enemy position:", e.characterX + " " + e.characterY + " " +
+                        e.dir.toString() + " move reducer:" + e.moveReducer +
+                        "\n----------------------------------------------------------------------------------");
             }
-            for (EnemyOne e : enemiesArraylist) {
-                if (e.explodedStarted == false) {
-                    e.updatePosition(tool.batch);
-                    Gdx.app.log("enemy position:", e.characterX + " " + e.characterY + " " +
-                            e.dir.toString() + " move reducer:" + e.moveReducer +
-                            "\n----------------------------------------------------------------------------------");
-                }
 
+        }
+        infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
+        tool.batch.end();
+    }
+
+    private void cameraOnPlayer() {
+        if(cameraFollowPlayer){
+            tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+
+        }
+        tool.camera.update();
+    }
+
+    private void removeEnemies() {
+        ArrayList<EnemyOne> toRemoveIfCrushed = new ArrayList<EnemyOne>();
+        for (EnemyOne e : enemiesArraylist) {
+            boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd;
+            Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
+            if (crushedAndAnimatedBlood) {
+                toRemoveIfCrushed.add(e);
             }
-            infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
-            tool.batch.end();
+        }
+        for (EnemyOne e : toRemoveIfCrushed) {
+            Gdx.app.log("enemy number", enemiesArraylist.size() + "");
+            Gdx.app.log("removing enemy", e.toString());
+            enemiesArraylist.remove(e);
+            Gdx.app.log("enemy number", enemiesArraylist.size() + "");
+        }
+    }
 
+    private void getPlayerInputIfMoveReducerIsZero(float delta) {
+        if (playerone.moveReducer > 0) {
+            playerone.moveReducer -= 1;
+        } else {
+            playerone.moveReducer = 8;
+            Gdx.app.log("new frame created fps :", (1 / delta) + "");
+            updatePosition();
         }
     }
 

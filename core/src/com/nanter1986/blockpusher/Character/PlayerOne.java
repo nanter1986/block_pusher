@@ -21,6 +21,7 @@ public class PlayerOne extends MovableCharacter {
     public ArrayList<Item>collectedItems=new ArrayList<Item>();
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
+        this.texture=playerOne;
         this.characterX=map.MAP_WIDTH_IN_BLOCKS/2;
         this.characterY=map.MAP_HEIGHT_IN_BLOCKS/2;
         this.characterW=tool.universalWidthFactor;
