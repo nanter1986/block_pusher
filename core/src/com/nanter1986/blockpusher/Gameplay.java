@@ -4,11 +4,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Character.EnemyOne;
@@ -26,10 +24,11 @@ import java.util.ArrayList;
  */
 
 class Gameplay implements Screen, InputProcessor {
-    boolean winConditionsMet;
+    private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
+    public final int STEPS_MULTIPLIER = 50;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
-    public final int STEPS_MULTIPLIER = 50;
+    boolean winConditionsMet;
     int enemiesToGenerate;
     int bombsToGenerate;
     int stepsGoingToBonus;
@@ -38,13 +37,10 @@ class Gameplay implements Screen, InputProcessor {
     DisplayToolkit tool;
     MapOne theMap;
     OutsideWall theWall;
-    ArrayList<EnemyOne> enemiesArraylist = new ArrayList<EnemyOne>();
+    ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
-
-
-    private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
     private PlayerOne playerone;
     private int enemyLocatorIndex;
     private boolean cameraFollowPlayer;
@@ -129,7 +125,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
-        for (EnemyOne e : enemiesArraylist) {
+        for (MovableCharacter e : enemiesArraylist) {
             boolean exploding = e.explodedStarted && e.explodedEnd == false;
             Gdx.app.log("enemy exploding", e.characterX + "/" + e.characterY + "/" + exploding);
             if (exploding) {
@@ -142,10 +138,10 @@ class Gameplay implements Screen, InputProcessor {
         for (Item item : itemsArraylist) {
             item.updatePosition(tool.batch);
         }
-        for (EnemyOne e : enemiesArraylist) {
+        for (MovableCharacter e : enemiesArraylist) {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
-                e.moveEnemy(theMap, enemiesArraylist);
+                e.moveCharacter(theMap, enemiesArraylist);
             }
 
         }
@@ -158,9 +154,9 @@ class Gameplay implements Screen, InputProcessor {
         for (Item item : playerone.collectedItems) {
             Gdx.app.log("item in inventory", item.getClass().toString());
         }
-        for (EnemyOne e : enemiesArraylist) {
+        for (MovableCharacter e : enemiesArraylist) {
             if (e.explodedStarted == false) {
-                e.updatePosition(tool.batch);
+                e.updatePosition(tool.batch, theMap, enemiesArraylist);
                 Gdx.app.log("enemy position:", e.characterX + " " + e.characterY + " " +
                         e.dir.toString() + " move reducer:" + e.moveReducer +
                         "\n----------------------------------------------------------------------------------");
@@ -180,15 +176,16 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private void removeEnemies() {
-        ArrayList<EnemyOne> toRemoveIfCrushed = new ArrayList<EnemyOne>();
-        for (EnemyOne e : enemiesArraylist) {
-            boolean crushedAndAnimatedBlood = e.checkIfcrushed(theMap) && e.explodedEnd;
+        ArrayList<MovableCharacter> toRemoveIfCrushed = new ArrayList<MovableCharacter>();
+        for (MovableCharacter e : enemiesArraylist) {
+            e.checkIfcrushed(theMap);
+            boolean crushedAndAnimatedBlood = e.crushed && e.explodedEnd;
             Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
             if (crushedAndAnimatedBlood) {
                 toRemoveIfCrushed.add(e);
             }
         }
-        for (EnemyOne e : toRemoveIfCrushed) {
+        for (MovableCharacter e : toRemoveIfCrushed) {
             Gdx.app.log("enemy number", enemiesArraylist.size() + "");
             Gdx.app.log("removing enemy", e.toString());
             enemiesArraylist.remove(e);

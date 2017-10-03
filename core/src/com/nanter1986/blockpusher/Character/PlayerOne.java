@@ -3,7 +3,6 @@ package com.nanter1986.blockpusher.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
@@ -44,8 +43,8 @@ public class PlayerOne extends MovableCharacter {
         }
     }
 
-    public void checkIfAlive(ArrayList<EnemyOne>eArray){
-        for(EnemyOne e:eArray){
+    public void checkIfAlive(ArrayList<MovableCharacter> eArray) {
+        for (MovableCharacter e : eArray) {
             if(e.explodedStarted==false && stillAlive && this.characterX==e.characterX && this.characterY==e.characterY){
                 stillAlive=false;
                 Gdx.app.log("player status:","DEAD");
@@ -54,7 +53,7 @@ public class PlayerOne extends MovableCharacter {
     }
 
     @Override
-    public void updatePosition(SpriteBatch b) {
+    public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         if(stillAlive){
             switch (dir){
                 case UP:
@@ -79,6 +78,16 @@ public class PlayerOne extends MovableCharacter {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
+
+    }
+
+    @Override
+    public void moveCharacter(MapOne map, ArrayList<MovableCharacter> enemies) {
+
+    }
+
+    @Override
+    public void checkIfcrushed(MapOne map) {
 
     }
 

@@ -31,23 +31,16 @@ public class EnemyOne extends MovableCharacter {
                 freeBlockFound=true;
                 this.characterX=theX;
                 this.characterY=theY;
-                moveReducer=0;
-                bloodAnimationX=0;
-                bloodAnimationY=0;
-                bloodDelayNumber=0;
-                explodedEnd=false;
-                explodedStarted=false;
             }
 
         }
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
-        this.dir=Direction.UP;
         Gdx.app.log("enemy creation\n","Enemy created at x:"+this.characterX+
         "\nat y:"+this.characterY);
     }
 
-    public void moveEnemy(MapOne map,ArrayList<EnemyOne>enemies){
+    public void moveCharacter(MapOne map, ArrayList<MovableCharacter> enemies) {
         if(moveReducer>0){
             moveReducer--;
             Gdx.app.log("reduce enemy moveReducer",moveReducer+"");
@@ -93,8 +86,7 @@ public class EnemyOne extends MovableCharacter {
 
     }
 
-    public boolean checkIfcrushed(MapOne map){
-        boolean crushed=false;
+    public void checkIfcrushed(MapOne map) {
         if(map.mapArray[characterX][characterY].type!=BlockGeneral.Blocktypes.AIR){
             crushed=true;
             explodedStarted=true;
@@ -103,7 +95,7 @@ public class EnemyOne extends MovableCharacter {
             Gdx.app.log("enemy crushed:",crushed+" still alive");
         }
 
-        return crushed;
+
     }
 
     private void getRandomDirection() {
@@ -125,7 +117,7 @@ public class EnemyOne extends MovableCharacter {
     }
 
     @Override
-    public void updatePosition(SpriteBatch b) {
+    public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         switch (dir){
             case UP:
                 b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,500,500,false,false);
@@ -178,7 +170,7 @@ public class EnemyOne extends MovableCharacter {
 
     }
 
-    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<EnemyOne>enemies){
+    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<MovableCharacter> enemies) {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
@@ -190,7 +182,7 @@ public class EnemyOne extends MovableCharacter {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==this.characterX && e.characterY==this.characterY+1){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction UP");
@@ -210,7 +202,7 @@ public class EnemyOne extends MovableCharacter {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==this.characterX && e.characterY==this.characterY-1){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction DOWN");
@@ -229,7 +221,7 @@ public class EnemyOne extends MovableCharacter {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==this.characterX-1 && e.characterY==this.characterY){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction LEFT");
@@ -251,7 +243,7 @@ public class EnemyOne extends MovableCharacter {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==this.characterX+1 && e.characterY==this.characterY){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction RIGHT");

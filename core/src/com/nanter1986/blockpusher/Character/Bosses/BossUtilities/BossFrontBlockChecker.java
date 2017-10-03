@@ -2,7 +2,6 @@ package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
 import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
-import com.nanter1986.blockpusher.Character.EnemyOne;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Map.MapOne;
 
@@ -20,7 +19,7 @@ public class BossFrontBlockChecker {
         this.character = character;
     }
 
-    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<EnemyOne> enemies){
+    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<MovableCharacter> enemies) {
         boolean isFreeToPass=true;
         switch (character.dir){
             case UP:
@@ -32,7 +31,7 @@ public class BossFrontBlockChecker {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==character.characterX && e.characterY==character.characterY+1){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction UP");
@@ -52,7 +51,7 @@ public class BossFrontBlockChecker {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==character.characterX && e.characterY==character.characterY-1){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction DOWN");
@@ -71,7 +70,7 @@ public class BossFrontBlockChecker {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==character.characterX-1 && e.characterY==character.characterY){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction LEFT");
@@ -93,7 +92,7 @@ public class BossFrontBlockChecker {
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }else{
-                        for(EnemyOne e:enemies){
+                        for (MovableCharacter e : enemies) {
                             if(e.characterX==character.characterX+1 && e.characterY==character.characterY){
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction RIGHT");

@@ -1,7 +1,6 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
 import com.badlogic.gdx.Gdx;
-import com.nanter1986.blockpusher.Character.EnemyOne;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Map.MapOne;
 
@@ -19,7 +18,7 @@ public class BossMover {
         this.character = character;
     }
 
-    public void moveBoss(MapOne map, ArrayList<EnemyOne>enemies){
+    public void moveBoss(MapOne map, ArrayList<MovableCharacter> enemies) {
         if(character.moveReducer>0){
             character.moveReducer--;
             Gdx.app.log("reduce enemy moveReducer",character.moveReducer+"");

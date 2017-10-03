@@ -2,7 +2,6 @@ package com.nanter1986.blockpusher.Blocks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 /**
@@ -13,21 +12,20 @@ public class BlockGeneral {
     private static final Texture airT=new Texture("air.png");
     private static final Texture woodT=new Texture("wood.png");
     private static final Texture waterT=new Texture("water.png");
+    private static final Texture iceT = new Texture("food.png");
     private static final Texture foodT=new Texture("food.png");
     private static final Texture stoneT=new Texture("stone.png");
     private static final Texture rockT=new Texture("rock.png");
-    private static final Texture playerOne = new Texture(Gdx.files.internal("playerone.png"));
+
 
     private static final Texture explosion=new Texture(Gdx.files.internal("explosion.png"));
-    int explosionAnimationX;
-    int explosionAnimationY;
     public boolean explodedStart;
     public boolean explodedEnd;
-
-
     public int blockX;
     public int blockY;
     public Blocktypes type;
+    int explosionAnimationX;
+    int explosionAnimationY;
 
     public BlockGeneral(int blockX, int blockY, Blocktypes type) {
         explosionAnimationX=0;
@@ -63,6 +61,7 @@ public class BlockGeneral {
         STONE(stoneT,false),
         ROCK(rockT,false),
         WATER(waterT,false),
+        ICE(iceT, false),
         FOOD(foodT,false);
 
         private Texture tile;

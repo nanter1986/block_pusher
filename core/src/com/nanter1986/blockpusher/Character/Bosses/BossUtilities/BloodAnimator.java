@@ -17,7 +17,7 @@ public class BloodAnimator {
     }
 
     public void bloodAnimation(DisplayToolkit tool) {
-        int widthOfBlood=6*tool.universalWidthFactor;
+        int widthOfBlood = character.level * 6 * tool.universalWidthFactor;
         int whereToExplodeX=character.characterX*tool.universalWidthFactor-widthOfBlood/2;
         int whereToExplodeY=character.characterY*tool.universalWidthFactor-widthOfBlood/2;
 

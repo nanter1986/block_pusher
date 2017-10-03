@@ -1,8 +1,6 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
-import com.nanter1986.blockpusher.Character.MovableCharacter;
 
 import java.util.ArrayList;
 
@@ -11,14 +9,18 @@ import java.util.ArrayList;
  */
 
 public interface GeneralBoss {
-    public abstract int levelOfBoss();
-    public abstract String nameOfBoss();
-    public abstract ArrayList<BossSkill> skillSet();
+    String nameOfBoss();
 
-    public abstract String firstDialog();
-    public abstract String PainDialog();
-    public abstract String BragDialog();
-    public abstract String WhenBossWinsDialog();
-    public abstract String WhenPlayerWinsDialog();
+    ArrayList<BossSkill> skillSet();
+
+    String firstDialog();
+
+    String PainDialog();
+
+    String BragDialog();
+
+    String WhenBossWinsDialog();
+
+    String WhenPlayerWinsDialog();
 
 }

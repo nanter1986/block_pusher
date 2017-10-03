@@ -2,7 +2,7 @@ package com.nanter1986.blockpusher.MenuFragments;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.nanter1986.blockpusher.Character.EnemyOne;
+import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.PowerUps.Item;
@@ -37,7 +37,7 @@ public class InfoPatch {
         Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
     }
 
-    public void drawSelf(DisplayToolkit tool, ArrayList<EnemyOne>enemies, ArrayList<Item>items, PlayerOne player){
+    public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player) {
         tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
         tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
         tool.font.draw(tool.batch,"x:"+player.characterX+"/y:"+player.characterY,positionX+cellWidth,positionY+3*cellHeight);
