@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossSkills;
 
+import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossIsMovableCharacterInFront;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossWhatIsTheFrontBlock;
@@ -17,20 +18,28 @@ public class BlockSmash implements BossSkill{
     @Override
     public void executeSkill(int level, MovableCharacter character, MapOne map, ArrayList<MovableCharacter> enemies) {
         BlockGeneral block = new BossWhatIsTheFrontBlock().whatIsTheFrontBlock(level, character, map);
-        for (int i = 0; i < level; i++) {
-            if (block.type == BlockGeneral.Blocktypes.STONE) {
-                block.type = BlockGeneral.Blocktypes.AIR;
-            } else if (block.type == BlockGeneral.Blocktypes.WATER) {
-                block.type = BlockGeneral.Blocktypes.ICE;
-            } else if (block.type == BlockGeneral.Blocktypes.AIR) {
-                MovableCharacter c = new BossIsMovableCharacterInFront(character).isMovableCharacterInFront(i, enemies, map);
-                if (c == null) {
+        if (block == null) {
 
-                } else {
-                    c.crushed = true;
-                    c.explodedStarted = true;
+        } else {
+            for (int i = 0; i < level; i++) {
+                if (block.type == BlockGeneral.Blocktypes.STONE) {
+                    block.type = BlockGeneral.Blocktypes.AIR;
+                    Gdx.app.log("skill execution: ", "stone to air");
+                } else if (block.type == BlockGeneral.Blocktypes.WATER) {
+                    block.type = BlockGeneral.Blocktypes.ICE;
+                    Gdx.app.log("skill execution: ", "water to ice");
+                } else if (block.type == BlockGeneral.Blocktypes.AIR) {
+                    MovableCharacter c = new BossIsMovableCharacterInFront(character).isMovableCharacterInFront(i, enemies, map);
+                    if (c == null) {
+
+                    } else {
+                        c.crushed = true;
+                        c.explodedStarted = true;
+                    }
+                    Gdx.app.log("skill execution: ", "kill movable");
                 }
             }
         }
+
     }
 }

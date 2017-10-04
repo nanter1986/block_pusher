@@ -3,6 +3,7 @@ package com.nanter1986.blockpusher.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
 
@@ -29,6 +30,8 @@ public abstract class MovableCharacter {
     public boolean explodedEnd = false;
     public boolean crushed = false;
     public int bloodDelayNumber = 0;
+
+    public ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
 
 
     public abstract void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters);

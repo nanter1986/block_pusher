@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
-import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BlockSmash;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossCrushChecker;
@@ -17,14 +16,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by user on 2/10/2017.
+ * Created by user on 3/10/2017.
  */
 
-public class Nitar extends MovableCharacter implements GeneralBoss {
+public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
     public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
-    public Nitar(DisplayToolkit tool, MapOne map) {
+    public MinionSimple(DisplayToolkit tool, MapOne map) {
         this.texture = playerOne;
         boolean freeBlockFound = false;
         while (freeBlockFound == false) {
@@ -39,49 +38,45 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         }
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
-        this.level = 2;
-        this.skills = skillSet();
+        this.level = 1;
         Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
                 "\nat y:" + this.characterY);
     }
 
     @Override
     public String nameOfBoss() {
-        return "Nitar";
+        return "Minion";
     }
 
     @Override
     public ArrayList<BossSkill> skillSet() {
-        ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
-        skills.add(new BlockSmash());
-        return skills;
+        return null;
     }
 
     @Override
     public String firstDialog() {
-        return "Hello";
+        return null;
     }
 
     @Override
     public String PainDialog() {
-        return "Ouch";
+        return null;
     }
 
     @Override
     public String BragDialog() {
-        return "HAHAHA";
+        return null;
     }
 
     @Override
     public String WhenBossWinsDialog() {
-        return "You are worthless";
+        return null;
     }
 
     @Override
     public String WhenPlayerWinsDialog() {
-        return "It can't beeee...";
+        return null;
     }
-
 
     @Override
     public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {

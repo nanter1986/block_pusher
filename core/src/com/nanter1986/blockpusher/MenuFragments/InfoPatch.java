@@ -24,7 +24,7 @@ public class InfoPatch {
     public float positionY;
 
     public InfoPatch(DisplayToolkit tool) {
-        this.height=tool.scH/8;
+        this.height = tool.scH / 6;
         this.width=tool.scW;
         this.cellHeight=height/5;
         this.cellWidth=width/2;

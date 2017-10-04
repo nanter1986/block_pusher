@@ -17,7 +17,7 @@ public class RandomBossDirectioner {
         this.character = character;
     }
 
-    private void getRandomDirection() {
+    public void getRandomDirection() {
         switch (new Random().nextInt(4)){
             case 0:
                 character.dir= MovableCharacter.Direction.LEFT;

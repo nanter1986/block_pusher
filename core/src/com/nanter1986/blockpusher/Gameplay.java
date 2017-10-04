@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Blocks.OutsideWall;
-import com.nanter1986.blockpusher.Character.EnemyOne;
+import com.nanter1986.blockpusher.Buttons.TouchableButton;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.Map.MapOne;
@@ -39,11 +40,13 @@ class Gameplay implements Screen, InputProcessor {
     OutsideWall theWall;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
+    ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
     private PlayerOne playerone;
     private int enemyLocatorIndex;
     private boolean cameraFollowPlayer;
+    private boolean android;
 
 
     public Gameplay(MainClass game) {
@@ -60,15 +63,21 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = 30;
         bombsToGenerate = 5;
+        android = Gdx.app.getType() == Application.ApplicationType.Android;
         stepsGoingToBonus = enemiesToGenerate * STEPS_MULTIPLIER;
         theMap = new MapOne(tool);
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
         for (int i = 0; i < enemiesToGenerate; i++) {
-            enemiesArraylist.add(new EnemyOne(tool, theMap));
+            enemiesArraylist.add(new Nitar(tool, theMap));
         }
         for (int i = 0; i < bombsToGenerate; i++) {
             itemsArraylist.add(new Bomb(tool, theMap));
+        }
+        Gdx.app.log("is android", "boolean test " + android);
+        if (android) {
+            Gdx.app.log("is android", "yes, creating d pad");
+            dirpad = TouchableButton.dirPad(tool);
         }
         playerone.collectedItems.add(new Bomb(tool, theMap));
         theMap.mapArray[playerone.characterX][playerone.characterY].type = BlockGeneral.Blocktypes.AIR;
@@ -145,10 +154,11 @@ class Gameplay implements Screen, InputProcessor {
             }
 
         }
-        playerone.updatePosition(tool.batch);
+        playerone.updatePosition(tool.batch, theMap, enemiesArraylist);
 
         Gdx.app.log("render----------------------------------------------------------------------\n",
-                "camera position:" + tool.camera.position.toString() +
+                "is android:" + android +
+                        "\ncamera position:" + tool.camera.position.toString() +
                         "\nplayer position x:" + playerone.characterX + " y:" + playerone.characterY +
                         "\nplayer direction:" + playerone.dir);
         for (Item item : playerone.collectedItems) {
@@ -164,6 +174,13 @@ class Gameplay implements Screen, InputProcessor {
 
         }
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
+        Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
+        if (android) {
+            for (TouchableButton t : dirpad) {
+                Gdx.app.log("is android", t.toString());
+                t.drawSelf(tool, infoPatch);
+            }
+        }
         tool.batch.end();
     }
 
@@ -182,7 +199,9 @@ class Gameplay implements Screen, InputProcessor {
             boolean crushedAndAnimatedBlood = e.crushed && e.explodedEnd;
             Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
             if (crushedAndAnimatedBlood) {
+
                 toRemoveIfCrushed.add(e);
+                Gdx.app.log("adding to remove", crushedAndAnimatedBlood + " " + e.toString());
             }
         }
         for (MovableCharacter e : toRemoveIfCrushed) {
@@ -300,7 +319,7 @@ class Gameplay implements Screen, InputProcessor {
                     useBombOnBlock();
                 } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
                     cameraFollowPlayer=false;
-                    if (enemyLocatorIndex > enemiesArraylist.size()) {
+                    if (enemyLocatorIndex >= enemiesArraylist.size()) {
                         enemyLocatorIndex = 0;
                     }
                     tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).characterX * tool.universalWidthFactor,
@@ -315,6 +334,8 @@ class Gameplay implements Screen, InputProcessor {
 
                 playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
                 //moveReducer = 8;
+            } else if (android) {
+
             }
 
         }

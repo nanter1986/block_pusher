@@ -17,16 +17,15 @@ public class BossCrushChecker {
         this.character = character;
     }
 
-    public boolean checkIfcrushed(MapOne map){
-        boolean crushed=false;
+    public void checkIfcrushed(MapOne map) {
         if(map.mapArray[character.characterX][character.characterY].type!= BlockGeneral.Blocktypes.AIR){
-            crushed=true;
+            character.crushed = true;
             character.explodedStarted=true;
-            Gdx.app.log("enemy crushed:",crushed+" is dead");
+            Gdx.app.log("enemy crushed:", character.crushed + " is dead");
         }else{
-            Gdx.app.log("enemy crushed:",crushed+" still alive");
+            Gdx.app.log("enemy crushed:", character.crushed + " still alive");
         }
 
-        return crushed;
+
     }
 }
