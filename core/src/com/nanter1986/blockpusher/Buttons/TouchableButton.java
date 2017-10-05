@@ -46,7 +46,7 @@ public abstract class TouchableButton {
         int x = Gdx.input.getX();
         int y = Gdx.input.getY();
 
-        if (Gdx.input.justTouched() && x > buttonX && x < buttonX + buttonW && y < screenH - buttonY && y > screenH - buttonY - buttonH) {
+        if (Gdx.input.isTouched() && x > buttonX && x < buttonX + buttonW && y < screenH - buttonY && y > screenH - buttonY - buttonH) {
             t = true;
         }
         return t;

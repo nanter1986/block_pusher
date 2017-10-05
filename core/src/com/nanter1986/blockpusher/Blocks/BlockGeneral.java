@@ -10,10 +10,10 @@ import com.nanter1986.blockpusher.DisplayToolkit;
 
 public class BlockGeneral {
     private static final Texture airT=new Texture("air.png");
-    private static final Texture woodT=new Texture("wood.png");
+
     private static final Texture waterT=new Texture("water.png");
     private static final Texture iceT = new Texture("food.png");
-    private static final Texture foodT=new Texture("food.png");
+
     private static final Texture stoneT=new Texture("stone.png");
     private static final Texture rockT=new Texture("rock.png");
 
@@ -24,6 +24,7 @@ public class BlockGeneral {
     public int blockX;
     public int blockY;
     public Blocktypes type;
+    public Texture tile;
     int explosionAnimationX;
     int explosionAnimationY;
 
@@ -35,6 +36,7 @@ public class BlockGeneral {
         this.blockX = blockX;
         this.blockY = blockY;
         this.type = type;
+        setTile();
         Gdx.app.log("block created ","x:"+blockX+" y:"+blockY+" type:"+type+" exp animation x:"+explosionAnimationX+" exp animation y:"+explosionAnimationY);
     }
 
@@ -55,30 +57,28 @@ public class BlockGeneral {
         }
     }
 
-    public enum Blocktypes{
-        AIR(airT,true),
-        WOOD(woodT,false),
-        STONE(stoneT,false),
-        ROCK(rockT,false),
-        WATER(waterT,false),
-        ICE(iceT, false),
-        FOOD(foodT,false);
-
-        private Texture tile;
-        private boolean passThrough;
-
-
-        Blocktypes(Texture t,boolean pTh){
-            this.tile=t;
-            this.passThrough=pTh;
+    public void setTile() {
+        switch (this.type) {
+            case AIR:
+                tile = airT;
+                break;
+            case STONE:
+                tile = stoneT;
+                break;
+            case WATER:
+                tile = waterT;
+                break;
+            case ICE:
+                tile = iceT;
+                break;
         }
+    }
 
-        public Texture getTile() {
-            return tile;
-        }
+    public enum Blocktypes {
+        AIR,
+        STONE,
+        WATER,
+        ICE
 
-        public boolean isPassThrough() {
-            return passThrough;
-        }
     }
 }

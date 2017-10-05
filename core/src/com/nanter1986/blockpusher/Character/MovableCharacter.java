@@ -22,6 +22,11 @@ public abstract class MovableCharacter {
     public int characterH;
     public int level;
     public int moveReducer = 0;
+    public int moveReducerLimit;
+    public float distancePerFrame;
+    public float whereToDrawX;
+    public float whereToDrawY;
+    public boolean doingSmooth = false;
     public Direction dir = Direction.UP;
 
     public int bloodAnimationX = 0;
@@ -41,6 +46,28 @@ public abstract class MovableCharacter {
     public abstract void moveCharacter(MapOne map, ArrayList<MovableCharacter> enemies);
 
     public abstract void checkIfcrushed(MapOne map);
+
+    public void smoothAnimation() {
+        if (doingSmooth) {
+            switch (dir) {
+                case UP:
+                    whereToDrawY += distancePerFrame;
+                    break;
+                case DOWN:
+                    whereToDrawY -= distancePerFrame;
+                    break;
+                case LEFT:
+                    whereToDrawX -= distancePerFrame;
+                    break;
+                case RIGHT:
+                    whereToDrawX += distancePerFrame;
+                    break;
+
+            }
+
+        }
+
+    }
 
     public enum Direction{
         UP,

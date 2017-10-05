@@ -26,6 +26,10 @@ public class PlayerOne extends MovableCharacter {
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
         this.dir=Direction.UP;
+        this.moveReducerLimit = 4;
+        this.distancePerFrame = tool.universalWidthFactor / this.moveReducerLimit;
+        this.whereToDrawX = this.characterX * this.characterW;
+        this.whereToDrawY = this.characterY * this.characterW;
         stillAlive=true;
     }
 
@@ -57,17 +61,17 @@ public class PlayerOne extends MovableCharacter {
         if(stillAlive){
             switch (dir){
                 case UP:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,500,500,false,false);
+                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 0, 500, 500, false, false);
                     break;
                 case DOWN:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1500,500,500,false,false);
+                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 1500, 500, 500, false, false);
                     break;
                 case LEFT:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1000,500,500,false,false);
+                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 1000, 500, 500, false, false);
 
                     break;
                 case RIGHT:
-                    b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,500,500,500,false,false);
+                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                     break;
 

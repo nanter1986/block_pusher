@@ -40,6 +40,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 2;
+        moveReducerLimit = 64;
         this.skills = skillSet();
         Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
                 "\nat y:" + this.characterY);

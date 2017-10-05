@@ -64,7 +64,7 @@ public class BossMover {
             for (BossSkill bs : skills) {
                 bs.executeSkill(character.level, character, map, enemies);
             }
-            character.moveReducer=64;
+            character.moveReducer = character.moveReducerLimit;
         }
     }
 }

@@ -1,13 +1,9 @@
 package com.nanter1986.blockpusher.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
-import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
-import com.nanter1986.blockpusher.FieldPrinter;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,10 +11,10 @@ import java.util.Random;
  */
 
 public class MapOne {
+    private static final Random RANDOM = new Random();
     public final int MAP_WIDTH_IN_BLOCKS=50;
     public final int MAP_HEIGHT_IN_BLOCKS=50;
     public int blocksize;
-    private static final Random RANDOM = new Random();
     public BlockGeneral[][] mapArray=new BlockGeneral[50][50];
 
     public MapOne(DisplayToolkit tool) {
@@ -51,7 +47,7 @@ public class MapOne {
                 }else if(mapArray[i][j].type== BlockGeneral.Blocktypes.AIR){
 
                 } else{
-                    tool.batch.draw(mapArray[i][j].type.getTile(),mapArray[i][j].blockX*blocksize,mapArray[i][j].blockY*blocksize,blocksize,blocksize);
+                    tool.batch.draw(mapArray[i][j].tile, mapArray[i][j].blockX * blocksize, mapArray[i][j].blockY * blocksize, blocksize, blocksize);
                 }
             }
         }

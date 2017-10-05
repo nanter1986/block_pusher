@@ -39,6 +39,7 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;
+        moveReducerLimit = 64;
         Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
                 "\nat y:" + this.characterY);
     }
