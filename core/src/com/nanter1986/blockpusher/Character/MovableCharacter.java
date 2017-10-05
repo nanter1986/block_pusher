@@ -16,17 +16,19 @@ import java.util.ArrayList;
 public abstract class MovableCharacter {
     public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
     public Texture texture;
+
     public int characterX;
     public int characterY;
+    public float realX;
+    public float realY;
     public int characterW;
     public int characterH;
     public int level;
     public int moveReducer = 0;
     public int moveReducerLimit;
-    public float distancePerFrame;
-    public float whereToDrawX;
-    public float whereToDrawY;
-    public boolean doingSmooth = false;
+    public boolean stepSequenceRunning = false;
+
+
     public Direction dir = Direction.UP;
 
     public int bloodAnimationX = 0;
@@ -47,26 +49,53 @@ public abstract class MovableCharacter {
 
     public abstract void checkIfcrushed(MapOne map);
 
-    public void smoothAnimation() {
-        if (doingSmooth) {
+
+    public void increaseByStep() {
+        if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    whereToDrawY += distancePerFrame;
+                    realY += getStep();
                     break;
                 case DOWN:
-                    whereToDrawY -= distancePerFrame;
-                    break;
-                case LEFT:
-                    whereToDrawX -= distancePerFrame;
+                    realY -= getStep();
                     break;
                 case RIGHT:
-                    whereToDrawX += distancePerFrame;
+                    realX += getStep();
                     break;
-
+                case LEFT:
+                    realX -= getStep();
+                    break;
             }
-
         }
 
+    }
+
+    public void fixatePosition() {
+        if (stepSequenceRunning) {
+            switch (dir) {
+                case UP:
+                    characterY++;
+                    realY = characterY * characterW;
+                    break;
+                case DOWN:
+                    characterY--;
+                    realY = characterY * characterW;
+                    break;
+                case RIGHT:
+                    characterX++;
+                    realX = characterX * characterW;
+                    break;
+                case LEFT:
+                    characterX--;
+                    realX = characterX * characterW;
+                    break;
+            }
+        }
+
+    }
+
+    public float getStep() {
+        return characterW / moveReducerLimit;
     }
 
     public enum Direction{

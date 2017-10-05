@@ -15,21 +15,24 @@ import java.util.ArrayList;
  */
 
 public class PlayerOne extends MovableCharacter {
+    private static final int PLAYER_MOVE_REDUCER = 8;
     public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public  boolean stillAlive;
     public ArrayList<Item>collectedItems=new ArrayList<Item>();
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
+        this.moveReducerLimit = PLAYER_MOVE_REDUCER;
         this.texture=playerOne;
+
         this.characterX=map.MAP_WIDTH_IN_BLOCKS/2;
         this.characterY=map.MAP_HEIGHT_IN_BLOCKS/2;
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
+        this.realX = characterX * characterW;
+        this.realY = characterY * characterW;
         this.dir=Direction.UP;
-        this.moveReducerLimit = 4;
-        this.distancePerFrame = tool.universalWidthFactor / this.moveReducerLimit;
-        this.whereToDrawX = this.characterX * this.characterW;
-        this.whereToDrawY = this.characterY * this.characterW;
+
+
         stillAlive=true;
     }
 
@@ -61,17 +64,17 @@ public class PlayerOne extends MovableCharacter {
         if(stillAlive){
             switch (dir){
                 case UP:
-                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 0, 500, 500, false, false);
+                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 0, 500, 500, false, false);
                     break;
                 case DOWN:
-                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 1500, 500, 500, false, false);
+                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 1500, 500, 500, false, false);
                     break;
                 case LEFT:
-                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 1000, 500, 500, false, false);
+                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 1000, 500, 500, false, false);
 
                     break;
                 case RIGHT:
-                    b.draw(playerOne, whereToDrawX, whereToDrawY, characterW, characterH, 0, 500, 500, 500, false, false);
+                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                     break;
 

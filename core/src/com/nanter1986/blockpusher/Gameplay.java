@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 class Gameplay implements Screen, InputProcessor {
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
-    private static final int PLAYER_MOVE_REDUCER = 4;
+
     public final int STEPS_MULTIPLIER = 50;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
@@ -187,7 +187,7 @@ class Gameplay implements Screen, InputProcessor {
 
     private void cameraOnPlayer() {
         if(cameraFollowPlayer){
-            tool.camera.position.set(playerone.characterX * tool.universalWidthFactor, playerone.characterY * tool.universalWidthFactor, 0);
+            tool.camera.position.set(playerone.realX, playerone.realY, 0);
 
         }
         tool.camera.update();
@@ -214,17 +214,21 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private void getPlayerInputIfMoveReducerIsZero(float delta) {
-        if (playerone.moveReducer > 0) {
+        if (playerone.moveReducer > 1) {
             playerone.moveReducer -= 1;
-            playerone.smoothAnimation();
-            updatePosition();
+
+            playerone.increaseByStep();
+        } else if (playerone.moveReducer == 1) {
+            playerone.fixatePosition();
+            playerone.moveReducer -= 1;
         } else {
+
+            playerone.stepSequenceRunning = false;
             playerone.moveReducer = playerone.moveReducerLimit;
             Gdx.app.log("new frame created fps :", (1 / delta) + " fps");
-            playerone.whereToDrawX = playerone.characterX * playerone.characterW;
-            playerone.whereToDrawY = playerone.characterY * playerone.characterW;
+
             updatePosition();
-            playerone.doingSmooth = false;
+
         }
     }
 
@@ -277,60 +281,60 @@ class Gameplay implements Screen, InputProcessor {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.characterX > 0) {
             playerone.dir = MovableCharacter.Direction.LEFT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterX -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
+
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX > 1) {
-                playerone.characterX -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
                 BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
                 BlockGeneral nextNext = theMap.mapArray[playerone.characterX - 1][playerone.characterY];
                 blockSwitcher(next, nextNext);
-
             }
-            playerone.doingSmooth = true;
+
 
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 1) {
             playerone.dir = MovableCharacter.Direction.RIGHT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterX += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 2) {
-                playerone.characterX += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
                 BlockGeneral nextNext = theMap.mapArray[playerone.characterX + 1][playerone.characterY];
                 BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
                 blockSwitcher(next, nextNext);
             }
-            playerone.doingSmooth = true;
+
+
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 1) {
             playerone.dir = MovableCharacter.Direction.UP;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterY += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 2) {
-                playerone.characterY += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
                 BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY + 1];
                 BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
                 blockSwitcher(next, nextNext);
-
             }
-            playerone.doingSmooth = true;
+
+
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && playerone.characterY > 0) {
             playerone.dir = MovableCharacter.Direction.DOWN;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterY -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY > 1) {
-                playerone.characterY -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
                 BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY - 1];
                 BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
                 blockSwitcher(next, nextNext);
             }
-            playerone.doingSmooth = true;
+
+
         } else if (gamePaused == false && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 
             gamePaused = true;
