@@ -54,16 +54,24 @@ public abstract class MovableCharacter {
         if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    realY += getStep();
+                    if (realY + getStep() < 49 * characterW) {
+                        realY += getStep();
+                    }
                     break;
                 case DOWN:
-                    realY -= getStep();
+                    if (realY - getStep() > 0) {
+                        realY -= getStep();
+                    }
                     break;
                 case RIGHT:
-                    realX += getStep();
+                    if (realX + getStep() < 49 * characterW) {
+                        realX += getStep();
+                    }
                     break;
                 case LEFT:
-                    realX -= getStep();
+                    if (realX - getStep() > 0) {
+                        realX -= getStep();
+                    }
                     break;
             }
         }
@@ -74,19 +82,27 @@ public abstract class MovableCharacter {
         if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    characterY++;
+                    if (characterY < 49) {
+                        characterY++;
+                    }
                     realY = characterY * characterW;
                     break;
                 case DOWN:
-                    characterY--;
+                    if (characterY > 0) {
+                        characterY--;
+                    }
                     realY = characterY * characterW;
                     break;
                 case RIGHT:
-                    characterX++;
+                    if (characterX < 49) {
+                        characterX++;
+                    }
                     realX = characterX * characterW;
                     break;
                 case LEFT:
-                    characterX--;
+                    if (characterX > 0) {
+                        characterX--;
+                    }
                     realX = characterX * characterW;
                     break;
             }
@@ -95,7 +111,9 @@ public abstract class MovableCharacter {
     }
 
     public float getStep() {
-        return characterW / moveReducerLimit;
+        float chW = characterW;
+        float limit = moveReducerLimit;
+        return chW / limit;
     }
 
     public enum Direction{

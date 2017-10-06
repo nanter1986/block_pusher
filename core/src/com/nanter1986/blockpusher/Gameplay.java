@@ -152,6 +152,7 @@ class Gameplay implements Screen, InputProcessor {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
                 e.moveCharacter(theMap, enemiesArraylist);
+                e.updatePosition(tool.batch, theMap, enemiesArraylist);
             }
 
         }
@@ -165,7 +166,7 @@ class Gameplay implements Screen, InputProcessor {
         for (Item item : playerone.collectedItems) {
             Gdx.app.log("item in inventory", item.getClass().toString());
         }
-        for (MovableCharacter e : enemiesArraylist) {
+        /*for (MovableCharacter e : enemiesArraylist) {
             if (e.explodedStarted == false) {
                 e.updatePosition(tool.batch, theMap, enemiesArraylist);
                 Gdx.app.log("enemy position:", e.characterX + " " + e.characterY + " " +
@@ -173,7 +174,7 @@ class Gameplay implements Screen, InputProcessor {
                         "\n----------------------------------------------------------------------------------");
             }
 
-        }
+        }*/
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
         Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
         if (android) {
@@ -273,8 +274,10 @@ class Gameplay implements Screen, InputProcessor {
 
         bNextNext.type = bNext.type;
         bNext.type = BlockGeneral.Blocktypes.AIR;
+        Gdx.app.log("types of switch", bNextNext.type + "/" + bNext.type);
         bNextNext.setTile();
         bNext.setTile();
+        Gdx.app.log("tiles of switch", bNextNext.tile + "/" + bNext.tile);
     }
 
     public void desktopControls() {
@@ -287,8 +290,8 @@ class Gameplay implements Screen, InputProcessor {
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX - 1][playerone.characterY];
+                BlockGeneral next = theMap.mapArray[playerone.characterX - 1][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX - 2][playerone.characterY];
                 blockSwitcher(next, nextNext);
             }
 
@@ -301,8 +304,8 @@ class Gameplay implements Screen, InputProcessor {
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX + 1][playerone.characterY];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX + 2][playerone.characterY];
+                BlockGeneral next = theMap.mapArray[playerone.characterX + 1][playerone.characterY];
                 blockSwitcher(next, nextNext);
             }
 
@@ -315,8 +318,8 @@ class Gameplay implements Screen, InputProcessor {
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY + 1];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY + 2];
+                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY + 1];
                 blockSwitcher(next, nextNext);
             }
 
@@ -329,8 +332,8 @@ class Gameplay implements Screen, InputProcessor {
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY - 1];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY - 2];
+                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY - 1];
                 blockSwitcher(next, nextNext);
             }
 
@@ -365,13 +368,13 @@ class Gameplay implements Screen, InputProcessor {
         if (dirpad.get(2).isButtonTouched() && playerone.characterX > 0) {
             playerone.dir = MovableCharacter.Direction.LEFT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterX -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX > 1) {
-                playerone.characterX -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX - 1][playerone.characterY];
+                BlockGeneral next = theMap.mapArray[playerone.characterX - 1][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX - 2][playerone.characterY];
                 blockSwitcher(next, nextNext);
 
             }
@@ -379,40 +382,40 @@ class Gameplay implements Screen, InputProcessor {
         } else if (dirpad.get(3).isButtonTouched() && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 1) {
             playerone.dir = MovableCharacter.Direction.RIGHT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterX += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterX < theMap.MAP_WIDTH_IN_BLOCKS - 2) {
-                playerone.characterX += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX + 1][playerone.characterY];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX + 2][playerone.characterY];
+                BlockGeneral next = theMap.mapArray[playerone.characterX + 1][playerone.characterY];
                 blockSwitcher(next, nextNext);
             }
         } else if (dirpad.get(0).isButtonTouched() && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 1) {
             playerone.dir = MovableCharacter.Direction.UP;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterY += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
 
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY < theMap.MAP_HEIGHT_IN_BLOCKS - 2) {
-                playerone.characterY += 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY + 1];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY + 2];
+                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY + 1];
                 blockSwitcher(next, nextNext);
 
             }
         } else if (dirpad.get(1).isButtonTouched() && playerone.characterY > 0) {
             playerone.dir = MovableCharacter.Direction.DOWN;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
-                playerone.characterY -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
 
             } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.characterY > 1) {
-                playerone.characterY -= 1;
+                playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY - 1];
-                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY];
+                BlockGeneral nextNext = theMap.mapArray[playerone.characterX][playerone.characterY - 2];
+                BlockGeneral next = theMap.mapArray[playerone.characterX][playerone.characterY - 1];
                 blockSwitcher(next, nextNext);
             }
 

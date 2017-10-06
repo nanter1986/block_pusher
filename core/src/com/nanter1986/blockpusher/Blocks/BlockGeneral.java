@@ -9,7 +9,7 @@ import com.nanter1986.blockpusher.DisplayToolkit;
  */
 
 public class BlockGeneral {
-    private static final Texture airT=new Texture("air.png");
+    public static final Texture airT = new Texture("air.png");
 
     private static final Texture waterT=new Texture("water.png");
     private static final Texture iceT = new Texture("food.png");

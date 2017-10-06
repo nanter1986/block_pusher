@@ -39,8 +39,10 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         }
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
+        this.realX = characterX * characterW;
+        this.realY = characterY * characterW;
         this.level = 2;
-        moveReducerLimit = 64;
+        moveReducerLimit = 32;
         this.skills = skillSet();
         Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
                 "\nat y:" + this.characterY);
@@ -88,16 +90,16 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         switch (dir) {
             case UP:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 0, 500, 500, false, false);
+                b.draw(texture, realX, realY, characterW, characterH, 0, 0, 500, 500, false, false);
                 break;
             case DOWN:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 1500, 500, 500, false, false);
+                b.draw(texture, realX, realY, characterW, characterH, 0, 1500, 500, 500, false, false);
                 break;
             case LEFT:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 1000, 500, 500, false, false);
+                b.draw(texture, realX, realY, characterW, characterH, 0, 1000, 500, 500, false, false);
                 break;
             case RIGHT:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 500, 500, 500, false, false);
+                b.draw(texture, realX, realY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                 break;
 
