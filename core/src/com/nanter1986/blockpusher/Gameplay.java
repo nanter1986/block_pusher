@@ -424,7 +424,7 @@ class Gameplay implements Screen, InputProcessor {
             gamePaused = true;
             pauseReducer = 8;
             Gdx.app.log("game paused", "true");
-        } else if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size() > 0) {
+        } else if (dirpad.get(4).isButtonTouched() && playerone.collectedItems.size() > 0) {
             useBombOnBlock();
         } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
             cameraFollowPlayer = false;

@@ -20,6 +20,7 @@ public abstract class TouchableButton {
     public boolean touchedOnce;
     public float screenW;
     public float screenH;
+    public Texture specificTexture;
 
     public int srcX;
     public int srcY;
@@ -28,6 +29,7 @@ public abstract class TouchableButton {
     public TouchableButton(DisplayToolkit tool) {
         this.screenH = tool.scH;
         this.screenW = tool.scW;
+        this.specificTexture = texture;
 
     }
 
@@ -37,6 +39,7 @@ public abstract class TouchableButton {
         dirpad.add(new DownButton(tool));
         dirpad.add(new LeftButton(tool));
         dirpad.add(new RightButton(tool));
+        dirpad.add(new BombButton(tool));
 
         return dirpad;
     }
@@ -60,6 +63,6 @@ public abstract class TouchableButton {
                 "\n" + xToDraw + "/" + yToDraw +
                 "\n" + buttonW +
                 "\n" + srcX + "/" + srcY);
-        tool.batch.draw(texture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
+        tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
 }

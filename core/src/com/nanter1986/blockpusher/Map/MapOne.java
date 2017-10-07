@@ -3,6 +3,7 @@ package com.nanter1986.blockpusher.Map;
 import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
+import com.nanter1986.blockpusher.InScreenDrawer.CheckIfInScreenToDraw;
 
 import java.util.Random;
 
@@ -39,16 +40,21 @@ public class MapOne {
 
         for(int i=0;i<50;i++) {
             for (int j = 0; j < 50; j++) {
-                boolean showExplosion=mapArray[i][j].explodedStart && mapArray[i][j].explodedEnd==false;
-                if(showExplosion){
+                float blockX = mapArray[i][j].blockX * blocksize;
+                float blockY = mapArray[i][j].blockY * blocksize;
+                if (CheckIfInScreenToDraw.checkIfInScreen(tool, blockX, blockY)) {
+                    boolean showExplosion = mapArray[i][j].explodedStart && mapArray[i][j].explodedEnd == false;
+                    if (showExplosion) {
 
-                    Gdx.app.log("show explosion: ",showExplosion+"( ' )");
-                    mapArray[i][j].explode(tool);
-                }else if(mapArray[i][j].type== BlockGeneral.Blocktypes.AIR){
+                        Gdx.app.log("show explosion: ", showExplosion + "( ' )");
+                        mapArray[i][j].explode(tool);
+                    } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.AIR) {
 
-                } else{
-                    tool.batch.draw(mapArray[i][j].tile, mapArray[i][j].blockX * blocksize, mapArray[i][j].blockY * blocksize, blocksize, blocksize);
+                    } else {
+                        tool.batch.draw(mapArray[i][j].tile, blockX, blockY, blocksize, blocksize);
+                    }
                 }
+
             }
         }
         //logSelf();
