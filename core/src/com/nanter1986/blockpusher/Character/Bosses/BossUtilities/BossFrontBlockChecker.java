@@ -23,8 +23,8 @@ public class BossFrontBlockChecker {
         boolean isFreeToPass=true;
         switch (character.dir){
             case UP:
-                int xToCheckUp=(character.characterX);
-                int yToCheckUp=character.characterY+1;
+                int xToCheckUp = (character.getFixatedX());
+                int yToCheckUp = character.getFixatedY() + 1;
                 if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<(map.MAP_HEIGHT_IN_BLOCKS-2) && yToCheckUp>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -32,7 +32,7 @@ public class BossFrontBlockChecker {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==character.characterX && e.characterY==character.characterY+1){
+                            if (e.getFixatedX() == character.getFixatedX() && e.getFixatedY() == character.getFixatedY() + 1) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction UP");
                             }
@@ -43,8 +43,8 @@ public class BossFrontBlockChecker {
 
                 break;
             case DOWN:
-                int xToCheckDown=character.characterX;
-                int yToCheckDown=character.characterY-1;
+                int xToCheckDown = character.getFixatedX();
+                int yToCheckDown = character.getFixatedY() - 1;
                 if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown>0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -52,7 +52,7 @@ public class BossFrontBlockChecker {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==character.characterX && e.characterY==character.characterY-1){
+                            if (e.getFixatedX() == character.getFixatedX() && e.getFixatedY() == character.getFixatedY() - 1) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction DOWN");
                             }
@@ -62,8 +62,8 @@ public class BossFrontBlockChecker {
 
                 break;
             case LEFT:
-                int xToCheckLeft=character.characterX-1;
-                int yToCheckLeft=character.characterY;
+                int xToCheckLeft = character.getFixatedX() - 1;
+                int yToCheckLeft = character.getFixatedY();
                 if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -71,7 +71,7 @@ public class BossFrontBlockChecker {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==character.characterX-1 && e.characterY==character.characterY){
+                            if (e.getFixatedX() == character.getFixatedX() - 1 && e.getFixatedY() == character.getFixatedY()) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction LEFT");
                             }
@@ -83,8 +83,8 @@ public class BossFrontBlockChecker {
                 break;
 
             case RIGHT:
-                int xToCheckRight=character.characterX+1;
-                int yToCheckRight=character.characterY;
+                int xToCheckRight = character.getFixatedX() + 1;
+                int yToCheckRight = character.getFixatedY();
 
                 if(xToCheckRight<(map.MAP_WIDTH_IN_BLOCKS-2) && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
@@ -93,7 +93,7 @@ public class BossFrontBlockChecker {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==character.characterX+1 && e.characterY==character.characterY){
+                            if (e.getFixatedX() == character.getFixatedX() + 1 && e.getFixatedY() == character.getFixatedY()) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction RIGHT");
                             }

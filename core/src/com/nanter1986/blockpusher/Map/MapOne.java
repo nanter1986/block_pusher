@@ -16,7 +16,7 @@ public class MapOne {
     public final int MAP_WIDTH_IN_BLOCKS=50;
     public final int MAP_HEIGHT_IN_BLOCKS=50;
     public int blocksize;
-    public BlockGeneral[][] mapArray=new BlockGeneral[50][50];
+    public BlockGeneral[][] mapArray = new BlockGeneral[MAP_WIDTH_IN_BLOCKS][MAP_HEIGHT_IN_BLOCKS];
 
     public MapOne(DisplayToolkit tool) {
         blocksize=tool.universalWidthFactor;

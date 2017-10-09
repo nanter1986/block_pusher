@@ -23,11 +23,11 @@ public class BossIsMovableCharacterInFront {
         for (MovableCharacter c : enemies) {
             switch (boss.dir) {
                 case UP:
-                    int xToCheckUp = (boss.characterX);
-                    int yToCheckUp = boss.characterY + 1 + howFar;
+                    int xToCheckUp = (boss.getFixatedX());
+                    int yToCheckUp = boss.getFixatedY() + 1 + howFar;
                     if (xToCheckUp < map.MAP_WIDTH_IN_BLOCKS && xToCheckUp >= 0 && yToCheckUp < (map.MAP_HEIGHT_IN_BLOCKS - 2) && yToCheckUp >= 0) {
 
-                        if (c.characterX == xToCheckUp && c.characterY == yToCheckUp) {
+                        if (c.getFixatedX() == xToCheckUp && c.getFixatedY() == yToCheckUp) {
                             foundCharacter = c;
                         }
 
@@ -36,11 +36,11 @@ public class BossIsMovableCharacterInFront {
 
                     break;
                 case DOWN:
-                    int xToCheckDown = boss.characterX;
-                    int yToCheckDown = boss.characterY - 1 - howFar;
+                    int xToCheckDown = boss.getFixatedX();
+                    int yToCheckDown = boss.getFixatedY() - 1 - howFar;
                     if (xToCheckDown < map.MAP_WIDTH_IN_BLOCKS && xToCheckDown >= 0 && yToCheckDown < map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown > 0) {
 
-                        if (c.characterX == xToCheckDown && c.characterY == yToCheckDown) {
+                        if (c.getFixatedX() == xToCheckDown && c.getFixatedY() == yToCheckDown) {
                             foundCharacter = c;
                         }
 
@@ -49,11 +49,11 @@ public class BossIsMovableCharacterInFront {
 
                     break;
                 case LEFT:
-                    int xToCheckLeft = boss.characterX - 1 - howFar;
-                    int yToCheckLeft = boss.characterY;
+                    int xToCheckLeft = boss.getFixatedX() - 1 - howFar;
+                    int yToCheckLeft = boss.getFixatedY();
                     if (xToCheckLeft < map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft > 0 && yToCheckLeft < map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft >= 0) {
 
-                        if (c.characterX == xToCheckLeft && c.characterY == yToCheckLeft) {
+                        if (c.getFixatedX() == xToCheckLeft && c.getFixatedY() == yToCheckLeft) {
                             foundCharacter = c;
                         }
 
@@ -64,14 +64,14 @@ public class BossIsMovableCharacterInFront {
                     break;
 
                 case RIGHT:
-                    int xToCheckRight = boss.characterX + 1 + howFar;
-                    int yToCheckRight = boss.characterY;
+                    int xToCheckRight = boss.getFixatedX() + 1 + howFar;
+                    int yToCheckRight = boss.getFixatedY();
 
                     if (xToCheckRight < (map.MAP_WIDTH_IN_BLOCKS - 2) && xToCheckRight >= 0 && yToCheckRight < map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight >= 0) {
                         BlockGeneral.Blocktypes bt = map.mapArray[xToCheckRight][yToCheckRight].type;
                         Gdx.app.log("type to check", bt.toString() + "");
 
-                        if (c.characterX == xToCheckRight && c.characterY == yToCheckRight) {
+                        if (c.getFixatedX() == xToCheckRight && c.getFixatedY() == yToCheckRight) {
                             foundCharacter = c;
                         }
 

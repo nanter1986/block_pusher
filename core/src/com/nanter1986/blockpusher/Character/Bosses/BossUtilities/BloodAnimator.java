@@ -18,8 +18,8 @@ public class BloodAnimator {
 
     public void bloodAnimation(DisplayToolkit tool) {
         int widthOfBlood = character.level * 6 * tool.universalWidthFactor;
-        int whereToExplodeX=character.characterX*tool.universalWidthFactor-widthOfBlood/2;
-        int whereToExplodeY=character.characterY*tool.universalWidthFactor-widthOfBlood/2;
+        int whereToExplodeX = character.getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
+        int whereToExplodeY = character.getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
 
         if(character.bloodDelayNumber>0){
             character.bloodDelayNumber--;

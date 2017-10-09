@@ -29,15 +29,15 @@ public class EnemyOne extends MovableCharacter {
             int theY=new Random().nextInt(50);
             if(map.mapArray[theX][theY].type==BlockGeneral.Blocktypes.AIR){
                 freeBlockFound=true;
-                this.characterX=theX;
-                this.characterY=theY;
+                this.realX = theX;
+                this.realY = theY;
             }
 
         }
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
-        Gdx.app.log("enemy creation\n","Enemy created at x:"+this.characterX+
-        "\nat y:"+this.characterY);
+        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
+                "\nat y:" + this.getFixatedY());
     }
 
     public void moveCharacter(MapOne map, ArrayList<MovableCharacter> enemies) {
@@ -48,36 +48,36 @@ public class EnemyOne extends MovableCharacter {
             if(checkIfBlockAtTheFront(map,enemies)){
                 switch (dir){
                     case UP:
-                        if(characterY<map.MAP_HEIGHT_IN_BLOCKS-1){
-                            characterY+=1;
+                        if (getFixatedY() < map.MAP_HEIGHT_IN_BLOCKS - 1) {
+                            realY += 1;
                         }else{
                             getRandomDirection();
                         }
                         break;
                     case DOWN:
-                        if(characterY>1){
-                            characterY-=1;
+                        if (getFixatedY() > 1) {
+                            realY -= 1;
                         }else{
                             getRandomDirection();
                         }
                         break;
                     case LEFT:
-                        if(characterX>1){
-                            characterX-=1;
+                        if (getFixatedX() > 1) {
+                            realX -= 1;
                         }else{
                             getRandomDirection();
                         }
                         break;
                     case RIGHT:
-                        if(characterX<map.MAP_WIDTH_IN_BLOCKS-1){
-                            characterX+=1;
+                        if (getFixatedX() < map.MAP_WIDTH_IN_BLOCKS - 1) {
+                            realX += 1;
                         }else{
                             getRandomDirection();
                         }
                         break;
 
                 }
-                Gdx.app.log("enemy walked to:",+characterX+"/"+characterY);
+                Gdx.app.log("enemy walked to:", +getFixatedX() + "/" + getFixatedY());
             }else{
                 getRandomDirection();
             }
@@ -87,7 +87,7 @@ public class EnemyOne extends MovableCharacter {
     }
 
     public void checkIfcrushed(MapOne map) {
-        if(map.mapArray[characterX][characterY].type!=BlockGeneral.Blocktypes.AIR){
+        if (map.mapArray[getFixatedX()][getFixatedY()].type != BlockGeneral.Blocktypes.AIR) {
             crushed=true;
             explodedStarted=true;
             Gdx.app.log("enemy crushed:",crushed+" is dead");
@@ -120,16 +120,16 @@ public class EnemyOne extends MovableCharacter {
     public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         switch (dir){
             case UP:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,0,500,500,false,false);
+                b.draw(playerOne, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 0, 500, 500, false, false);
                 break;
             case DOWN:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1500,500,500,false,false);
+                b.draw(playerOne, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 1500, 500, 500, false, false);
                 break;
             case LEFT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,1000,500,500,false,false);
+                b.draw(playerOne, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 1000, 500, 500, false, false);
                 break;
             case RIGHT:
-                b.draw(playerOne,characterX*characterW,characterY*characterW,characterW,characterH,0,500,500,500,false,false);
+                b.draw(playerOne, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 500, 500, 500, false, false);
 
                 break;
 
@@ -139,8 +139,8 @@ public class EnemyOne extends MovableCharacter {
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
         int widthOfBlood=6*tool.universalWidthFactor;
-        int whereToExplodeX=characterX*tool.universalWidthFactor-widthOfBlood/2;
-        int whereToExplodeY=characterY*tool.universalWidthFactor-widthOfBlood/2;
+        int whereToExplodeX = getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
+        int whereToExplodeY = getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
 
         if(bloodDelayNumber>0){
             bloodDelayNumber--;
@@ -174,8 +174,8 @@ public class EnemyOne extends MovableCharacter {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
-                int xToCheckUp=(characterX);
-                int yToCheckUp=characterY+1;
+                int xToCheckUp = (getFixatedX());
+                int yToCheckUp = getFixatedY() + 1;
                 if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<(map.MAP_HEIGHT_IN_BLOCKS-2) && yToCheckUp>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -183,7 +183,7 @@ public class EnemyOne extends MovableCharacter {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==this.characterX && e.characterY==this.characterY+1){
+                            if (e.getFixatedX() == this.getFixatedX() && e.getFixatedY() == this.getFixatedY() + 1) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction UP");
                             }
@@ -194,8 +194,8 @@ public class EnemyOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                int xToCheckDown=characterX;
-                int yToCheckDown=characterY-1;
+                int xToCheckDown = getFixatedX();
+                int yToCheckDown = getFixatedY() - 1;
                 if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown>0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -203,7 +203,7 @@ public class EnemyOne extends MovableCharacter {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==this.characterX && e.characterY==this.characterY-1){
+                            if (e.getFixatedX() == this.getFixatedX() && e.getFixatedY() == this.getFixatedY() - 1) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction DOWN");
                             }
@@ -213,8 +213,8 @@ public class EnemyOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                int xToCheckLeft=characterX-1;
-                int yToCheckLeft=characterY;
+                int xToCheckLeft = getFixatedX() - 1;
+                int yToCheckLeft = getFixatedY();
                 if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -222,7 +222,7 @@ public class EnemyOne extends MovableCharacter {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==this.characterX-1 && e.characterY==this.characterY){
+                            if (e.getFixatedX() == this.getFixatedX() - 1 && e.getFixatedY() == this.getFixatedY()) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction LEFT");
                             }
@@ -234,8 +234,8 @@ public class EnemyOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                int xToCheckRight=characterX+1;
-                int yToCheckRight=characterY;
+                int xToCheckRight = getFixatedX() + 1;
+                int yToCheckRight = getFixatedY();
 
                 if(xToCheckRight<(map.MAP_WIDTH_IN_BLOCKS-2) && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
@@ -244,7 +244,7 @@ public class EnemyOne extends MovableCharacter {
                         isFreeToPass=false;
                     }else{
                         for (MovableCharacter e : enemies) {
-                            if(e.characterX==this.characterX+1 && e.characterY==this.characterY){
+                            if (e.getFixatedX() == this.getFixatedX() + 1 && e.getFixatedY() == this.getFixatedY()) {
                                 isFreeToPass=false;
                                 Gdx.app.log("enemy in front,","direction RIGHT");
                             }

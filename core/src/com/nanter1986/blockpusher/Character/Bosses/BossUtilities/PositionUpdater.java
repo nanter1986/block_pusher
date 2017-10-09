@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 
@@ -19,17 +18,17 @@ public class PositionUpdater {
     public void updatePosition(SpriteBatch b) {
         switch (character.dir) {
             case UP:
-                b.draw(character.texture, character.characterX * character.characterW, character.characterY * character.characterW, character.characterW, character.characterH, 0, 0, 500, 500, false, false);
+                b.draw(character.texture, character.getFixatedX() * character.characterW, character.getFixatedY() * character.characterW, character.characterW, character.characterH, 0, 0, 500, 500, false, false);
                 break;
             case DOWN:
-                b.draw(character.texture, character.characterX * character.characterW, character.characterY * character.characterW, character.characterW, character.characterH, 0, 1500, 500, 500, false, false);
+                b.draw(character.texture, character.getFixatedX() * character.characterW, character.getFixatedY() * character.characterW, character.characterW, character.characterH, 0, 1500, 500, 500, false, false);
                 break;
             case LEFT:
-                b.draw(character.texture, character.characterX * character.characterW, character.characterY * character.characterW, character.characterW, character.characterH, 0, 1000, 500, 500, false, false);
+                b.draw(character.texture, character.getFixatedX() * character.characterW, character.getFixatedY() * character.characterW, character.characterW, character.characterH, 0, 1000, 500, 500, false, false);
 
                 break;
             case RIGHT:
-                b.draw(character.texture, character.characterX * character.characterW, character.characterY * character.characterW, character.characterW, character.characterH, 0, 500, 500, 500, false, false);
+                b.draw(character.texture, character.getFixatedX() * character.characterW, character.getFixatedY() * character.characterW, character.characterW, character.characterH, 0, 500, 500, 500, false, false);
 
                 break;
         }

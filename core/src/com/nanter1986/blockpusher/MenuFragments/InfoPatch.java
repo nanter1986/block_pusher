@@ -40,7 +40,7 @@ public class InfoPatch {
     public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player) {
         tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
         tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
-        tool.font.draw(tool.batch,"x:"+player.characterX+"/y:"+player.characterY,positionX+cellWidth,positionY+3*cellHeight);
+        tool.font.draw(tool.batch, "x:" + player.getFixatedX() + "/y:" + player.getFixatedY(), positionX + cellWidth, positionY + 3 * cellHeight);
         int iterator=0;
         for(Item b:items){
             float displayWidthInPatch=height/5;

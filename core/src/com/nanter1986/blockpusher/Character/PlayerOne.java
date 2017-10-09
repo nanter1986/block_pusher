@@ -24,12 +24,10 @@ public class PlayerOne extends MovableCharacter {
         this.moveReducerLimit = PLAYER_MOVE_REDUCER;
         this.texture=playerOne;
 
-        this.characterX=map.MAP_WIDTH_IN_BLOCKS/2;
-        this.characterY=map.MAP_HEIGHT_IN_BLOCKS/2;
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
-        this.realX = characterX * characterW;
-        this.realY = characterY * characterW;
+        this.realX = map.MAP_WIDTH_IN_BLOCKS * this.characterW / 2;
+        this.realY = map.MAP_HEIGHT_IN_BLOCKS * this.characterW / 2;
         this.dir=Direction.UP;
 
 
@@ -39,7 +37,7 @@ public class PlayerOne extends MovableCharacter {
     public void collectItems(ArrayList<Item>allItems){
         ArrayList<Item>toMoveToInventory=new ArrayList<Item>();
         for(Item item:allItems){
-            if(characterX==item.itemX && characterY==item.itemY){
+            if (getFixatedX() == item.itemX && getFixatedX() == item.itemY) {
                 toMoveToInventory.add(item);
             }
         }
@@ -52,7 +50,7 @@ public class PlayerOne extends MovableCharacter {
 
     public void checkIfAlive(ArrayList<MovableCharacter> eArray) {
         for (MovableCharacter e : eArray) {
-            if(e.explodedStarted==false && stillAlive && this.characterX==e.characterX && this.characterY==e.characterY){
+            if (e.explodedStarted == false && stillAlive && this.getFixatedX() == e.getFixatedX() && this.getFixatedY() == e.getFixatedY()) {
                 stillAlive=false;
                 Gdx.app.log("player status:","DEAD");
             }
@@ -100,8 +98,8 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedTopWall(int mapH){
         boolean reached=false;
-        if(characterY>=mapH*characterH-characterH){
-            characterY=mapH*characterH-characterH;
+        if (getFixatedY() >= mapH * characterH - characterH) {
+            realY = mapH * characterH - characterH;
             reached=true;
         }
         return reached;
@@ -109,8 +107,8 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedBottomWall(){
         boolean reached=false;
-        if(characterY<=0){
-            characterY=0;
+        if (getFixatedY() <= 0) {
+            realY = 0;
             reached=true;
         }
         return reached;
@@ -118,8 +116,8 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedLeftWall(){
         boolean reached=false;
-        if(characterX<=0){
-            characterX=0;
+        if (getFixatedX() <= 0) {
+            realX = 0;
             reached=true;
         }
         return reached;
@@ -127,8 +125,8 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedRightWall(int mapW){
         boolean reached=false;
-        if(characterX>= mapW*characterW-characterW){
-            characterX=50*characterW-characterW;
+        if (getFixatedX() >= mapW * characterW - characterW) {
+            realX = 50 * characterW - characterW;
             reached=true;
         }
         return reached;
@@ -145,8 +143,8 @@ public class PlayerOne extends MovableCharacter {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
-                int xToCheckUp=(characterX);
-                int yToCheckUp=characterY+1;
+                int xToCheckUp = (getFixatedX());
+                int yToCheckUp = getFixatedY() + 1;
                 if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<map.MAP_HEIGHT_IN_BLOCKS && xToCheckUp>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -157,8 +155,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                int xToCheckDown=characterX;
-                int yToCheckDown=characterY-1;
+                int xToCheckDown = getFixatedX();
+                int yToCheckDown = getFixatedY() - 1;
                 if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && xToCheckDown>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -169,8 +167,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                int xToCheckLeft=characterX-1;
-                int yToCheckLeft=characterY;
+                int xToCheckLeft = getFixatedX() - 1;
+                int yToCheckLeft = getFixatedY();
                 if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>=0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && xToCheckLeft>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("type to check",bt.toString()+"");
@@ -183,8 +181,8 @@ public class PlayerOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                int xToCheckRight=characterX+1;
-                int yToCheckRight=characterY;
+                int xToCheckRight = getFixatedX() + 1;
+                int yToCheckRight = getFixatedY();
 
                 if(xToCheckRight<map.MAP_WIDTH_IN_BLOCKS && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && xToCheckRight>=0){
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
@@ -204,9 +202,9 @@ public class PlayerOne extends MovableCharacter {
         boolean notWater=true;
         switch (dir) {
             case UP:
-                if(characterY<map.MAP_HEIGHT_IN_BLOCKS-2){
-                    if(map.mapArray[characterX][characterY+1].type== BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[characterX][characterY+2].type== BlockGeneral.Blocktypes.WATER){
+                if (getFixatedY() < map.MAP_HEIGHT_IN_BLOCKS - 2) {
+                    if (map.mapArray[getFixatedX()][getFixatedY() + 1].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[getFixatedX()][getFixatedY() + 2].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -214,9 +212,9 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                if(characterY>1){
-                    if(map.mapArray[characterX][characterY-1].type== BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[characterX][characterY-2].type== BlockGeneral.Blocktypes.WATER){
+                if (getFixatedY() > 1) {
+                    if (map.mapArray[getFixatedX()][getFixatedY() - 1].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[getFixatedX()][getFixatedY() - 2].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -224,18 +222,18 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                if(characterX>1){
-                    if(map.mapArray[characterX-1][characterY].type== BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[characterX-2][characterY].type== BlockGeneral.Blocktypes.WATER){
+                if (getFixatedX() > 1) {
+                    if (map.mapArray[getFixatedX() - 1][getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[getFixatedX() - 2][getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
 
                 break;
             case RIGHT:
-                if(characterX<map.MAP_WIDTH_IN_BLOCKS-2){
-                    if(map.mapArray[characterX+1][characterY].type== BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[characterX+2][characterY].type== BlockGeneral.Blocktypes.WATER){
+                if (getFixatedX() < map.MAP_WIDTH_IN_BLOCKS - 2) {
+                    if (map.mapArray[getFixatedX() + 1][getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[getFixatedX() + 2][getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -250,9 +248,9 @@ public class PlayerOne extends MovableCharacter {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
-                int xToCheckUp=(characterX);
-                int yToCheckUp=characterY+2;
-                if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<map.MAP_HEIGHT_IN_BLOCKS && xToCheckUp>=0){
+                int xToCheckUp = (getFixatedX());
+                int yToCheckUp = getFixatedY() + 2;
+                if (xToCheckUp < map.MAP_WIDTH_IN_BLOCKS && xToCheckUp >= 0 && yToCheckUp < map.MAP_HEIGHT_IN_BLOCKS && yToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -262,9 +260,9 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                int xToCheckDown=characterX;
-                int yToCheckDown=characterY-2;
-                if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && xToCheckDown>=0){
+                int xToCheckDown = getFixatedX();
+                int yToCheckDown = getFixatedY() - 2;
+                if (xToCheckDown < map.MAP_WIDTH_IN_BLOCKS && xToCheckDown >= 0 && yToCheckDown < map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -274,9 +272,9 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                int xToCheckLeft=characterX-2;
-                int yToCheckLeft=characterY;
-                if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>=0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && xToCheckLeft>=0){
+                int xToCheckLeft = getFixatedX() - 2;
+                int yToCheckLeft = getFixatedY();
+                if (xToCheckLeft < map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft >= 0 && yToCheckLeft < map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -288,10 +286,10 @@ public class PlayerOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                int xToCheckRight=characterX+2;
-                int yToCheckRight=characterY;
+                int xToCheckRight = getFixatedX() + 2;
+                int yToCheckRight = getFixatedY();
 
-                if(xToCheckRight<map.MAP_WIDTH_IN_BLOCKS && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && xToCheckRight>=0){
+                if (xToCheckRight < map.MAP_WIDTH_IN_BLOCKS && xToCheckRight >= 0 && yToCheckRight < map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
                     Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){

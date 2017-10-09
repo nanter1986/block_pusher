@@ -17,8 +17,8 @@ public abstract class MovableCharacter {
     public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
     public Texture texture;
 
-    public int characterX;
-    public int characterY;
+    //public int characterX;
+    //public int characterY;
     public float realX;
     public float realY;
     public int characterW;
@@ -78,42 +78,26 @@ public abstract class MovableCharacter {
 
     }
 
-    public void fixatePosition() {
-        if (stepSequenceRunning) {
-            switch (dir) {
-                case UP:
-                    if (characterY < 49) {
-                        characterY++;
-                    }
-                    realY = characterY * characterW;
-                    break;
-                case DOWN:
-                    if (characterY > 0) {
-                        characterY--;
-                    }
-                    realY = characterY * characterW;
-                    break;
-                case RIGHT:
-                    if (characterX < 49) {
-                        characterX++;
-                    }
-                    realX = characterX * characterW;
-                    break;
-                case LEFT:
-                    if (characterX > 0) {
-                        characterX--;
-                    }
-                    realX = characterX * characterW;
-                    break;
-            }
-        }
+    public int getFixatedX() {
+        Gdx.app.log("fixX", this.realX + "/" + this.characterW + "=" + Math.round(this.realX / this.characterW));
+        return Math.round(this.realX) / this.characterW;
 
+    }
+
+    public int getFixatedY() {
+        Gdx.app.log("fixY", this.realY + "/" + this.characterW + "=" + Math.round(this.realY / this.characterW));
+        return Math.round(this.realY) / this.characterW;
     }
 
     public float getStep() {
         float chW = characterW;
         float limit = moveReducerLimit;
         return chW / limit;
+    }
+
+    public void fixatePosition() {
+        this.realX = getFixatedX() * characterW;
+        this.realY = getFixatedY() * characterW;
     }
 
     public enum Direction{

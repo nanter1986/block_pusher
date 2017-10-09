@@ -25,6 +25,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
     public Nitar(DisplayToolkit tool, MapOne map) {
+        Gdx.app.log("constructor nitar", "in constructor");
         this.texture = playerOne;
         boolean freeBlockFound = false;
         while (freeBlockFound == false) {
@@ -32,20 +33,20 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
             int theY = new Random().nextInt(50);
             if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                 freeBlockFound = true;
-                this.characterX = theX;
-                this.characterY = theY;
+                this.realX = theX * characterW;
+                this.realY = theY * characterW;
+                this.characterW = tool.universalWidthFactor;
+                this.characterH = tool.universalWidthFactor;
+
+                this.level = 2;
+                moveReducerLimit = 32;
+                this.skills = skillSet();
+                Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
+                        "\nat y:" + this.getFixatedY());
             }
 
         }
-        this.characterW = tool.universalWidthFactor;
-        this.characterH = tool.universalWidthFactor;
-        this.realX = characterX * characterW;
-        this.realY = characterY * characterW;
-        this.level = 2;
-        moveReducerLimit = 32;
-        this.skills = skillSet();
-        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
-                "\nat y:" + this.characterY);
+
     }
 
     @Override

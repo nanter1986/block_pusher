@@ -32,28 +32,28 @@ public class BossMover {
             if(new BossFrontBlockChecker(character).checkIfBlockAtTheFront(map,enemies)){
                 switch (character.dir){
                     case UP:
-                        if(character.characterY<map.MAP_HEIGHT_IN_BLOCKS-1){
+                        if (character.getFixatedY() < map.MAP_HEIGHT_IN_BLOCKS - 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
                         }
                         break;
                     case DOWN:
-                        if(character.characterY>1){
+                        if (character.getFixatedY() > 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
                         }
                         break;
                     case LEFT:
-                        if(character.characterX>1){
+                        if (character.getFixatedX() > 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
                         }
                         break;
                     case RIGHT:
-                        if(character.characterX<map.MAP_WIDTH_IN_BLOCKS-1){
+                        if (character.getFixatedX() < map.MAP_WIDTH_IN_BLOCKS - 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
@@ -61,13 +61,13 @@ public class BossMover {
                         break;
 
                 }
-                Gdx.app.log("enemy walked to:",+character.characterX+"/"+character.characterY);
+                Gdx.app.log("enemy walked to:", +character.getFixatedX() + "/" + character.getFixatedY());
             }else{
                 new RandomBossDirectioner(character).getRandomDirection();
             }
             ArrayList<BossSkill> skills = character.skills;
             for (BossSkill bs : skills) {
-                bs.executeSkill(character.level, character, map, enemies);
+                //bs.executeSkill(character.level, character, map, enemies);
             }
             character.moveReducer = character.moveReducerLimit;
         }

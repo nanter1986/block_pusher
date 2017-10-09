@@ -18,7 +18,7 @@ public class BossCrushChecker {
     }
 
     public void checkIfcrushed(MapOne map) {
-        if(map.mapArray[character.characterX][character.characterY].type!= BlockGeneral.Blocktypes.AIR){
+        if (map.mapArray[character.getFixatedX()][character.getFixatedY()].type != BlockGeneral.Blocktypes.AIR) {
             character.crushed = true;
             character.explodedStarted=true;
             Gdx.app.log("enemy crushed:", character.crushed + " is dead");

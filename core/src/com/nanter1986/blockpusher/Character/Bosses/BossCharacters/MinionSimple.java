@@ -31,8 +31,8 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
             int theY = new Random().nextInt(50);
             if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                 freeBlockFound = true;
-                this.characterX = theX;
-                this.characterY = theY;
+                this.realX = theX * characterW;
+                this.realY = theY * characterW;
             }
 
         }
@@ -40,8 +40,8 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
         this.characterH = tool.universalWidthFactor;
         this.level = 1;
         moveReducerLimit = 64;
-        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.characterX +
-                "\nat y:" + this.characterY);
+        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
+                "\nat y:" + this.getFixatedY());
     }
 
     @Override
@@ -83,16 +83,16 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         switch (dir) {
             case UP:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 0, 500, 500, false, false);
+                b.draw(texture, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 0, 500, 500, false, false);
                 break;
             case DOWN:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 1500, 500, 500, false, false);
+                b.draw(texture, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 1500, 500, 500, false, false);
                 break;
             case LEFT:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 1000, 500, 500, false, false);
+                b.draw(texture, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 1000, 500, 500, false, false);
                 break;
             case RIGHT:
-                b.draw(texture, characterX * characterW, characterY * characterW, characterW, characterH, 0, 500, 500, 500, false, false);
+                b.draw(texture, getFixatedX() * characterW, getFixatedY() * characterW, characterW, characterH, 0, 500, 500, 500, false, false);
 
                 break;
 

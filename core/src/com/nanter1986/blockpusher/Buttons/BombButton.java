@@ -11,7 +11,7 @@ import com.nanter1986.blockpusher.DisplayToolkit;
 public class BombButton extends TouchableButton {
     public BombButton(DisplayToolkit tool) {
         super(tool);
-        this.specificTexture = new Texture(Gdx.files.internal("bomb.png"));
+        this.specificTexture = new Texture(Gdx.files.internal("bombbutton.png"));
         this.buttonW = (int) screenW / 3;
         this.buttonX = 0;
         this.buttonH = (int) screenW / 3;
