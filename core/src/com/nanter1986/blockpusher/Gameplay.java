@@ -62,7 +62,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
-        enemiesToGenerate = 30;
+        enemiesToGenerate = 10;
         bombsToGenerate = 5;
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         stepsGoingToBonus = enemiesToGenerate * STEPS_MULTIPLIER;
@@ -188,7 +188,7 @@ class Gameplay implements Screen, InputProcessor {
 
     private void cameraOnPlayer() {
         if(cameraFollowPlayer){
-            tool.camera.position.set(playerone.realX, playerone.realY, 0);
+            tool.camera.position.set(playerone.coord.realX, playerone.coord.realY, 0);
 
         }
         tool.camera.update();

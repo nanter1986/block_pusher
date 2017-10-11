@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
 
@@ -17,10 +18,7 @@ public abstract class MovableCharacter {
     public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
     public Texture texture;
 
-    //public int characterX;
-    //public int characterY;
-    public float realX;
-    public float realY;
+    public DoubleCoordSystem coord;
     public int characterW;
     public int characterH;
     public int level;
@@ -54,23 +52,23 @@ public abstract class MovableCharacter {
         if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    if (realY + getStep() < 49 * characterW) {
-                        realY += getStep();
+                    if (coord.realY + getStep() < 49 * characterW) {
+                        coord.realY += getStep();
                     }
                     break;
                 case DOWN:
-                    if (realY - getStep() > 0) {
-                        realY -= getStep();
+                    if (coord.realY - getStep() > 0) {
+                        coord.realY -= getStep();
                     }
                     break;
                 case RIGHT:
-                    if (realX + getStep() < 49 * characterW) {
-                        realX += getStep();
+                    if (coord.realX + getStep() < 49 * characterW) {
+                        coord.realX += getStep();
                     }
                     break;
                 case LEFT:
-                    if (realX - getStep() > 0) {
-                        realX -= getStep();
+                    if (coord.realX - getStep() > 0) {
+                        coord.realX -= getStep();
                     }
                     break;
             }
@@ -79,14 +77,12 @@ public abstract class MovableCharacter {
     }
 
     public int getFixatedX() {
-        Gdx.app.log("fixX", this.realX + "/" + this.characterW + "=" + Math.round(this.realX / this.characterW));
-        return Math.round(this.realX) / this.characterW;
+        return coord.fixatedX;
 
     }
 
     public int getFixatedY() {
-        Gdx.app.log("fixY", this.realY + "/" + this.characterW + "=" + Math.round(this.realY / this.characterW));
-        return Math.round(this.realY) / this.characterW;
+        return coord.fixatedY;
     }
 
     public float getStep() {
@@ -96,8 +92,10 @@ public abstract class MovableCharacter {
     }
 
     public void fixatePosition() {
-        this.realX = getFixatedX() * characterW;
-        this.realY = getFixatedY() * characterW;
+        Gdx.app.log("before fixate enemy", this.coord.realX + "/" + this.coord.realY);
+        this.coord.fixateX();
+        this.coord.fixateY();
+        Gdx.app.log("after fixate enemy", this.coord.realX + "/" + this.coord.realY);
     }
 
     public enum Direction{

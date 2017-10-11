@@ -33,7 +33,7 @@ public class MapOne {
                 }
             }
         }
-        logSelf();
+        //logSelf();
     }
 
     public void updatePosition(DisplayToolkit tool){

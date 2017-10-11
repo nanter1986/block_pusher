@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
 import com.nanter1986.blockpusher.PowerUps.Item;
@@ -26,8 +27,11 @@ public class PlayerOne extends MovableCharacter {
 
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
-        this.realX = map.MAP_WIDTH_IN_BLOCKS * this.characterW / 2;
-        this.realY = map.MAP_HEIGHT_IN_BLOCKS * this.characterW / 2;
+        this.coord = new DoubleCoordSystem(map.MAP_WIDTH_IN_BLOCKS * this.characterW / 2,
+                map.MAP_HEIGHT_IN_BLOCKS * this.characterW / 2,
+                map.MAP_WIDTH_IN_BLOCKS / 2,
+                map.MAP_HEIGHT_IN_BLOCKS / 2,
+                this.characterW);
         this.dir=Direction.UP;
 
 
@@ -35,9 +39,14 @@ public class PlayerOne extends MovableCharacter {
     }
 
     public void collectItems(ArrayList<Item>allItems){
+        Gdx.app.log("item collected now", ".......");
         ArrayList<Item>toMoveToInventory=new ArrayList<Item>();
         for(Item item:allItems){
-            if (getFixatedX() == item.itemX && getFixatedX() == item.itemY) {
+            Gdx.app.log("item x", item.itemX + "");
+            Gdx.app.log("player x", getFixatedX() + "");
+            Gdx.app.log("item y", item.itemY + "");
+            Gdx.app.log("player y", getFixatedY() + "");
+            if (getFixatedX() == item.itemX && getFixatedY() == item.itemY) {
                 toMoveToInventory.add(item);
             }
         }
@@ -62,17 +71,17 @@ public class PlayerOne extends MovableCharacter {
         if(stillAlive){
             switch (dir){
                 case UP:
-                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 0, 500, 500, false, false);
+                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
                     break;
                 case DOWN:
-                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 1500, 500, 500, false, false);
+                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1500, 500, 500, false, false);
                     break;
                 case LEFT:
-                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 1000, 500, 500, false, false);
+                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1000, 500, 500, false, false);
 
                     break;
                 case RIGHT:
-                    b.draw(playerOne, realX, realY, characterW, characterH, 0, 500, 500, 500, false, false);
+                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                     break;
 
@@ -99,7 +108,7 @@ public class PlayerOne extends MovableCharacter {
     public boolean reachedTopWall(int mapH){
         boolean reached=false;
         if (getFixatedY() >= mapH * characterH - characterH) {
-            realY = mapH * characterH - characterH;
+            this.coord.realY = mapH * characterH - characterH;
             reached=true;
         }
         return reached;
@@ -108,7 +117,7 @@ public class PlayerOne extends MovableCharacter {
     public boolean reachedBottomWall(){
         boolean reached=false;
         if (getFixatedY() <= 0) {
-            realY = 0;
+            this.coord.realY = 0;
             reached=true;
         }
         return reached;
@@ -117,7 +126,7 @@ public class PlayerOne extends MovableCharacter {
     public boolean reachedLeftWall(){
         boolean reached=false;
         if (getFixatedX() <= 0) {
-            realX = 0;
+            this.coord.realX = 0;
             reached=true;
         }
         return reached;
@@ -126,7 +135,7 @@ public class PlayerOne extends MovableCharacter {
     public boolean reachedRightWall(int mapW){
         boolean reached=false;
         if (getFixatedX() >= mapW * characterW - characterW) {
-            realX = 50 * characterW - characterW;
+            this.coord.realX = 50 * characterW - characterW;
             reached=true;
         }
         return reached;

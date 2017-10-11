@@ -9,6 +9,7 @@ import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossMover;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.MapOne;
@@ -31,12 +32,16 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         while (freeBlockFound == false) {
             int theX = new Random().nextInt(50);
             int theY = new Random().nextInt(50);
+            Gdx.app.log("rXY", theX + "/" + theY);
             if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                 freeBlockFound = true;
-                this.realX = theX * characterW;
-                this.realY = theY * characterW;
+
                 this.characterW = tool.universalWidthFactor;
                 this.characterH = tool.universalWidthFactor;
+                this.coord = new DoubleCoordSystem(theX * this.characterW,
+                        theY * this.characterW,
+                        theX,
+                        theY, this.characterW);
 
                 this.level = 2;
                 moveReducerLimit = 32;
@@ -91,16 +96,16 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
         switch (dir) {
             case UP:
-                b.draw(texture, realX, realY, characterW, characterH, 0, 0, 500, 500, false, false);
+                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
                 break;
             case DOWN:
-                b.draw(texture, realX, realY, characterW, characterH, 0, 1500, 500, 500, false, false);
+                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1500, 500, 500, false, false);
                 break;
             case LEFT:
-                b.draw(texture, realX, realY, characterW, characterH, 0, 1000, 500, 500, false, false);
+                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1000, 500, 500, false, false);
                 break;
             case RIGHT:
-                b.draw(texture, realX, realY, characterW, characterH, 0, 500, 500, 500, false, false);
+                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                 break;
 
