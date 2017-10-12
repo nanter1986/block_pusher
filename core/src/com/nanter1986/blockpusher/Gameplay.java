@@ -13,6 +13,7 @@ import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
+import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.Map.MapOne;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
@@ -27,18 +28,18 @@ import java.util.ArrayList;
 class Gameplay implements Screen, InputProcessor {
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
 
-    public final int STEPS_MULTIPLIER = 50;
+
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     boolean winConditionsMet;
     int enemiesToGenerate;
     int bombsToGenerate;
     int stepsGoingToBonus;
-    //public static Preferences prefs = Gdx.app.getPreferences("Pusher");
     MainClass game;
     DisplayToolkit tool;
     MapOne theMap;
     OutsideWall theWall;
+    DataControler data;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
@@ -60,12 +61,13 @@ class Gameplay implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
+        data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = 10;
         bombsToGenerate = 5;
         android = Gdx.app.getType() == Application.ApplicationType.Android;
-        stepsGoingToBonus = enemiesToGenerate * STEPS_MULTIPLIER;
+        stepsGoingToBonus = enemiesToGenerate * data.STEPS_PER_ENEMY;
         theMap = new MapOne(tool);
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
@@ -118,12 +120,10 @@ class Gameplay implements Screen, InputProcessor {
 
     private void doAfterWinConditionsHaveMet() {
         int numOfBombs = playerone.collectedItems.size();
-        tool.prefs.putInteger("numOfBombs", numOfBombs);
+        data.putBombs(numOfBombs);
         Gdx.app.log("bombs left:", numOfBombs + "");
-        tool.prefs.putInteger("numberOfSteps", numOfSteps);
+        data.putSteps(numOfSteps);
         Gdx.app.log("total steps:", numOfSteps + "");
-        tool.prefs.putInteger("stepsToBonus", stepsGoingToBonus);
-        Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
         Gdx.app.log("setting new screen to game: ", win.toString());
         game.setScreen(win);

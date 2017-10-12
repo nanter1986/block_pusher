@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.nanter1986.blockpusher.DataControl.DataControler;
 
 /**
  * Created by user on 23/9/2017.
@@ -11,17 +12,18 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class WinScreen implements Screen{
 
+    private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
     MainClass game;
     DisplayToolkit tool;
+    DataControler data;
     int screenLineHeight;
-
-    private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
 
 
 
     public WinScreen(MainClass game) {
         this.game = game;
         this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        data = new DataControler(tool);
         screenLineHeight=tool.scH/10;
         this.tool.camera.update();
         Gdx.app.log("win screen created for game: ",game.toString());
@@ -40,12 +42,12 @@ public class WinScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
-        int numOfBombs=tool.prefs.getInteger("numOfBombs");
-        int numOfSteps=tool.prefs.getInteger("numOfsteps");
-        int stepsToBonus=tool.prefs.getInteger("stepsToBonus");
+        int numOfBombs = data.readBombs();
+        int numOfSteps = data.readSteps();
+        int xpGained = numOfSteps + numOfBombs * data.BOMBS_MULTIPLIER;
         tool.font.draw(tool.batch,"bombs:"+numOfBombs+"",0,1*screenLineHeight);
         tool.font.draw(tool.batch,"steps:"+numOfSteps+"",0,2*screenLineHeight);
-        tool.font.draw(tool.batch,"steps to bonus:"+stepsToBonus+"",0,3*screenLineHeight);
+        tool.font.draw(tool.batch, "xp gained:" + xpGained + "", 0, 3 * screenLineHeight);
         tool.batch.end();
     }
 
