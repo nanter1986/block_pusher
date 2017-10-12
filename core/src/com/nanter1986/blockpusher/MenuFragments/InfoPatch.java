@@ -24,16 +24,16 @@ public class InfoPatch {
     public float positionY;
 
     public InfoPatch(DisplayToolkit tool) {
-        this.height = tool.scH / 6;
+        this.height = tool.scH / 12;
         this.width=tool.scW;
-        this.cellHeight=height/5;
+        this.cellHeight = height / 2;
         this.cellWidth=width/2;
 
     }
 
     public void stealPosition(DisplayToolkit tool){
         this.positionX=tool.camera.position.x-tool.scW/2;
-        this.positionY=tool.camera.position.y-tool.scH/2;
+        this.positionY = tool.camera.position.y + tool.scH / 2 - this.height;
         Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
     }
 
@@ -43,9 +43,9 @@ public class InfoPatch {
         tool.font.draw(tool.batch, "x:" + player.getFixatedX() + "/y:" + player.getFixatedY(), positionX + cellWidth, positionY + 3 * cellHeight);
         int iterator=0;
         for(Item b:items){
-            float displayWidthInPatch=height/5;
+            float displayWidthInPatch = height / 2;
             float theX=positionX+iterator*displayWidthInPatch;
-            float theY=positionY+3*cellHeight;
+            float theY = positionY + cellHeight;
             tool.batch.draw(bomb,theX,theY,displayWidthInPatch,displayWidthInPatch);
             Gdx.app.log("bomb drawn:",theX+"/"+theY+"/"+displayWidthInPatch);
             iterator++;

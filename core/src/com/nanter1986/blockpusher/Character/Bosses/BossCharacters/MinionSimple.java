@@ -32,12 +32,13 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
             int theY = new Random().nextInt(50);
             if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                 freeBlockFound = true;
+                this.characterW = tool.universalWidthFactor;
+                this.characterH = tool.universalWidthFactor;
                 this.coord = new DoubleCoordSystem(theX * this.characterW,
                         theY * this.characterW,
                         theX,
                         theY, this.characterW);
-                this.characterW = tool.universalWidthFactor;
-                this.characterH = tool.universalWidthFactor;
+
                 this.level = 1;
                 moveReducerLimit = 64;
                 Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +

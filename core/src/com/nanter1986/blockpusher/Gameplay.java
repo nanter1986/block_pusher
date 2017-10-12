@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
-import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.Map.MapOne;
@@ -70,7 +70,7 @@ class Gameplay implements Screen, InputProcessor {
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
         for (int i = 0; i < enemiesToGenerate; i++) {
-            enemiesArraylist.add(new Nitar(tool, theMap));
+            enemiesArraylist.add(new MinionSimple(tool, theMap));
         }
         for (int i = 0; i < bombsToGenerate; i++) {
             itemsArraylist.add(new Bomb(tool, theMap));
