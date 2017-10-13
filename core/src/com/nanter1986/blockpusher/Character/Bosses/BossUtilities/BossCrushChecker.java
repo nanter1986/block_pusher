@@ -26,7 +26,7 @@ public class BossCrushChecker {
         Gdx.app.log("crush check", xTocheck + "/" + yTocheck);
         switch (character.dir) {
             case UP:
-                if (yTocheck + character.characterW / 2 < LIMIT) {
+                if (yTocheck < LIMIT && yTocheck > 0) {
                     yForArray = character.coord.fixatedY;
                     xForArray = character.coord.fixatedX;
                 } else {
@@ -35,7 +35,7 @@ public class BossCrushChecker {
                 }
                 break;
             case DOWN:
-                if (yTocheck - character.characterW < LIMIT) {
+                if (yTocheck < LIMIT) {
                     yForArray = character.coord.fixatedY - 1;
                     xForArray = character.coord.fixatedX;
                 } else {
@@ -44,7 +44,7 @@ public class BossCrushChecker {
                 }
                 break;
             case LEFT:
-                if (xTocheck - character.characterW < LIMIT) {
+                if (xTocheck < LIMIT) {
                     yForArray = character.coord.fixatedY;
                     xForArray = character.coord.fixatedX - 1;
                 } else {
@@ -53,7 +53,7 @@ public class BossCrushChecker {
                 }
                 break;
             case RIGHT:
-                if (xTocheck + character.characterW < LIMIT) {
+                if (xTocheck < LIMIT) {
                     yForArray = character.coord.fixatedY;
                     xForArray = character.coord.fixatedX;
                 } else {
@@ -64,7 +64,8 @@ public class BossCrushChecker {
                 break;
 
         }
-        Gdx.app.log("crush check int", xForArray + "/" + yForArray);
+        Gdx.app.log("crush check int", xForArray + "/" + yForArray +
+                "------" + character.coord.fixatedX + "/" + character.coord.fixatedY + " dir:" + character.dir);
         if (map.mapArray[xForArray][yForArray].type != BlockGeneral.Blocktypes.AIR) {
             character.crushed = true;
             character.explodedStarted=true;
