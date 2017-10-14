@@ -41,14 +41,14 @@ public class BossMover {
                         }
                         break;
                     case DOWN:
-                        if (character.getFixatedY() > 1) {
+                        if (character.getFixatedY() > 0) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
                         }
                         break;
                     case LEFT:
-                        if (character.getFixatedX() > 1) {
+                        if (character.getFixatedX() > 0) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();

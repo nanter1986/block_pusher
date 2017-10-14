@@ -20,13 +20,13 @@ public class BossCrushChecker {
     public void checkIfcrushed(MapOne map) {
         int xForArray = 0;
         int yForArray = 0;
-        final float LIMIT = 0.2f;
+        final float LIMIT = 0.5f;
         float xTocheck = (character.coord.realX % character.characterW) / character.characterW;
         float yTocheck = (character.coord.realY % character.characterW) / character.characterW;
         Gdx.app.log("crush check", xTocheck + "/" + yTocheck);
         switch (character.dir) {
             case UP:
-                if (yTocheck < LIMIT && yTocheck > 0) {
+                if (yTocheck < LIMIT) {
                     yForArray = character.coord.fixatedY;
                     xForArray = character.coord.fixatedX;
                 } else {
@@ -35,7 +35,7 @@ public class BossCrushChecker {
                 }
                 break;
             case DOWN:
-                if (yTocheck < LIMIT) {
+                if (yTocheck > LIMIT) {
                     yForArray = character.coord.fixatedY - 1;
                     xForArray = character.coord.fixatedX;
                 } else {
@@ -44,7 +44,7 @@ public class BossCrushChecker {
                 }
                 break;
             case LEFT:
-                if (xTocheck < LIMIT) {
+                if (xTocheck > LIMIT) {
                     yForArray = character.coord.fixatedY;
                     xForArray = character.coord.fixatedX - 1;
                 } else {
@@ -64,9 +64,11 @@ public class BossCrushChecker {
                 break;
 
         }
+        BlockGeneral.Blocktypes type = map.mapArray[xForArray][yForArray].type;
         Gdx.app.log("crush check int", xForArray + "/" + yForArray +
-                "------" + character.coord.fixatedX + "/" + character.coord.fixatedY + " dir:" + character.dir);
-        if (map.mapArray[xForArray][yForArray].type != BlockGeneral.Blocktypes.AIR) {
+                "------" + character.coord.fixatedX + "/" + character.coord.fixatedY +
+                " dir:" + character.dir + " type" + type.toString());
+        if (type != BlockGeneral.Blocktypes.AIR) {
             character.crushed = true;
             character.explodedStarted=true;
             Gdx.app.log("enemy crushed:", character.crushed + " is dead");
