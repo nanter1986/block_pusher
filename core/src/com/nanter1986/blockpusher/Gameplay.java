@@ -122,8 +122,8 @@ class Gameplay implements Screen, InputProcessor {
         int numOfBombs = playerone.collectedItems.size();
         data.putBombs(numOfBombs);
         Gdx.app.log("bombs left:", numOfBombs + "");
-        data.putSteps(numOfSteps);
-        Gdx.app.log("total steps:", numOfSteps + "");
+        data.putSteps(stepsGoingToBonus);
+        Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
         Gdx.app.log("setting new screen to game: ", win.toString());
         game.setScreen(win);
@@ -143,8 +143,7 @@ class Gameplay implements Screen, InputProcessor {
             }
 
         }
-        theMap.updatePosition(tool);
-        theWall.drawSelf(theMap);
+
         for (Item item : itemsArraylist) {
             item.updatePosition(tool.batch);
         }
@@ -175,6 +174,8 @@ class Gameplay implements Screen, InputProcessor {
             }
 
         }*/
+        theMap.updatePosition(tool);
+        theWall.drawSelf(theMap);
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
         Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
         if (android) {
