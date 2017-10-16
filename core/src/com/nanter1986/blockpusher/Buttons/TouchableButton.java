@@ -65,4 +65,14 @@ public abstract class TouchableButton {
                 "\n" + srcX + "/" + srcY);
         tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
+
+    public void drawSelf(DisplayToolkit tool) {
+        float xToDraw = this.buttonX;
+        float yToDraw = this.buttonY;
+        Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
+                "\n" + xToDraw + "/" + yToDraw +
+                "\n" + buttonW +
+                "\n" + srcX + "/" + srcY);
+        tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
+    }
 }

@@ -1,10 +1,15 @@
 package com.nanter1986.blockpusher;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.nanter1986.blockpusher.Buttons.NextWinScreenButton;
+import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 23/9/2017.
@@ -18,6 +23,8 @@ public class WinScreen implements Screen{
     DisplayToolkit tool;
     DataControler data;
     int screenLineHeight;
+    ArrayList<TouchableButton> buttons = new ArrayList<TouchableButton>();
+    private boolean android;
 
 
 
@@ -33,11 +40,41 @@ public class WinScreen implements Screen{
 
     @Override
     public void show() {
-
+        android = Gdx.app.getType() == Application.ApplicationType.Android;
+        buttons.add(new NextWinScreenButton(tool));
     }
 
     @Override
     public void render(float delta) {
+        drawEverythingHere();
+        takeInput();
+    }
+
+    private void takeInput() {
+        if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+            desktopControls();
+        } else if (android) {
+            androidControls();
+        }
+    }
+
+    private void androidControls() {
+        if (buttons.get(0).isButtonTouched()) {
+            Gameplay gameplay = new Gameplay(game);
+            Gdx.app.log("setting new screen to game: ", gameplay.toString());
+            game.setScreen(gameplay);
+        }
+    }
+
+    private void desktopControls() {
+        if (buttons.get(0).isButtonTouched()) {
+            Gameplay gameplay = new Gameplay(game);
+            Gdx.app.log("setting new screen to game: ", gameplay.toString());
+            game.setScreen(gameplay);
+        }
+    }
+
+    private void drawEverythingHere() {
         Gdx.gl.glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g,
                 BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -53,7 +90,9 @@ public class WinScreen implements Screen{
         tool.font.draw(tool.batch, "xp gained:" + xpGained + "", 0, 3 * screenLineHeight);
         tool.font.draw(tool.batch, "level:" + data.readLevel() + "", 0, 4 * screenLineHeight);
         tool.font.draw(tool.batch, "xp for next level:" + (XpPerLevel - data.readXP()) + "", 0, 5 * screenLineHeight);
-
+        for (TouchableButton t : buttons) {
+            t.drawSelf(tool);
+        }
         tool.batch.end();
     }
 

@@ -64,7 +64,7 @@ class Gameplay implements Screen, InputProcessor {
         data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
-        enemiesToGenerate = 10;
+        enemiesToGenerate = 1;
         bombsToGenerate = 5;
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         stepsGoingToBonus = enemiesToGenerate * data.STEPS_PER_ENEMY;
