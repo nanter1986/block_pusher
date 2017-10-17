@@ -59,20 +59,20 @@ public abstract class TouchableButton {
     public void drawSelf(DisplayToolkit tool, InfoPatch info) {
         float xToDraw = info.positionX + this.buttonX;
         float yToDraw = info.positionY + this.buttonY;
-        Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
+        /*Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
                 "\n" + xToDraw + "/" + yToDraw +
                 "\n" + buttonW +
-                "\n" + srcX + "/" + srcY);
+                "\n" + srcX + "/" + srcY);*/
         tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
 
     public void drawSelf(DisplayToolkit tool) {
         float xToDraw = this.buttonX;
         float yToDraw = this.buttonY;
-        Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
+        /*Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
                 "\n" + xToDraw + "/" + yToDraw +
                 "\n" + buttonW +
-                "\n" + srcX + "/" + srcY);
+                "\n" + srcX + "/" + srcY);*/
         tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
 }

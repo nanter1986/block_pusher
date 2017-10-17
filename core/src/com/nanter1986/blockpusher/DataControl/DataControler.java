@@ -10,6 +10,8 @@ public class DataControler {
 
     public final int STEPS_PER_ENEMY = 50;
     public final int BOMBS_MULTIPLIER = 50;
+    public final int MORE_ENEMIES_EVERY_X_STAGES = 10;
+    public final int MORE_BOMBS_EVERY_X_STAGES = 20;
     DisplayToolkit tool;
 
     public DataControler(DisplayToolkit tool) {
@@ -29,7 +31,7 @@ public class DataControler {
     }
 
     public void putXP(int xp) {
-        tool.prefs.getInteger("xpPoints", xp);
+        tool.prefs.putInteger("xpPoints", xp);
     }
 
     public void putBombs(int bombs) {
@@ -54,5 +56,13 @@ public class DataControler {
 
     public int stepsToPoints(int numOfSteps) {
         return numOfSteps;
+    }
+
+    public int readStage() {
+        return tool.prefs.getInteger("stage", 1);
+    }
+
+    public void putStage(int stage) {
+        tool.prefs.putInteger("stage", stage);
     }
 }

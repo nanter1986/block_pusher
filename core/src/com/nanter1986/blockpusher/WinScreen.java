@@ -24,6 +24,10 @@ public class WinScreen implements Screen{
     DataControler data;
     int screenLineHeight;
     ArrayList<TouchableButton> buttons = new ArrayList<TouchableButton>();
+    int numOfBombs;
+    int numOfSteps;
+    int xpGained;
+    int xpForNextLevel;
     private boolean android;
 
 
@@ -42,6 +46,14 @@ public class WinScreen implements Screen{
     public void show() {
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         buttons.add(new NextWinScreenButton(tool));
+        numOfBombs = data.readBombs();
+        numOfSteps = data.readSteps();
+        boolean numOfStepsSmallerThanZero = numOfSteps < 0;
+        if (numOfStepsSmallerThanZero) {
+            numOfSteps = 0;
+        }
+        xpGained = data.stepsToPoints(numOfSteps) + data.bombsToPoints(numOfBombs);
+        calculateLevelsAndXP();
     }
 
     @Override
@@ -80,23 +92,19 @@ public class WinScreen implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
-        int numOfBombs = data.readBombs();
-        int numOfSteps = data.readSteps();
-        int xpGained = numOfSteps + numOfBombs * data.BOMBS_MULTIPLIER;
-        data.putXP(data.readXP() + xpGained);
-        calculateLevelsAndXP(xpGained);
+
         tool.font.draw(tool.batch,"bombs:"+numOfBombs+"",0,1*screenLineHeight);
         tool.font.draw(tool.batch,"steps:"+numOfSteps+"",0,2*screenLineHeight);
         tool.font.draw(tool.batch, "xp gained:" + xpGained + "", 0, 3 * screenLineHeight);
         tool.font.draw(tool.batch, "level:" + data.readLevel() + "", 0, 4 * screenLineHeight);
-        tool.font.draw(tool.batch, "xp for next level:" + (XpPerLevel - data.readXP()) + "", 0, 5 * screenLineHeight);
+        tool.font.draw(tool.batch, "xp for next level:" + xpForNextLevel + "", 0, 5 * screenLineHeight);
         for (TouchableButton t : buttons) {
             t.drawSelf(tool);
         }
         tool.batch.end();
     }
 
-    private void calculateLevelsAndXP(int xpGained) {
+    private void calculateLevelsAndXP() {
         int newXpTotal = xpGained + data.readXP();
         int levels = data.readLevel();
         while (newXpTotal >= XpPerLevel) {
@@ -104,8 +112,17 @@ public class WinScreen implements Screen{
             levels++;
             Gdx.app.log("level gained", "+1");
         }
+
         data.putLevel(levels);
         data.putXP(newXpTotal);
+        int nextStage = data.readStage() + 1;
+        data.putStage(nextStage);
+        xpForNextLevel = XpPerLevel - data.readXP();
+        Gdx.app.log("winscreen",
+                "next stage:" + nextStage +
+                        "\nlevels:" + levels +
+                        "\nxpTotal:" + data.readXP() +
+                        "\nxp for next level:" + xpForNextLevel);
     }
 
     @Override

@@ -64,8 +64,8 @@ class Gameplay implements Screen, InputProcessor {
         data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
-        enemiesToGenerate = 1;
-        bombsToGenerate = 5;
+        enemiesToGenerate = howManyEnemiesToGenerate();
+        bombsToGenerate = howManyBombsToGenerate();
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         stepsGoingToBonus = enemiesToGenerate * data.STEPS_PER_ENEMY;
         theMap = new MapOne(tool);
@@ -88,6 +88,18 @@ class Gameplay implements Screen, InputProcessor {
         cameraFollowPlayer=true;
         //tool.camera.zoom=5f;
         Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
+    }
+
+    private int howManyBombsToGenerate() {
+        int stage = data.readStage();
+        int numOfBombs = (stage / data.MORE_BOMBS_EVERY_X_STAGES) + 5;
+        return numOfBombs;
+    }
+
+    private int howManyEnemiesToGenerate() {
+        int stage = data.readStage();
+        int numOfEnemies = (stage / data.MORE_ENEMIES_EVERY_X_STAGES) + 1;
+        return numOfEnemies;
     }
 
 
