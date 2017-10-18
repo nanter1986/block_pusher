@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
+import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.PowerUps.Item;
 
@@ -22,6 +23,7 @@ public class InfoPatch {
     public int cellWidth;
     public float positionX;
     public float positionY;
+    public DataControler data;
 
     public InfoPatch(DisplayToolkit tool) {
         this.height = tool.scH / 12;
@@ -37,10 +39,12 @@ public class InfoPatch {
         Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
     }
 
-    public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player) {
+    public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player, DataControler data) {
+        int stage = data.readStage();
         tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
         tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
-        tool.font.draw(tool.batch, "x:" + player.getFixatedX() + "/y:" + player.getFixatedY(), positionX + cellWidth, positionY + 3 * cellHeight);
+        tool.font.draw(tool.batch, "Stage:" + stage, positionX + cellWidth, positionY + cellHeight);
+        //tool.font.draw(tool.batch, "x:" + player.getFixatedX() + "/y:" + player.getFixatedY(), positionX + cellWidth, positionY + 3 * cellHeight);
         int iterator=0;
         for(Item b:items){
             float displayWidthInPatch = height / 2;

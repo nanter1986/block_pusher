@@ -52,7 +52,7 @@ public class WinScreen implements Screen{
         if (numOfStepsSmallerThanZero) {
             numOfSteps = 0;
         }
-        xpGained = data.stepsToPoints(numOfSteps) + data.bombsToPoints(numOfBombs);
+        xpGained = data.stepsToPoints(numOfSteps) + data.bombsToPoints(numOfBombs) + data.readStage() * 100;
         calculateLevelsAndXP();
     }
 

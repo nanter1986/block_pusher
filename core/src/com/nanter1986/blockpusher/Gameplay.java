@@ -188,7 +188,7 @@ class Gameplay implements Screen, InputProcessor {
         }*/
         theMap.updatePosition(tool);
         theWall.drawSelf(theMap);
-        infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone);
+        infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, data);
         Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
         if (android) {
             for (TouchableButton t : dirpad) {
