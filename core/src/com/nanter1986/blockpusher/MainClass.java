@@ -1,11 +1,6 @@
 package com.nanter1986.blockpusher;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainClass extends Game {
 	MainClass game;
@@ -16,6 +11,6 @@ public class MainClass extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new Gameplay(game));
+		setScreen(new MainMenuScreen(game));
 	}
 }
