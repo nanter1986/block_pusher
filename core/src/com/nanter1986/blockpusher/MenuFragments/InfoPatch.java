@@ -39,8 +39,7 @@ public class InfoPatch {
         Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
     }
 
-    public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player, DataControler data) {
-        int stage = data.readStage();
+    public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player, int stage) {
         tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
         tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
         tool.font.draw(tool.batch, "Stage:" + stage, positionX + cellWidth, positionY + cellHeight);

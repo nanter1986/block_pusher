@@ -31,6 +31,7 @@ class Gameplay implements Screen, InputProcessor {
 
     public int pauseReducer = 0;
     public int numOfSteps = 0;
+    int stage;
     boolean winConditionsMet;
     int enemiesToGenerate;
     int bombsToGenerate;
@@ -63,6 +64,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
         data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
+        stage = data.readStage();
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = howManyEnemiesToGenerate();
         bombsToGenerate = howManyBombsToGenerate();
@@ -91,13 +93,11 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private int howManyBombsToGenerate() {
-        int stage = data.readStage();
         int numOfBombs = (stage / data.MORE_BOMBS_EVERY_X_STAGES) + 5;
         return numOfBombs;
     }
 
     private int howManyEnemiesToGenerate() {
-        int stage = data.readStage();
         int numOfEnemies = (stage / data.MORE_ENEMIES_EVERY_X_STAGES) + 1;
         return numOfEnemies;
     }
@@ -138,6 +138,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
         Gdx.app.log("setting new screen to game: ", win.toString());
+        tool.prefs.flush();
         game.setScreen(win);
     }
 
@@ -188,7 +189,7 @@ class Gameplay implements Screen, InputProcessor {
         }*/
         theMap.updatePosition(tool);
         theWall.drawSelf(theMap);
-        infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, data);
+        infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, stage);
         Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
         if (android) {
             for (TouchableButton t : dirpad) {

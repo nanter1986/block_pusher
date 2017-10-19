@@ -80,6 +80,7 @@ public class WinScreen implements Screen{
 
     private void desktopControls() {
         if (buttons.get(0).isButtonTouched()) {
+            tool.prefs.flush();
             Gameplay gameplay = new Gameplay(game);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
