@@ -76,6 +76,7 @@ class Gameplay implements Screen, InputProcessor {
         for (int i = 0; i < enemiesToGenerate; i++) {
             enemiesArraylist.add(new MinionSimple(tool, theMap));
         }
+        enemiesArraylist.get(0).crushed = true;
         for (int i = 0; i < bombsToGenerate; i++) {
             itemsArraylist.add(new Bomb(tool, theMap));
         }

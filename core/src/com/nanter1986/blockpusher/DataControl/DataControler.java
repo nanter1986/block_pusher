@@ -28,18 +28,22 @@ public class DataControler {
 
     public void putLevel(int level) {
         tool.prefs.putInteger("level", level);
+        tool.prefs.flush();
     }
 
     public void putXP(int xp) {
         tool.prefs.putInteger("xpPoints", xp);
+        tool.prefs.flush();
     }
 
     public void putBombs(int bombs) {
         tool.prefs.putInteger("numOfBombs", bombs);
+        tool.prefs.flush();
     }
 
     public void putSteps(int steps) {
         tool.prefs.putInteger("numberOfSteps", steps);
+        tool.prefs.flush();
     }
 
     public int readBombs() {
@@ -64,5 +68,6 @@ public class DataControler {
 
     public void putStage(int stage) {
         tool.prefs.putInteger("stage", stage);
+        tool.prefs.flush();
     }
 }

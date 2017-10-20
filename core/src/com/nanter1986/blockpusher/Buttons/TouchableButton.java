@@ -57,8 +57,8 @@ public abstract class TouchableButton {
     }
 
     public void drawSelf(DisplayToolkit tool, InfoPatch info) {
-        float xToDraw = info.positionX + this.buttonX;
-        float yToDraw = info.positionY + this.buttonY;
+        float xToDraw = tool.camera.position.x - tool.scW / 2 + this.buttonX;
+        float yToDraw = tool.camera.position.y - tool.scH / 2 + this.buttonY;
         /*Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
                 "\n" + xToDraw + "/" + yToDraw +
                 "\n" + buttonW +
