@@ -106,7 +106,14 @@ class Gameplay implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        if (winConditionsMet) {
+        boolean playerDied = !playerone.stillAlive;
+        if (playerDied) {
+            tool.prefs.flush();
+            DeathScreen deathScreen = new DeathScreen(game);
+            Gdx.app.log("setting new screen to game: ", deathScreen.toString());
+            game.setScreen(deathScreen);
+            this.dispose();
+        } else if (winConditionsMet) {
             doAfterWinConditionsHaveMet();
 
         } else if (gamePaused && pauseReducer == 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
@@ -373,6 +380,8 @@ class Gameplay implements Screen, InputProcessor {
 
         } else if (Gdx.input.isKeyPressed(Input.Keys.G)) {
             cameraFollowPlayer = true;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.H)) {
+            playerone.stillAlive = false;
         }
 
         playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
