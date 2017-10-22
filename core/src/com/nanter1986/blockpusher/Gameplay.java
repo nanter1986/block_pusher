@@ -107,7 +107,7 @@ class Gameplay implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         boolean playerDied = !playerone.stillAlive;
-        if (playerDied) {
+        if (playerDied && playerone.explodedEnd) {
             tool.prefs.flush();
             DeathScreen deathScreen = new DeathScreen(game);
             Gdx.app.log("setting new screen to game: ", deathScreen.toString());
@@ -204,6 +204,9 @@ class Gameplay implements Screen, InputProcessor {
                 Gdx.app.log("is android", t.toString());
                 t.drawSelf(tool, infoPatch);
             }
+        }
+        if (playerone.explodedStarted) {
+            playerone.bloodAnimation(tool);
         }
         tool.batch.end();
     }
@@ -382,6 +385,7 @@ class Gameplay implements Screen, InputProcessor {
             cameraFollowPlayer = true;
         } else if (Gdx.input.isKeyPressed(Input.Keys.H)) {
             playerone.stillAlive = false;
+            playerone.explodedStarted = true;
         }
 
         playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);

@@ -18,10 +18,12 @@ import java.util.ArrayList;
 public class PlayerOne extends MovableCharacter {
     private static final int PLAYER_MOVE_REDUCER = 8;
     public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
+    public DisplayToolkit tool;
     public  boolean stillAlive;
     public ArrayList<Item>collectedItems=new ArrayList<Item>();
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
+        this.tool = tool;
         this.moveReducerLimit = PLAYER_MOVE_REDUCER;
         this.texture=playerOne;
 
@@ -61,6 +63,7 @@ public class PlayerOne extends MovableCharacter {
         for (MovableCharacter e : eArray) {
             if (e.explodedStarted == false && stillAlive && this.getFixatedX() == e.getFixatedX() && this.getFixatedY() == e.getFixatedY()) {
                 stillAlive=false;
+                explodedStarted = true;
                 Gdx.app.log("player status:","DEAD");
             }
         }
@@ -92,7 +95,33 @@ public class PlayerOne extends MovableCharacter {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
+        int widthOfBlood = tool.scW;
+        int heightOfBlood = tool.scW;
+        int whereToExplodeX = getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
+        int whereToExplodeY = getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
+        if (bloodDelayNumber > 0) {
+            bloodDelayNumber--;
+        } else {
 
+
+            Gdx.app.log("blood animation:", whereToExplodeX + "/" + whereToExplodeY + "/" + widthOfBlood);
+            bloodAnimationX++;
+            if (bloodAnimationX == 2) {
+                bloodAnimationX = 0;
+                bloodAnimationY++;
+            }
+            Gdx.app.log("showing explosion:", bloodAnimationX + " " + bloodAnimationY + " " + blood.toString() +
+                    " at " + whereToExplodeX + "/" + whereToExplodeY + " width:" + widthOfBlood);
+            if (bloodAnimationY == 3) {
+                explodedEnd = true;
+                Gdx.app.log("explosion ended: ", explodedEnd + "");
+            }
+            bloodDelayNumber = 64;
+        }
+        int sourceX = bloodAnimationX * 500;
+        int sourceY = bloodAnimationY * 500;
+        Gdx.app.log("blood source at:", sourceX + "/" + sourceY);
+        tool.batch.draw(blood, whereToExplodeX, whereToExplodeY, widthOfBlood, heightOfBlood, sourceX, sourceY, 500, 500, false, false);
     }
 
     @Override
