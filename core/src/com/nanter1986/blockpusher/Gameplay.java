@@ -11,6 +11,7 @@ import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DataControl.DataControler;
@@ -27,8 +28,7 @@ import java.util.ArrayList;
 
 class Gameplay implements Screen, InputProcessor {
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
-
-
+    private final int BOSS_FREQUENCY = 20;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     int stage;
@@ -46,6 +46,7 @@ class Gameplay implements Screen, InputProcessor {
     ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
+    boolean isStageDevidedByBossFrecuency;
     private PlayerOne playerone;
     private int enemyLocatorIndex;
     private boolean cameraFollowPlayer;
@@ -73,9 +74,9 @@ class Gameplay implements Screen, InputProcessor {
         theMap = new MapOne(tool);
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
-        for (int i = 0; i < enemiesToGenerate; i++) {
-            enemiesArraylist.add(new MinionSimple(tool, theMap));
-        }
+        isStageDevidedByBossFrecuency = stage % BOSS_FREQUENCY == 0;
+        spawnEnemies();
+
         enemiesArraylist.get(0).crushed = true;
         for (int i = 0; i < bombsToGenerate; i++) {
             itemsArraylist.add(new Bomb(tool, theMap));
@@ -91,6 +92,20 @@ class Gameplay implements Screen, InputProcessor {
         cameraFollowPlayer=true;
         //tool.camera.zoom=5f;
         Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
+    }
+
+    private void spawnEnemies() {
+
+        if (isStageDevidedByBossFrecuency) {
+            for (int i = 0; i < enemiesToGenerate; i++) {
+                enemiesArraylist.add(new Nitar(tool, theMap));
+            }
+        } else {
+            for (int i = 0; i < enemiesToGenerate; i++) {
+                enemiesArraylist.add(new MinionSimple(tool, theMap));
+            }
+        }
+
     }
 
     private int howManyBombsToGenerate() {
@@ -386,6 +401,11 @@ class Gameplay implements Screen, InputProcessor {
         } else if (Gdx.input.isKeyPressed(Input.Keys.H)) {
             playerone.stillAlive = false;
             playerone.explodedStarted = true;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.N)) {
+            for (MovableCharacter m : enemiesArraylist) {
+                m.crushed = true;
+                m.explodedStarted = true;
+            }
         }
 
         playerone.keepPlayerInBounds(theMap.MAP_WIDTH_IN_BLOCKS, theMap.MAP_HEIGHT_IN_BLOCKS);
