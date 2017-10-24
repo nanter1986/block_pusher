@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nanter1986.blockpusher.DataControl.DataControler;
 
 /**
  * Created by user on 29/8/2017.
@@ -18,6 +19,7 @@ public class DisplayToolkit {
     public int scW;
     public int scH;
     public int universalWidthFactor;
+    public DataControler data;
 
     public DisplayToolkit(int screenWidth,int screenHeight) {
         prefs= Gdx.app.getPreferences("Pusher");
@@ -27,6 +29,7 @@ public class DisplayToolkit {
         batch = new SpriteBatch();
         camera = new OrthographicCamera(screenWidth, screenHeight);
         camera.position.set(screenWidth / 2, screenHeight / 2, 100);
+        data = new DataControler(this);
 
         font=new BitmapFont();
         font.setColor(0.9f, 0.1f, 0.1f, 1.0f);

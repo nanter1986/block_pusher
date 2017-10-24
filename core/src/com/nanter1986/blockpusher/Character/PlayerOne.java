@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 
 public class PlayerOne extends MovableCharacter {
-    private static final int PLAYER_MOVE_REDUCER = 8;
+    private static final int PLAYER_MOVE_REDUCER_START = 16;
     public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public DisplayToolkit tool;
     public  boolean stillAlive;
@@ -24,7 +24,7 @@ public class PlayerOne extends MovableCharacter {
 
     public PlayerOne(DisplayToolkit tool,MapOne map) {
         this.tool = tool;
-        this.moveReducerLimit = PLAYER_MOVE_REDUCER;
+        this.moveReducerLimit = getPlayerMoveReducer();
         this.texture=playerOne;
 
         this.characterW=tool.universalWidthFactor;
@@ -38,6 +38,16 @@ public class PlayerOne extends MovableCharacter {
 
 
         stillAlive=true;
+    }
+
+    private int getPlayerMoveReducer() {
+        int level = tool.data.readLevel();
+        int moveReducer = PLAYER_MOVE_REDUCER_START - (level / 10);
+        if (moveReducer < 1) {
+            moveReducer = 1;
+        }
+        Gdx.app.log("speed of player", "movereducer:" + moveReducer);
+        return moveReducer;
     }
 
     public void collectItems(ArrayList<Item>allItems){

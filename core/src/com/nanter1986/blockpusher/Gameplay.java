@@ -40,7 +40,6 @@ class Gameplay implements Screen, InputProcessor {
     DisplayToolkit tool;
     MapOne theMap;
     OutsideWall theWall;
-    DataControler data;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
@@ -63,14 +62,14 @@ class Gameplay implements Screen, InputProcessor {
     public void show() {
         Gdx.input.setInputProcessor(this);
         Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
-        data = new DataControler(tool);
+        tool.data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
-        stage = data.readStage();
+        stage = tool.data.readStage();
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = howManyEnemiesToGenerate();
         bombsToGenerate = howManyBombsToGenerate();
         android = Gdx.app.getType() == Application.ApplicationType.Android;
-        stepsGoingToBonus = enemiesToGenerate * data.STEPS_PER_ENEMY;
+        stepsGoingToBonus = enemiesToGenerate * tool.data.STEPS_PER_ENEMY;
         theMap = new MapOne(tool);
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
@@ -109,12 +108,12 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private int howManyBombsToGenerate() {
-        int numOfBombs = (stage / data.MORE_BOMBS_EVERY_X_STAGES) + 5;
+        int numOfBombs = (stage / tool.data.MORE_BOMBS_EVERY_X_STAGES) + 5;
         return numOfBombs;
     }
 
     private int howManyEnemiesToGenerate() {
-        int numOfEnemies = (stage / data.MORE_ENEMIES_EVERY_X_STAGES) + 1;
+        int numOfEnemies = (stage / tool.data.MORE_ENEMIES_EVERY_X_STAGES) + 1;
         return numOfEnemies;
     }
 
@@ -155,9 +154,9 @@ class Gameplay implements Screen, InputProcessor {
 
     private void doAfterWinConditionsHaveMet() {
         int numOfBombs = playerone.collectedItems.size();
-        data.putBombs(numOfBombs);
+        tool.data.putBombs(numOfBombs);
         Gdx.app.log("bombs left:", numOfBombs + "");
-        data.putSteps(stepsGoingToBonus);
+        tool.data.putSteps(stepsGoingToBonus);
         Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
         Gdx.app.log("setting new screen to game: ", win.toString());
