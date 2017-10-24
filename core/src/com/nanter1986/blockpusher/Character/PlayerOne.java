@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class PlayerOne extends MovableCharacter {
     private static final int PLAYER_MOVE_REDUCER_START = 16;
+    private static final int LEVELS_PER_SPEED_BOOST = 10;
+    private static final int MINIMUM_MOVE_REDUCER = 1;
     public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public DisplayToolkit tool;
     public  boolean stillAlive;
@@ -42,9 +44,10 @@ public class PlayerOne extends MovableCharacter {
 
     private int getPlayerMoveReducer() {
         int level = tool.data.readLevel();
-        int moveReducer = PLAYER_MOVE_REDUCER_START - (level / 10);
-        if (moveReducer < 1) {
-            moveReducer = 1;
+        int moveReducer = PLAYER_MOVE_REDUCER_START - (level / LEVELS_PER_SPEED_BOOST);
+        boolean isMoveReducerTooSmall = moveReducer < MINIMUM_MOVE_REDUCER;
+        if (isMoveReducerTooSmall) {
+            moveReducer = MINIMUM_MOVE_REDUCER;
         }
         Gdx.app.log("speed of player", "movereducer:" + moveReducer);
         return moveReducer;
