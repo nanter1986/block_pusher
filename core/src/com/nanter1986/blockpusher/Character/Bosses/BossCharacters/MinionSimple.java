@@ -11,7 +11,7 @@ import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossMover;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,12 +24,12 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
     public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
-    public MinionSimple(DisplayToolkit tool, MapOne map) {
+    public MinionSimple(DisplayToolkit tool, GeneralMap map) {
         this.texture = playerOne;
         boolean freeBlockFound = false;
         while (freeBlockFound == false) {
-            int theX = new Random().nextInt(50);
-            int theY = new Random().nextInt(50);
+            int theX = new Random().nextInt(map.width);
+            int theY = new Random().nextInt(map.height);
             if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                 freeBlockFound = true;
                 this.characterW = tool.universalWidthFactor;
@@ -85,7 +85,7 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public void updatePosition(SpriteBatch b, MapOne map, ArrayList<MovableCharacter> characters) {
+    public void updatePosition(SpriteBatch b, GeneralMap map, ArrayList<MovableCharacter> characters) {
         switch (dir) {
             case UP:
                 b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
@@ -110,12 +110,12 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public void moveCharacter(MapOne map, ArrayList<MovableCharacter> enemies) {
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies) {
         new BossMover(this).moveBoss(map, enemies);
     }
 
     @Override
-    public void checkIfcrushed(MapOne map) {
+    public void checkIfcrushed(GeneralMap map) {
         new BossCrushChecker(this).checkIfcrushed(map);
     }
 }

@@ -3,7 +3,7 @@ package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public class BossMover {
         this.character = character;
     }
 
-    public void moveBoss(MapOne map, ArrayList<MovableCharacter> enemies) {
+    public void moveBoss(GeneralMap map, ArrayList<MovableCharacter> enemies) {
         if (character.moveReducer > 1) {
             character.moveReducer--;
             character.increaseByStep();
@@ -34,7 +34,7 @@ public class BossMover {
             if(new BossFrontBlockChecker(character).checkIfBlockAtTheFront(map,enemies)){
                 switch (character.dir){
                     case UP:
-                        if (character.getFixatedY() < map.MAP_HEIGHT_IN_BLOCKS - 1) {
+                        if (character.getFixatedY() < map.height - 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();
@@ -55,7 +55,7 @@ public class BossMover {
                         }
                         break;
                     case RIGHT:
-                        if (character.getFixatedX() < map.MAP_WIDTH_IN_BLOCKS - 1) {
+                        if (character.getFixatedX() < map.width - 1) {
                             character.stepSequenceRunning = true;
                         }else{
                             new RandomBossDirectioner(character).getRandomDirection();

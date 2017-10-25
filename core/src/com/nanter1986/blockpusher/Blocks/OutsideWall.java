@@ -3,7 +3,7 @@ package com.nanter1986.blockpusher.Blocks;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.DisplayToolkit;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 /**
  * Created by user on 28/9/2017.
@@ -18,7 +18,7 @@ public class OutsideWall {
         Gdx.app.log("outside wall texture:",wallRock.toString());
     }
 
-    public void drawSelf(MapOne map){
+    public void drawSelf(GeneralMap map) {
         for(int xLeft=-1;xLeft>=-3;xLeft--){
             for(int yLeft=-3;yLeft<53;yLeft++){
                 int xLeftWithWidth=xLeft*tool.universalWidthFactor;

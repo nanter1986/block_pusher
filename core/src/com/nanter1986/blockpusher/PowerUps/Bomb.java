@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.Random;
 
@@ -16,11 +16,11 @@ import java.util.Random;
 public class Bomb extends Item{
     public final Texture playerOne = new Texture(Gdx.files.internal("bomb.png"));
 
-    public Bomb(DisplayToolkit tool, MapOne map) {
+    public Bomb(DisplayToolkit tool, GeneralMap map) {
         boolean freeBlockFound=false;
         while (freeBlockFound==false){
-            int theX=new Random().nextInt(50);
-            int theY=new Random().nextInt(50);
+            int theX = new Random().nextInt(map.width);
+            int theY = new Random().nextInt(map.height);
             if(map.mapArray[theX][theY].type== BlockGeneral.Blocktypes.AIR){
                 freeBlockFound=true;
                 this.itemX=theX;

@@ -3,7 +3,7 @@ package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,13 @@ public class BossFrontBlockChecker {
         this.character = character;
     }
 
-    public boolean checkIfBlockAtTheFront(MapOne map, ArrayList<MovableCharacter> enemies) {
+    public boolean checkIfBlockAtTheFront(GeneralMap map, ArrayList<MovableCharacter> enemies) {
         boolean isFreeToPass=true;
         switch (character.dir){
             case UP:
                 int xToCheckUp = (character.getFixatedX());
                 int yToCheckUp = character.getFixatedY() + 1;
-                if(xToCheckUp<map.MAP_WIDTH_IN_BLOCKS && xToCheckUp>=0 && yToCheckUp<(map.MAP_HEIGHT_IN_BLOCKS-2) && yToCheckUp>=0){
+                if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < (map.height - 2) && yToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -45,7 +45,7 @@ public class BossFrontBlockChecker {
             case DOWN:
                 int xToCheckDown = character.getFixatedX();
                 int yToCheckDown = character.getFixatedY() - 1;
-                if(xToCheckDown<map.MAP_WIDTH_IN_BLOCKS && xToCheckDown>=0 && yToCheckDown<map.MAP_HEIGHT_IN_BLOCKS && yToCheckDown>0){
+                if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown > 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -64,7 +64,7 @@ public class BossFrontBlockChecker {
             case LEFT:
                 int xToCheckLeft = character.getFixatedX() - 1;
                 int yToCheckLeft = character.getFixatedY();
-                if(xToCheckLeft<map.MAP_WIDTH_IN_BLOCKS && xToCheckLeft>0 && yToCheckLeft<map.MAP_HEIGHT_IN_BLOCKS && yToCheckLeft>=0){
+                if (xToCheckLeft < map.width && xToCheckLeft > 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -86,7 +86,7 @@ public class BossFrontBlockChecker {
                 int xToCheckRight = character.getFixatedX() + 1;
                 int yToCheckRight = character.getFixatedY();
 
-                if(xToCheckRight<(map.MAP_WIDTH_IN_BLOCKS-2) && xToCheckRight>=0 && yToCheckRight<map.MAP_HEIGHT_IN_BLOCKS && yToCheckRight>=0){
+                if (xToCheckRight < (map.width - 2) && xToCheckRight >= 0 && yToCheckRight < map.height && yToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
