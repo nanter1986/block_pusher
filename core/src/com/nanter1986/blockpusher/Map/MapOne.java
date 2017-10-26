@@ -15,6 +15,7 @@ public class MapOne extends GeneralMap {
 
     public MapOne(DisplayToolkit tool) {
         super(tool);
+        type = GameplayTypes.REGULAR;
         width = MAP_WIDTH_IN_BLOCKS;
         height = MAP_HEIGHT_IN_BLOCKS;
         mapArray = new BlockGeneral[width][width];

@@ -16,7 +16,6 @@ import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.Map.GeneralMap;
-import com.nanter1986.blockpusher.Map.MapOne;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
@@ -53,8 +52,9 @@ class Gameplay implements Screen, InputProcessor {
     private boolean android;
 
 
-    public Gameplay(MainClass game) {
+    public Gameplay(MainClass game, GeneralMap theMap) {
         this.game = game;
+        this.theMap = theMap;
         this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.tool.camera.update();
     }
@@ -71,16 +71,12 @@ class Gameplay implements Screen, InputProcessor {
         bombsToGenerate = howManyBombsToGenerate();
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         stepsGoingToBonus = enemiesToGenerate * tool.data.STEPS_PER_ENEMY;
-        theMap = new MapOne(tool);
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
         isStageDevidedByBossFrecuency = stage % BOSS_FREQUENCY == 0;
         spawnEnemies();
+        spawnBombs();
 
-        enemiesArraylist.get(0).crushed = true;
-        for (int i = 0; i < bombsToGenerate; i++) {
-            itemsArraylist.add(new Bomb(tool, theMap));
-        }
         Gdx.app.log("is android", "boolean test " + android);
         if (android) {
             Gdx.app.log("is android", "yes, creating d pad");
@@ -92,6 +88,12 @@ class Gameplay implements Screen, InputProcessor {
         cameraFollowPlayer=true;
         //tool.camera.zoom=5f;
         Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
+    }
+
+    private void spawnBombs() {
+        for (int i = 0; i < bombsToGenerate; i++) {
+            itemsArraylist.add(new Bomb(tool, theMap));
+        }
     }
 
     private void spawnEnemies() {

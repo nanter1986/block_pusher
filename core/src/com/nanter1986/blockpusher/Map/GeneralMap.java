@@ -13,6 +13,7 @@ import java.util.Random;
 
 public abstract class GeneralMap {
     public static final Random RANDOM = new Random();
+    public GameplayTypes type;
     public int width;
     public int height;
     public int blocksize;

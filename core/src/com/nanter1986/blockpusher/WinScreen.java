@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nanter1986.blockpusher.Buttons.NextWinScreenButton;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
+import com.nanter1986.blockpusher.Map.MapOne;
 
 import java.util.ArrayList;
 
@@ -72,7 +73,7 @@ public class WinScreen implements Screen{
 
     private void androidControls() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game);
+            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
@@ -81,7 +82,7 @@ public class WinScreen implements Screen{
     private void desktopControls() {
         if (buttons.get(0).isButtonTouched()) {
             tool.prefs.flush();
-            Gameplay gameplay = new Gameplay(game);
+            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
