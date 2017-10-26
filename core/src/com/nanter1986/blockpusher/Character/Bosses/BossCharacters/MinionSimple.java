@@ -26,26 +26,39 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
     public MinionSimple(DisplayToolkit tool, GeneralMap map) {
         this.texture = playerOne;
-        boolean freeBlockFound = false;
-        while (freeBlockFound == false) {
-            int theX = new Random().nextInt(map.width);
-            int theY = new Random().nextInt(map.height);
-            if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
-                freeBlockFound = true;
-                this.characterW = tool.universalWidthFactor;
-                this.characterH = tool.universalWidthFactor;
-                this.coord = new DoubleCoordSystem(theX * this.characterW,
-                        theY * this.characterW,
-                        theX,
-                        theY, this.characterW);
 
-                this.level = 1;
-                moveReducerLimit = 64;
-                Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
-                        "\nat y:" + this.getFixatedY());
-            }
 
+        this.characterW = tool.universalWidthFactor;
+        this.characterH = tool.universalWidthFactor;
+        this.level = 1;
+        moveReducerLimit = 64;
+        switch (map.type) {
+            case TUTORIAL1:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
+            default:
+                boolean freeBlockFound = false;
+                while (freeBlockFound == false) {
+                    int theX = new Random().nextInt(map.width);
+                    int theY = new Random().nextInt(map.height);
+                    if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
+                        freeBlockFound = true;
+                        this.coord = new DoubleCoordSystem(theX * this.characterW,
+                                theY * this.characterW,
+                                theX,
+                                theY,
+                                this.characterW);
+
+                    }
+
+                }
         }
+        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
+                "\nat y:" + this.getFixatedY());
 
     }
 

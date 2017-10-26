@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher.Map.TutorialMaps;
 
+import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GameplayTypes;
@@ -13,7 +14,7 @@ public class TutorialOne extends GeneralMap {
     public final int MAP_WIDTH_IN_BLOCKS = 5;
     public final int MAP_HEIGHT_IN_BLOCKS = 5;
     public int blocksize;
-    public BlockGeneral[][] mapArray = new BlockGeneral[MAP_WIDTH_IN_BLOCKS][MAP_HEIGHT_IN_BLOCKS];
+
 
 
     public TutorialOne(DisplayToolkit tool) {
@@ -21,6 +22,7 @@ public class TutorialOne extends GeneralMap {
         type = GameplayTypes.TUTORIAL1;
         this.width = MAP_WIDTH_IN_BLOCKS;
         this.height = MAP_HEIGHT_IN_BLOCKS;
+        mapArray = new BlockGeneral[width][height];
         mapArray[0][0] = new BlockGeneral(0, 0, BlockGeneral.Blocktypes.WATER);
         mapArray[1][0] = new BlockGeneral(1, 0, BlockGeneral.Blocktypes.WATER);
         mapArray[2][0] = new BlockGeneral(2, 0, BlockGeneral.Blocktypes.WATER);
@@ -48,6 +50,6 @@ public class TutorialOne extends GeneralMap {
         mapArray[2][4] = new BlockGeneral(2, 4, BlockGeneral.Blocktypes.WATER);
         mapArray[3][4] = new BlockGeneral(3, 4, BlockGeneral.Blocktypes.WATER);
         mapArray[4][4] = new BlockGeneral(4, 4, BlockGeneral.Blocktypes.WATER);
-
+        Gdx.app.log("array", mapArray[0][2].type.toString());
     }
 }

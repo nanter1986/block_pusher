@@ -31,15 +31,25 @@ public class PlayerOne extends MovableCharacter {
 
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
-        this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
-                map.height * this.characterW / 2,
-                map.width / 2,
-                map.height / 2,
-                this.characterW);
         this.dir=Direction.UP;
-
-
         stillAlive=true;
+        switch (map.type) {
+            case TUTORIAL1:
+                this.coord = new DoubleCoordSystem(0,
+                        2 * this.characterW,
+                        0,
+                        2,
+                        this.characterW);
+                break;
+            default:
+                this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
+                        map.height * this.characterW / 2,
+                        map.width / 2,
+                        map.height / 2,
+                        this.characterW);
+        }
+
+
     }
 
     private int getPlayerMoveReducer() {

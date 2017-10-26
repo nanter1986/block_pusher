@@ -25,8 +25,8 @@ public abstract class GeneralMap {
 
     public void updatePosition(DisplayToolkit tool) {
 
-        for (int i = 0; i < 50; i++) {
-            for (int j = 0; j < 50; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 float blockX = mapArray[i][j].blockX * blocksize;
                 float blockY = mapArray[i][j].blockY * blocksize;
                 if (CheckIfInScreenToDraw.checkIfInScreen(tool, blockX, blockY)) {

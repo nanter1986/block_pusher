@@ -76,13 +76,14 @@ class Gameplay implements Screen, InputProcessor {
         isStageDevidedByBossFrecuency = stage % BOSS_FREQUENCY == 0;
         spawnEnemies();
         spawnBombs();
-
+        playerGetsItems();
         Gdx.app.log("is android", "boolean test " + android);
         if (android) {
             Gdx.app.log("is android", "yes, creating d pad");
             dirpad = TouchableButton.dirPad(tool);
         }
-        playerone.collectedItems.add(new Bomb(tool, theMap));
+        Gdx.app.log("pl1", playerone.getFixatedX() + " " + playerone.getFixatedY());
+        Gdx.app.log("pl1", theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY()].blockX + "");
         theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY()].type = BlockGeneral.Blocktypes.AIR;
         winConditionsMet = false;
         cameraFollowPlayer=true;
@@ -90,23 +91,47 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
     }
 
-    private void spawnBombs() {
-        for (int i = 0; i < bombsToGenerate; i++) {
-            itemsArraylist.add(new Bomb(tool, theMap));
+    private void playerGetsItems() {
+        switch (theMap.type) {
+            case TUTORIAL1:
+
+                break;
+            default:
+                playerone.collectedItems.add(new Bomb(tool, theMap));
         }
+
+    }
+
+    private void spawnBombs() {
+        switch (theMap.type) {
+            case TUTORIAL1:
+
+                break;
+            default:
+                for (int i = 0; i < bombsToGenerate; i++) {
+                    itemsArraylist.add(new Bomb(tool, theMap));
+                }
+        }
+
     }
 
     private void spawnEnemies() {
-
-        if (isStageDevidedByBossFrecuency) {
-            for (int i = 0; i < enemiesToGenerate; i++) {
-                enemiesArraylist.add(new Nitar(tool, theMap));
-            }
-        } else {
-            for (int i = 0; i < enemiesToGenerate; i++) {
+        switch (theMap.type) {
+            case TUTORIAL1:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
-            }
+                break;
+            default:
+                if (isStageDevidedByBossFrecuency) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new Nitar(tool, theMap));
+                    }
+                } else {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new MinionSimple(tool, theMap));
+                    }
+                }
         }
+
 
     }
 

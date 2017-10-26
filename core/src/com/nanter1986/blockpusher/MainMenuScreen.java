@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nanter1986.blockpusher.Buttons.MainMenuPlayButton;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.TutorialMaps.TutorialOne;
 
 import java.util.ArrayList;
 
@@ -50,7 +50,7 @@ public class MainMenuScreen implements Screen {
 
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
+            Gameplay gameplay = new Gameplay(game, new TutorialOne(tool));
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }

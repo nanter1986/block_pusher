@@ -17,24 +17,32 @@ public class Bomb extends Item{
     public final Texture playerOne = new Texture(Gdx.files.internal("bomb.png"));
 
     public Bomb(DisplayToolkit tool, GeneralMap map) {
-        boolean freeBlockFound=false;
-        while (freeBlockFound==false){
-            int theX = new Random().nextInt(map.width);
-            int theY = new Random().nextInt(map.height);
-            if(map.mapArray[theX][theY].type== BlockGeneral.Blocktypes.AIR){
-                freeBlockFound=true;
-                this.itemX=theX;
-                this.itemY=theY;
-            }
-            this.itemW=tool.universalWidthFactor;
-            this.itemH=tool.universalWidthFactor;
-            this.collected=false;
-            this.used=false;
-            Gdx.app.log("item created:","item x:"+this.itemX+
-                    " item y:"+this.itemY+
-                    " item type:"+this.getClass().toString());
 
+        this.itemW = tool.universalWidthFactor;
+        this.itemH = tool.universalWidthFactor;
+        this.collected = false;
+        this.used = false;
+        switch (map.type) {
+            case TUTORIAL1:
+
+                break;
+            default:
+                boolean freeBlockFound = false;
+                while (freeBlockFound == false) {
+                    int theX = new Random().nextInt(map.width);
+                    int theY = new Random().nextInt(map.height);
+                    if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
+                        freeBlockFound = true;
+                        this.itemX = theX;
+                        this.itemY = theY;
+                    }
+
+
+                }
         }
+        Gdx.app.log("item created:", "item x:" + this.itemX +
+                " item y:" + this.itemY +
+                " item type:" + this.getClass().toString());
     }
 
     @Override
