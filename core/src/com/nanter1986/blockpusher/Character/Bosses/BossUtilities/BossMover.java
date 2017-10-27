@@ -26,7 +26,7 @@ public class BossMover {
             Gdx.app.log("reduce enemy moveReducer,step", character.moveReducer + "," + character.getStep());
         } else if (character.moveReducer == 1) {
             //character.fixatePosition();
-            character.moveReducer -= 1;
+            character.moveReducer--;
             Gdx.app.log("fixate enemy position", character.moveReducer + "");
         }else{
             character.stepSequenceRunning = false;
