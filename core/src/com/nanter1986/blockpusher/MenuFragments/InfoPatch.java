@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
-import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.PowerUps.Item;
 
@@ -14,18 +13,13 @@ import java.util.ArrayList;
  * Created by user on 26/9/2017.
  */
 
-public class InfoPatch {
+public class InfoPatch extends GeneralMenuFragement {
     public final Texture blackInfoPatch = new Texture(Gdx.files.internal("blackinfopatch.png"));
     public final Texture bomb = new Texture(Gdx.files.internal("bomb.png"));
-    public int height;
-    public int width;
-    public int cellHeight;
-    public int cellWidth;
-    public float positionX;
-    public float positionY;
-    public DataControler data;
+
 
     public InfoPatch(DisplayToolkit tool) {
+        this.texture = blackInfoPatch;
         this.height = tool.scH / 12;
         this.width=tool.scW;
         this.cellHeight = height / 2;
@@ -33,14 +27,9 @@ public class InfoPatch {
 
     }
 
-    public void stealPosition(DisplayToolkit tool){
-        this.positionX=tool.camera.position.x-tool.scW/2;
-        this.positionY = tool.camera.position.y + tool.scH / 2 - this.height;
-        Gdx.app.log("info patch position:", this.positionX + "/" + this.positionY);
-    }
 
     public void drawSelf(DisplayToolkit tool, ArrayList<MovableCharacter> enemies, ArrayList<Item> items, PlayerOne player, int stage) {
-        tool.batch.draw(blackInfoPatch,positionX,positionY,width,height);
+        drawFragment(tool);
         tool.font.draw(tool.batch,"Enemies left:"+enemies.size(),positionX,positionY+cellHeight);
         tool.font.draw(tool.batch, "Stage:" + stage, positionX + cellWidth, positionY + cellHeight);
         //tool.font.draw(tool.batch, "x:" + player.getFixatedX() + "/y:" + player.getFixatedY(), positionX + cellWidth, positionY + 3 * cellHeight);

@@ -16,6 +16,7 @@ import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.Map.GeneralMap;
+import com.nanter1986.blockpusher.MenuFragments.DialogBox;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
@@ -250,6 +251,7 @@ class Gameplay implements Screen, InputProcessor {
         if (playerone.explodedStarted) {
             playerone.bloodAnimation(tool);
         }
+        new DialogBox(tool).drawText(tool, "heyyyyyyyyyyy");
         tool.batch.end();
     }
 
