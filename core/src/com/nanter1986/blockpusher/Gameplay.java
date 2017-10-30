@@ -17,6 +17,7 @@ import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.Map.GeneralMap;
 import com.nanter1986.blockpusher.MenuFragments.DialogBox;
+import com.nanter1986.blockpusher.MenuFragments.DialogChooser;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
@@ -40,6 +41,7 @@ class Gameplay implements Screen, InputProcessor {
     MainClass game;
     DisplayToolkit tool;
     GeneralMap theMap;
+    DialogChooser dialog;
     OutsideWall theWall;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
@@ -67,6 +69,7 @@ class Gameplay implements Screen, InputProcessor {
         tool.data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         stage = tool.data.readStage();
+        dialog = new DialogChooser();
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = howManyEnemiesToGenerate();
         bombsToGenerate = howManyBombsToGenerate();
@@ -251,7 +254,7 @@ class Gameplay implements Screen, InputProcessor {
         if (playerone.explodedStarted) {
             playerone.bloodAnimation(tool);
         }
-        new DialogBox(tool).drawText(tool, "heyyyyyyyyyyy");
+        new DialogBox(tool).drawText(tool, dialog.giveDialog(theMap, 0, 0));
         tool.batch.end();
     }
 

@@ -11,27 +11,111 @@ public class DialogChooser {
         String dialog = "";
         switch (map.type) {
             case REGULAR:
-                regularGameplay();
+                dialog = regularGameplay(stage, senction);
                 break;
             case TUTORIAL1:
-                tutorialOne();
+                dialog = tutorialOne(senction);
                 break;
             case TUTORIAL2:
-                tutorialTwo();
+                dialog = tutorialTwo(senction);
                 break;
         }
         return dialog;
     }
 
-    private String tutorialTwo() {
-        return null;
+    private String tutorialTwo(int senction) {
+        String dialog = "";
+        switch (senction) {
+            case 0:
+                dialog = "";
+                break;
+            case 1:
+                dialog = "";
+                break;
+            case 2:
+                dialog = "";
+                break;
+        }
+        return dialog;
     }
 
-    private String tutorialOne() {
-        return null;
+    private String tutorialOne(int senction) {
+        String dialog = "";
+        switch (senction) {
+            case 0:
+                dialog = "hello there player,welcome!";
+                break;
+            case 1:
+                dialog = "";
+                break;
+            case 2:
+                dialog = "";
+                break;
+        }
+        return dialog;
     }
 
-    private String regularGameplay() {
-        return null;
+    private String regularGameplay(int stage, int senction) {
+        String dialog = "";
+        switch (stage) {
+            case 0:
+                dialog = regularGameplaySenctionDialogsOne(senction);
+                break;
+            case 1:
+                dialog = regularGameplaySenctionDialogsTwo(senction);
+                break;
+            case 2:
+                dialog = regularGameplaySenctionDialogsThree(senction);
+                break;
+        }
+        return dialog;
+    }
+
+    private String regularGameplaySenctionDialogsTwo(int senction) {
+        String dialog = "";
+        switch (senction) {
+            case 0:
+                dialog = "";
+                break;
+            case 1:
+                dialog = "";
+                break;
+            case 2:
+                dialog = "";
+                break;
+        }
+        return dialog;
+    }
+
+    private String regularGameplaySenctionDialogsThree(int senction) {
+        String dialog = "";
+        switch (senction) {
+            case 0:
+                dialog = "";
+                break;
+            case 1:
+                dialog = "";
+                break;
+            case 2:
+                dialog = "";
+                break;
+        }
+        return dialog;
+    }
+
+    private String regularGameplaySenctionDialogsOne(int senction) {
+        String dialog = "";
+        switch (senction) {
+            case 0:
+                dialog = "";
+                break;
+            case 1:
+                dialog = "";
+                break;
+            case 2:
+                dialog = "";
+                break;
+        }
+        return dialog;
     }
 }
