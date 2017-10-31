@@ -34,6 +34,7 @@ class Gameplay implements Screen, InputProcessor {
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     int stage;
+    int dialogSenction;
     boolean winConditionsMet;
     int enemiesToGenerate;
     int bombsToGenerate;
@@ -53,6 +54,8 @@ class Gameplay implements Screen, InputProcessor {
     private int enemyLocatorIndex;
     private boolean cameraFollowPlayer;
     private boolean android;
+    private boolean showingDialog;
+    private boolean doneInitialStop;
 
 
     public Gameplay(MainClass game, GeneralMap theMap) {
@@ -69,11 +72,14 @@ class Gameplay implements Screen, InputProcessor {
         tool.data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         stage = tool.data.readStage();
+        dialogSenction = 0;
         dialog = new DialogChooser();
         Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = howManyEnemiesToGenerate();
         bombsToGenerate = howManyBombsToGenerate();
         android = Gdx.app.getType() == Application.ApplicationType.Android;
+        showingDialog = true;
+        gamePaused = false;
         stepsGoingToBonus = enemiesToGenerate * tool.data.STEPS_PER_ENEMY;
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
@@ -162,6 +168,10 @@ class Gameplay implements Screen, InputProcessor {
         } else if (winConditionsMet) {
             doAfterWinConditionsHaveMet();
 
+        } else if (gamePaused && pauseReducer == 0 && Gdx.input.justTouched() && showingDialog) {
+            gamePaused = false;
+            showingDialog = false;
+            Gdx.app.log("game paused", "false");
         } else if (gamePaused && pauseReducer == 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             gamePaused = false;
             Gdx.app.log("game paused", "false");
@@ -178,10 +188,20 @@ class Gameplay implements Screen, InputProcessor {
             cameraOnPlayer();
             infoPatch.stealPosition(tool);
             drawEverythingHere();
-
+            initialStop();
 
 
         }
+
+    }
+
+    private void initialStop() {
+        if (!doneInitialStop) {
+            showingDialog = true;
+            gamePaused = true;
+            doneInitialStop = true;
+        }
+
     }
 
     private void doAfterWinConditionsHaveMet() {
@@ -254,7 +274,10 @@ class Gameplay implements Screen, InputProcessor {
         if (playerone.explodedStarted) {
             playerone.bloodAnimation(tool);
         }
-        new DialogBox(tool).drawText(tool, dialog.giveDialog(theMap, 0, 0));
+        if (showingDialog) {
+            new DialogBox(tool).drawText(tool, dialog.giveDialog(theMap, stage, dialogSenction));
+        }
+
         tool.batch.end();
     }
 
