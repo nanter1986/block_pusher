@@ -589,7 +589,7 @@ class Gameplay implements Screen, InputProcessor {
             case UP:
                 int blockY = playerone.getFixatedY() + 1;
                 Gdx.app.log("upward y coord:", blockY + "");
-                boolean yLessThanTop = playerone.getFixatedY() + 1 <= 49;
+                boolean yLessThanTop = playerone.getFixatedY() + 1 < theMap.height;
                 Gdx.app.log("is less than top:", yLessThanTop + "");
                 if (yLessThanTop) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX(), playerone.getFixatedY() + 1);
@@ -616,7 +616,7 @@ class Gameplay implements Screen, InputProcessor {
             case RIGHT:
                 int blockXright = playerone.getFixatedX() + 1;
                 Gdx.app.log("right x coord:", blockXright + "");
-                boolean xLessThanRightLimit = playerone.getFixatedX() + 1 <= 49;
+                boolean xLessThanRightLimit = playerone.getFixatedX() + 1 < theMap.width;
                 Gdx.app.log("is less than right limit:", xLessThanRightLimit + "");
                 if (xLessThanRightLimit) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX() + 1, playerone.getFixatedY());
