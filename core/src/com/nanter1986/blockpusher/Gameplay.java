@@ -275,7 +275,7 @@ class Gameplay implements Screen, InputProcessor {
             playerone.bloodAnimation(tool);
         }
         if (showingDialog) {
-            new DialogBox(tool).drawText(tool, dialog.giveDialog(theMap, stage, dialogSenction));
+            new DialogBox(tool, infoPatch).drawText(tool, dialog.giveDialog(theMap, stage, dialogSenction));
         }
 
         tool.batch.end();
