@@ -41,6 +41,13 @@ public class PlayerOne extends MovableCharacter {
                         2,
                         this.characterW);
                 break;
+            case TUTORIAL2:
+                this.coord = new DoubleCoordSystem(0,
+                        2 * this.characterW,
+                        0,
+                        2,
+                        this.characterW);
+                break;
             default:
                 this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
                         map.height * this.characterW / 2,

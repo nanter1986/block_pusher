@@ -1,6 +1,7 @@
 package com.nanter1986.blockpusher.DataControl;
 
 import com.nanter1986.blockpusher.DisplayToolkit;
+import com.nanter1986.blockpusher.Map.GameplayTypes;
 
 /**
  * Created by user on 12/10/2017.
@@ -69,5 +70,14 @@ public class DataControler {
     public void putStage(int stage) {
         tool.prefs.putInteger("stage", stage);
         tool.prefs.flush();
+    }
+
+    public void putGameplayType(GameplayTypes type) {
+        tool.prefs.putString("gameplayType", type.toString());
+        tool.prefs.flush();
+    }
+
+    public String readGameplayType() {
+        return tool.prefs.getString("gameplayType", "");
     }
 }

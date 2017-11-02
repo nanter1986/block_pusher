@@ -26,6 +26,9 @@ public class Bomb extends Item{
             case TUTORIAL1:
 
                 break;
+            case TUTORIAL2:
+
+                break;
             default:
                 boolean freeBlockFound = false;
                 while (freeBlockFound == false) {

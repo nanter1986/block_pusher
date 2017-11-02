@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.nanter1986.blockpusher.Buttons.NextWinScreenButton;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
+import com.nanter1986.blockpusher.Map.GameplayTypes;
 import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.TutorialMaps.TutorialTwo;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class WinScreen implements Screen{
     int numOfSteps;
     int xpGained;
     int xpForNextLevel;
+    GameplayTypes previosGameplayType;
     private boolean android;
 
 
@@ -49,6 +52,8 @@ public class WinScreen implements Screen{
         buttons.add(new NextWinScreenButton(tool));
         numOfBombs = data.readBombs();
         numOfSteps = data.readSteps();
+        Gdx.app.log("type", data.readGameplayType());
+        previosGameplayType = GameplayTypes.valueOf(data.readGameplayType());
         boolean numOfStepsSmallerThanZero = numOfSteps < 0;
         if (numOfStepsSmallerThanZero) {
             numOfSteps = 0;
@@ -82,9 +87,25 @@ public class WinScreen implements Screen{
     private void desktopControls() {
         if (buttons.get(0).isButtonTouched()) {
             tool.prefs.flush();
-            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
-            Gdx.app.log("setting new screen to game: ", gameplay.toString());
-            game.setScreen(gameplay);
+            switch (previosGameplayType) {
+                case TUTORIAL1:
+                    Gameplay tut2 = new Gameplay(game, new TutorialTwo(tool));
+                    Gdx.app.log("setting new screen to game: ", tut2.toString());
+                    game.setScreen(tut2);
+                    break;
+                case TUTORIAL2:
+                    Gameplay regular1 = new Gameplay(game, new MapOne(tool));
+                    Gdx.app.log("setting new screen to game: ", regular1.toString());
+                    game.setScreen(regular1);
+                    break;
+                case REGULAR:
+                    Gameplay regular2 = new Gameplay(game, new MapOne(tool));
+                    Gdx.app.log("setting new screen to game: ", regular2.toString());
+                    game.setScreen(regular2);
+                    break;
+            }
+
+
         }
     }
 

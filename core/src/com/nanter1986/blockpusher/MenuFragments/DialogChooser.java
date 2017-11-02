@@ -27,7 +27,7 @@ public class DialogChooser {
         String dialog = "";
         switch (senction) {
             case 0:
-                dialog = "";
+                dialog = "Use the bomb to blow up one of the blocks\nso that you can push the others.";
                 break;
             case 1:
                 dialog = "";

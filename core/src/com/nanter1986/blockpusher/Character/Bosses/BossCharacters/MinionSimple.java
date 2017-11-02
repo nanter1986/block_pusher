@@ -40,6 +40,13 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
                         2,
                         this.characterW);
                 break;
+            case TUTORIAL2:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
             default:
                 boolean freeBlockFound = false;
                 while (freeBlockFound == false) {

@@ -117,6 +117,9 @@ class Gameplay implements Screen, InputProcessor {
             case TUTORIAL1:
 
                 break;
+            case TUTORIAL2:
+                itemsArraylist.add(new Bomb(tool, theMap));
+                break;
             default:
                 for (int i = 0; i < bombsToGenerate; i++) {
                     itemsArraylist.add(new Bomb(tool, theMap));
@@ -128,6 +131,9 @@ class Gameplay implements Screen, InputProcessor {
     private void spawnEnemies() {
         switch (theMap.type) {
             case TUTORIAL1:
+                enemiesArraylist.add(new MinionSimple(tool, theMap));
+                break;
+            case TUTORIAL2:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
                 break;
             default:
@@ -212,6 +218,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
         Gdx.app.log("setting new screen to game: ", win.toString());
+        tool.data.putGameplayType(theMap.type);
         tool.prefs.flush();
         game.setScreen(win);
     }
