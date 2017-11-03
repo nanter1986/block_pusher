@@ -9,20 +9,20 @@ import com.nanter1986.blockpusher.DisplayToolkit;
 
 public class MapOne extends GeneralMap {
 
-    public final int MAP_WIDTH_IN_BLOCKS=50;
-    public final int MAP_HEIGHT_IN_BLOCKS=50;
+    public final int MAP_MIN_WIDTH_IN_BLOCKS = 10;
+    public final int MAP_MIN_HEIGHT_IN_BLOCKS = 10;
 
 
     public MapOne(DisplayToolkit tool) {
         super(tool);
         type = GameplayTypes.REGULAR;
-        width = MAP_WIDTH_IN_BLOCKS;
-        height = MAP_HEIGHT_IN_BLOCKS;
+        width = calculateWidth(tool);
+        height = calculateHeight(tool);
         mapArray = new BlockGeneral[width][width];
         blocksize=tool.universalWidthFactor;
 
-        for(int i=0;i<MAP_WIDTH_IN_BLOCKS;i++){
-            for(int j=0;j<MAP_HEIGHT_IN_BLOCKS;j++){
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 int anInteger=RANDOM.nextInt(100);
                 if(anInteger<50){
                     mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.AIR);
@@ -36,9 +36,17 @@ public class MapOne extends GeneralMap {
         //logSelf();
     }
 
+    private int calculateHeight(DisplayToolkit tool) {
+        int stage = tool.data.readStage();
+        int height = MAP_MIN_HEIGHT_IN_BLOCKS + stage / 10;
+        return height;
+    }
 
-
-
+    private int calculateWidth(DisplayToolkit tool) {
+        int stage = tool.data.readStage();
+        int width = MAP_MIN_WIDTH_IN_BLOCKS + stage / 10;
+        return width;
+    }
 
 
 }
