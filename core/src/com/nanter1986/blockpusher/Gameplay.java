@@ -190,6 +190,7 @@ class Gameplay implements Screen, InputProcessor {
             playerone.checkIfAlive(enemiesArraylist);
             playerone.collectItems(itemsArraylist);
             getPlayerInputIfMoveReducerIsZero(delta);
+            moveEnemies();
             removeEnemies();
             cameraOnPlayer();
             infoPatch.stealPosition(tool);
@@ -199,6 +200,16 @@ class Gameplay implements Screen, InputProcessor {
 
         }
 
+    }
+
+    private void moveEnemies() {
+        for (MovableCharacter e : enemiesArraylist) {
+            boolean enemyAlive = e.explodedStarted == false;
+            if (enemyAlive) {
+                e.moveCharacter(theMap, enemiesArraylist);
+            }
+
+        }
     }
 
     private void initialStop() {
@@ -244,7 +255,7 @@ class Gameplay implements Screen, InputProcessor {
         for (MovableCharacter e : enemiesArraylist) {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
-                e.moveCharacter(theMap, enemiesArraylist);
+                //e.moveCharacter(theMap, enemiesArraylist);
                 e.updatePosition(tool.batch, theMap, enemiesArraylist);
             }
 

@@ -50,19 +50,6 @@ public class PlayerOne extends MovableCharacter {
                 break;
             default:
                 whereToSpawnPlayerInRegularGame(map);
-                if (map.width % 2 == 0 && map.height % 2 == 0) {
-                    this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
-                            map.height * this.characterW / 2,
-                            map.width / 2,
-                            map.height / 2,
-                            this.characterW);
-                } else {
-                    this.coord = new DoubleCoordSystem((map.width - 1) * this.characterW / 2,
-                            (map.height - 1) * this.characterW / 2,
-                            map.width / 2,
-                            map.height / 2,
-                            this.characterW);
-                }
 
         }
 
