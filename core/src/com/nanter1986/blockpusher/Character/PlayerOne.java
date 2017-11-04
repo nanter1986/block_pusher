@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 public class PlayerOne extends MovableCharacter {
     private static final int PLAYER_MOVE_REDUCER_START = 16;
-    private static final int LEVELS_PER_SPEED_BOOST = 10;
-    private static final int MINIMUM_MOVE_REDUCER = 1;
+    private static final int LEVELS_PER_SPEED_BOOST = 100;
+    private static final int MINIMUM_MOVE_REDUCER = 2;
     public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public DisplayToolkit tool;
     public  boolean stillAlive;
@@ -49,14 +49,52 @@ public class PlayerOne extends MovableCharacter {
                         this.characterW);
                 break;
             default:
-                this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
-                        map.height * this.characterW / 2,
-                        map.width / 2,
-                        map.height / 2,
-                        this.characterW);
+                whereToSpawnPlayerInRegularGame(map);
+                if (map.width % 2 == 0 && map.height % 2 == 0) {
+                    this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
+                            map.height * this.characterW / 2,
+                            map.width / 2,
+                            map.height / 2,
+                            this.characterW);
+                } else {
+                    this.coord = new DoubleCoordSystem((map.width - 1) * this.characterW / 2,
+                            (map.height - 1) * this.characterW / 2,
+                            map.width / 2,
+                            map.height / 2,
+                            this.characterW);
+                }
+
         }
 
 
+    }
+
+    private void whereToSpawnPlayerInRegularGame(GeneralMap map) {
+        if (map.width % 2 == 0 && map.height % 2 == 0) {
+            this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
+                    map.height * this.characterW / 2,
+                    map.width / 2,
+                    map.height / 2,
+                    this.characterW);
+        } else if (map.width % 2 == 0) {
+            this.coord = new DoubleCoordSystem(map.width * this.characterW / 2,
+                    (map.height - 1) * this.characterW / 2,
+                    map.width / 2,
+                    (map.height - 1) / 2,
+                    this.characterW);
+        } else if (map.height % 2 == 0) {
+            this.coord = new DoubleCoordSystem((map.width - 1) * this.characterW / 2,
+                    map.height * this.characterW / 2,
+                    (map.width - 1) / 2,
+                    map.height / 2,
+                    this.characterW);
+        } else {
+            this.coord = new DoubleCoordSystem((map.width - 1) * this.characterW / 2,
+                    (map.height - 1) * this.characterW / 2,
+                    (map.width - 1) / 2,
+                    (map.height - 1) / 2,
+                    this.characterW);
+        }
     }
 
     private int getPlayerMoveReducer() {

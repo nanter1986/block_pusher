@@ -49,11 +49,11 @@ public abstract class MovableCharacter {
     public abstract void checkIfcrushed(GeneralMap map);
 
 
-    public void increaseByStep() {
+    public void increaseByStep(GeneralMap map) {
         if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    if (coord.realY + getStep() < 49 * characterW) {
+                    if (coord.realY + getStep() < (map.height - 1) * characterW) {
                         coord.realY += getStep();
                     }
                     break;
@@ -63,7 +63,8 @@ public abstract class MovableCharacter {
                     }
                     break;
                 case RIGHT:
-                    if (coord.realX + getStep() < 49 * characterW) {
+
+                    if (coord.realX + getStep() < (map.width - 1) * characterW) {
                         coord.realX += getStep();
                     }
                     break;

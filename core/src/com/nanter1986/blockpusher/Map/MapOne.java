@@ -18,7 +18,7 @@ public class MapOne extends GeneralMap {
         type = GameplayTypes.REGULAR;
         width = calculateWidth(tool);
         height = calculateHeight(tool);
-        mapArray = new BlockGeneral[width][width];
+        mapArray = new BlockGeneral[width][height];
         blocksize=tool.universalWidthFactor;
 
         for (int i = 0; i < width; i++) {

@@ -45,7 +45,7 @@ public class BossFrontBlockChecker {
             case DOWN:
                 int xToCheckDown = character.getFixatedX();
                 int yToCheckDown = character.getFixatedY() - 1;
-                if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown > 0) {
+                if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){

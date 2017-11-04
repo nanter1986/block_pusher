@@ -317,10 +317,11 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private void getPlayerInputIfMoveReducerIsZero(float delta) {
+        Gdx.app.log("today", "its in here:" + playerone.moveReducer);
         if (playerone.moveReducer > 1) {
             playerone.moveReducer -= 1;
 
-            playerone.increaseByStep();
+            playerone.increaseByStep(theMap);
         } else if (playerone.moveReducer == 1) {
             playerone.fixatePosition();
             playerone.moveReducer -= 1;
@@ -329,7 +330,6 @@ class Gameplay implements Screen, InputProcessor {
             playerone.stepSequenceRunning = false;
             playerone.moveReducer = playerone.moveReducerLimit;
             Gdx.app.log("new frame created fps :", (1 / delta) + " fps");
-
             updatePosition();
 
         }
