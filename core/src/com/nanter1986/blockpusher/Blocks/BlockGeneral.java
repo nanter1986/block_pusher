@@ -37,7 +37,6 @@ public class BlockGeneral {
         this.blockY = blockY;
         this.type = type;
         setTile();
-        Gdx.app.log("block created ","x:"+blockX+" y:"+blockY+" type:"+type+" exp animation x:"+explosionAnimationX+" exp animation y:"+explosionAnimationY);
     }
 
     public void explode(DisplayToolkit tool){
@@ -49,11 +48,8 @@ public class BlockGeneral {
             explosionAnimationX=0;
             explosionAnimationY++;
         }
-        Gdx.app.log("showing explosion:",explosionAnimationX+" "+explosionAnimationY+" "+explosion.toString()+
-                " at "+whereToExplodeX+"/"+whereToExplodeY+" width:"+tool.universalWidthFactor);
         if(explosionAnimationY==6){
             explodedEnd=true;
-            Gdx.app.log("explosion ended: ",explodedEnd+"");
         }
     }
 

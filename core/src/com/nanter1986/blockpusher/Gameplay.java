@@ -68,13 +68,11 @@ class Gameplay implements Screen, InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-        Gdx.app.log("input processor set to:", Gdx.input.getInputProcessor().toString());
         tool.data = new DataControler(tool);
         infoPatch = new InfoPatch(tool);
         stage = tool.data.readStage();
         dialogSenction = 0;
         dialog = new DialogChooser();
-        Gdx.app.log("info patch dimensions:", infoPatch.height + "/" + infoPatch.width);
         enemiesToGenerate = howManyEnemiesToGenerate();
         bombsToGenerate = howManyBombsToGenerate();
         android = Gdx.app.getType() == Application.ApplicationType.Android;
@@ -87,18 +85,13 @@ class Gameplay implements Screen, InputProcessor {
         spawnEnemies();
         spawnBombs();
         playerGetsItems();
-        Gdx.app.log("is android", "boolean test " + android);
         if (android) {
-            Gdx.app.log("is android", "yes, creating d pad");
             dirpad = TouchableButton.dirPad(tool);
         }
-        Gdx.app.log("pl1", playerone.getFixatedX() + " " + playerone.getFixatedY());
-        Gdx.app.log("pl1", theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY()].blockX + "");
         theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY()].type = BlockGeneral.Blocktypes.AIR;
         winConditionsMet = false;
         cameraFollowPlayer=true;
-        //tool.camera.zoom=5f;
-        Gdx.app.log("cam info", tool.camera.zoom + "/" + tool.camera.viewportHeight);
+
     }
 
     private void playerGetsItems() {
@@ -177,7 +170,6 @@ class Gameplay implements Screen, InputProcessor {
         if (playerDied && playerone.explodedEnd) {
             tool.prefs.flush();
             DeathScreen deathScreen = new DeathScreen(game);
-            Gdx.app.log("setting new screen to game: ", deathScreen.toString());
             game.setScreen(deathScreen);
             this.dispose();
         } else if (winConditionsMet) {
@@ -186,10 +178,8 @@ class Gameplay implements Screen, InputProcessor {
         } else if (gamePaused && pauseReducer == 0 && Gdx.input.justTouched() && showingDialog) {
             gamePaused = false;
             showingDialog = false;
-            Gdx.app.log("game paused", "false");
         } else if (gamePaused && pauseReducer == 0 && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             gamePaused = false;
-            Gdx.app.log("game paused", "false");
         } else if (gamePaused) {
             if (pauseReducer > 0) {
                 pauseReducer--;
@@ -233,11 +223,8 @@ class Gameplay implements Screen, InputProcessor {
     private void doAfterWinConditionsHaveMet() {
         int numOfBombs = playerone.collectedItems.size();
         tool.data.putBombs(numOfBombs);
-        Gdx.app.log("bombs left:", numOfBombs + "");
         tool.data.putSteps(stepsGoingToBonus);
-        Gdx.app.log("steps to bonus:", stepsGoingToBonus + "");
         WinScreen win = new WinScreen(game);
-        Gdx.app.log("setting new screen to game: ", win.toString());
         tool.data.putGameplayType(theMap.type);
         tool.prefs.flush();
         game.setScreen(win);
@@ -251,7 +238,6 @@ class Gameplay implements Screen, InputProcessor {
         tool.batch.begin();
         for (MovableCharacter e : enemiesArraylist) {
             boolean exploding = e.explodedStarted && e.explodedEnd == false;
-            Gdx.app.log("enemy exploding", e.getFixatedX() + "/" + e.getFixatedY() + "/" + exploding);
             if (exploding) {
                 e.bloodAnimation(tool);
             }
@@ -271,30 +257,15 @@ class Gameplay implements Screen, InputProcessor {
         }
         playerone.updatePosition(tool.batch, theMap, enemiesArraylist);
 
-        Gdx.app.log("render----------------------------------------------------------------------\n",
-                "is android:" + android +
-                        "\ncamera position:" + tool.camera.position.toString() +
-                        "\nplayer position x:" + playerone.getFixatedX() + " y:" + playerone.getFixatedY() +
-                        "\nplayer direction:" + playerone.dir);
         for (Item item : playerone.collectedItems) {
             Gdx.app.log("item in inventory", item.getClass().toString());
         }
-        /*for (MovableCharacter e : enemiesArraylist) {
-            if (e.explodedStarted == false) {
-                e.updatePosition(tool.batch, theMap, enemiesArraylist);
-                Gdx.app.log("enemy position:", e.getFixatedX() + " " + e.getFixatedY() + " " +
-                        e.dir.toString() + " move reducer:" + e.moveReducer +
-                        "\n----------------------------------------------------------------------------------");
-            }
 
-        }*/
         theMap.updatePosition(tool);
         theWall.drawSelf(theMap);
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, stage);
-        Gdx.app.log("is android", "boolean test before draw " + android + " size " + dirpad.size());
         if (android) {
             for (TouchableButton t : dirpad) {
-                Gdx.app.log("is android", t.toString());
                 t.drawSelf(tool, infoPatch);
             }
         }
@@ -321,23 +292,20 @@ class Gameplay implements Screen, InputProcessor {
         for (MovableCharacter e : enemiesArraylist) {
             e.checkIfcrushed(theMap);
             boolean crushedAndAnimatedBlood = e.crushed && e.explodedEnd;
-            Gdx.app.log("explosion ended, ready to remove enemy:", crushedAndAnimatedBlood + "");
             if (crushedAndAnimatedBlood) {
 
                 toRemoveIfCrushed.add(e);
-                Gdx.app.log("adding to remove", crushedAndAnimatedBlood + " " + e.toString());
             }
         }
         for (MovableCharacter e : toRemoveIfCrushed) {
-            Gdx.app.log("enemy number", enemiesArraylist.size() + "");
-            Gdx.app.log("removing enemy", e.toString());
+
             enemiesArraylist.remove(e);
-            Gdx.app.log("enemy number", enemiesArraylist.size() + "");
+
         }
     }
 
     private void getPlayerInputIfMoveReducerIsZero(float delta) {
-        Gdx.app.log("today", "its in here:" + playerone.moveReducer);
+
         if (playerone.moveReducer > 1) {
             playerone.moveReducer -= 1;
 
@@ -349,7 +317,6 @@ class Gameplay implements Screen, InputProcessor {
 
             playerone.stepSequenceRunning = false;
             playerone.moveReducer = playerone.moveReducerLimit;
-            Gdx.app.log("new frame created fps :", (1 / delta) + " fps");
             updatePosition();
 
         }
@@ -363,8 +330,7 @@ class Gameplay implements Screen, InputProcessor {
             winConditionsMet = true;
 
         }
-        Gdx.app.log("won game: ", wonGame + "");
-        Gdx.app.log("enemies left: ", enemiesLeft + "");
+
     }
 
     @Override
@@ -396,10 +362,10 @@ class Gameplay implements Screen, InputProcessor {
 
         bNextNext.type = bNext.type;
         bNext.type = BlockGeneral.Blocktypes.AIR;
-        Gdx.app.log("types of switch", bNextNext.type + "/" + bNext.type);
+
         bNextNext.setTile();
         bNext.setTile();
-        Gdx.app.log("tiles of switch", bNextNext.tile + "/" + bNext.tile);
+
     }
 
     public void desktopControls() {
@@ -464,7 +430,6 @@ class Gameplay implements Screen, InputProcessor {
 
             gamePaused = true;
             pauseReducer = 8;
-            Gdx.app.log("game paused", "true");
         } else if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) && playerone.collectedItems.size() > 0) {
             useBombOnBlock();
         } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
@@ -553,7 +518,6 @@ class Gameplay implements Screen, InputProcessor {
 
             gamePaused = true;
             pauseReducer = 8;
-            Gdx.app.log("game paused", "true");
         } else if (dirpad.get(4).isButtonTouched() && playerone.collectedItems.size() > 0) {
             useBombOnBlock();
         } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
@@ -590,23 +554,15 @@ class Gameplay implements Screen, InputProcessor {
     private void addOneStep() {
         numOfSteps++;
         stepsGoingToBonus--;
-        Gdx.app.log("total number of steps:", numOfSteps + "");
-        Gdx.app.log("number of steps to bonus:", stepsGoingToBonus + "");
     }
 
     private void checkIfBlockRemovableAndRemove(int xToCheck, int yToCheck) {
-        Gdx.app.log("checking if block removable at: ", xToCheck + "/" + yToCheck);
+
         if (theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.AIR
                 && theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.WATER) {
-            Gdx.app.log("block destroying:", "at x/y " + xToCheck + "/" + yToCheck +
-                    " from " + theMap.mapArray[xToCheck][yToCheck].type.toString() + " to " + BlockGeneral.Blocktypes.AIR.toString());
             theMap.mapArray[xToCheck][yToCheck].explodedStart = true;
-            Gdx.app.log("explosion started: ", theMap.mapArray[xToCheck][yToCheck].explodedStart + "");
             theMap.mapArray[xToCheck][yToCheck].type = BlockGeneral.Blocktypes.AIR;
             playerone.collectedItems.remove(0);
-            for (Item i : playerone.collectedItems) {
-                Gdx.app.log("remaining inventory: ", i.getClass().toString());
-            }
 
         }
     }
@@ -615,36 +571,28 @@ class Gameplay implements Screen, InputProcessor {
         switch (playerone.dir) {
             case UP:
                 int blockY = playerone.getFixatedY() + 1;
-                Gdx.app.log("upward y coord:", blockY + "");
                 boolean yLessThanTop = playerone.getFixatedY() + 1 < theMap.height;
-                Gdx.app.log("is less than top:", yLessThanTop + "");
                 if (yLessThanTop) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX(), playerone.getFixatedY() + 1);
                 }
                 break;
             case DOWN:
                 int blockYdown = playerone.getFixatedY() + 1;
-                Gdx.app.log("downward y coord:", blockYdown + "");
                 boolean yMoreThanBottom = playerone.getFixatedY() - 1 >= 0;
-                Gdx.app.log("is more than bottom:", yMoreThanBottom + "");
                 if (yMoreThanBottom) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX(), playerone.getFixatedY() - 1);
                 }
                 break;
             case LEFT:
                 int blockXleft = playerone.getFixatedX() - 1;
-                Gdx.app.log("left x coord:", blockXleft + "");
                 boolean xMoreThanLeftLimit = playerone.getFixatedX() - 1 >= 0;
-                Gdx.app.log("is more than left limit:", xMoreThanLeftLimit + "");
                 if (xMoreThanLeftLimit) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX() - 1, playerone.getFixatedY());
                 }
                 break;
             case RIGHT:
                 int blockXright = playerone.getFixatedX() + 1;
-                Gdx.app.log("right x coord:", blockXright + "");
                 boolean xLessThanRightLimit = playerone.getFixatedX() + 1 < theMap.width;
-                Gdx.app.log("is less than right limit:", xLessThanRightLimit + "");
                 if (xLessThanRightLimit) {
                     checkIfBlockRemovableAndRemove(playerone.getFixatedX() + 1, playerone.getFixatedY());
                 }

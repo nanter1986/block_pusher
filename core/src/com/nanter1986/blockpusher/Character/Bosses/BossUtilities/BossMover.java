@@ -23,10 +23,9 @@ public class BossMover {
         if (character.moveReducer > 0) {
             character.moveReducer--;
             character.increaseByStep(map);
-            Gdx.app.log("reduce enemy moveReducer,step", character.moveReducer + "," + character.getStep());
         } else {
-            character.stepSequenceRunning = false;
             character.fixatePosition();
+            character.stepSequenceRunning = false;
             if(new BossFrontBlockChecker(character).checkIfBlockAtTheFront(map,enemies)){
                 switch (character.dir){
                     case UP:
@@ -59,15 +58,17 @@ public class BossMover {
                         break;
 
                 }
+                character.moveReducer = character.moveReducerLimit;
                 Gdx.app.log("enemy walked to:", +character.getFixatedX() + "/" + character.getFixatedY());
             }else{
                 new RandomBossDirectioner(character).getRandomDirection();
+                character.moveReducer = character.moveReducerLimit;
             }
             ArrayList<BossSkill> skills = character.skills;
             for (BossSkill bs : skills) {
                 //bs.executeSkill(character.level, character, map, enemies);
             }
-            character.moveReducer = character.moveReducerLimit;
+
         }
     }
 }

@@ -53,7 +53,7 @@ public abstract class MovableCharacter {
         if (stepSequenceRunning) {
             switch (dir) {
                 case UP:
-                    if (coord.realY + getStep() < (map.height - 1) * characterW) {
+                    if (coord.realY + getStep() <= (map.height - 1) * characterW) {
                         coord.realY += getStep();
                     }
                     break;

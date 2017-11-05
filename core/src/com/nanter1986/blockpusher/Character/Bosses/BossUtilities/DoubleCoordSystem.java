@@ -26,6 +26,8 @@ public class DoubleCoordSystem {
         } else if (realX < fixatedX * characterW) {
             fixatedX--;
             realX = fixatedX * characterW;
+        } else {
+            realX = fixatedX * characterW;
         }
     }
 
@@ -35,6 +37,8 @@ public class DoubleCoordSystem {
             realY = fixatedY * characterW;
         } else if (realY < fixatedY * characterW) {
             fixatedY--;
+            realY = fixatedY * characterW;
+        } else {
             realY = fixatedY * characterW;
         }
     }

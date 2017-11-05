@@ -98,18 +98,12 @@ public class PlayerOne extends MovableCharacter {
         if (isMoveReducerTooSmall) {
             moveReducer = MINIMUM_MOVE_REDUCER;
         }
-        Gdx.app.log("speed of player", "movereducer:" + moveReducer);
         return moveReducer;
     }
 
     public void collectItems(ArrayList<Item>allItems){
-        Gdx.app.log("item collected now", ".......");
         ArrayList<Item>toMoveToInventory=new ArrayList<Item>();
         for(Item item:allItems){
-            Gdx.app.log("item x", item.itemX + "");
-            Gdx.app.log("player x", getFixatedX() + "");
-            Gdx.app.log("item y", item.itemY + "");
-            Gdx.app.log("player y", getFixatedY() + "");
             if (getFixatedX() == item.itemX && getFixatedY() == item.itemY) {
                 toMoveToInventory.add(item);
             }
@@ -117,7 +111,6 @@ public class PlayerOne extends MovableCharacter {
         for(Item itemCollected:toMoveToInventory){
             allItems.remove(itemCollected);
             collectedItems.add(itemCollected);
-            Gdx.app.log("item collected at:",itemCollected.itemX+"/"+itemCollected.itemY+"/"+itemCollected.getClass().toString());
         }
     }
 
@@ -126,7 +119,6 @@ public class PlayerOne extends MovableCharacter {
             if (e.explodedStarted == false && stillAlive && this.getFixatedX() == e.getFixatedX() && this.getFixatedY() == e.getFixatedY()) {
                 stillAlive=false;
                 explodedStarted = true;
-                Gdx.app.log("player status:","DEAD");
             }
         }
     }
@@ -166,14 +158,11 @@ public class PlayerOne extends MovableCharacter {
         } else {
 
 
-            Gdx.app.log("blood animation:", whereToExplodeX + "/" + whereToExplodeY + "/" + widthOfBlood);
             bloodAnimationX++;
             if (bloodAnimationX == 2) {
                 bloodAnimationX = 0;
                 bloodAnimationY++;
             }
-            Gdx.app.log("showing explosion:", bloodAnimationX + " " + bloodAnimationY + " " + blood.toString() +
-                    " at " + whereToExplodeX + "/" + whereToExplodeY + " width:" + widthOfBlood);
             if (bloodAnimationY == 3) {
                 explodedEnd = true;
                 Gdx.app.log("explosion ended: ", explodedEnd + "");
@@ -247,7 +236,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckUp = getFixatedY() + 1;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && xToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
-                    Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -259,7 +247,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckDown = getFixatedY() - 1;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && xToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
-                    Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -271,7 +258,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckLeft = getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && xToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
-                    Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -286,7 +272,6 @@ public class PlayerOne extends MovableCharacter {
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && xToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
-                    Gdx.app.log("type to check",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -352,7 +337,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckUp = getFixatedY() + 2;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && yToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
-                    Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -364,7 +348,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckDown = getFixatedY() - 2;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
-                    Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -376,7 +359,6 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckLeft = getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
-                    Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
@@ -391,7 +373,6 @@ public class PlayerOne extends MovableCharacter {
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && yToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
-                    Gdx.app.log("block behind block",bt.toString()+"");
                     if(bt!= BlockGeneral.Blocktypes.AIR){
                         isFreeToPass=false;
                     }
