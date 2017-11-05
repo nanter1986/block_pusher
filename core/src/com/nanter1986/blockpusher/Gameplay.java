@@ -114,6 +114,9 @@ class Gameplay implements Screen, InputProcessor {
 
     private void spawnBombs() {
         switch (theMap.type) {
+            case DEBUG_ENEMY:
+
+                break;
             case TUTORIAL1:
 
                 break;
@@ -130,6 +133,12 @@ class Gameplay implements Screen, InputProcessor {
 
     private void spawnEnemies() {
         switch (theMap.type) {
+            case DEBUG_ENEMY:
+                enemiesArraylist.add(new MinionSimple(tool, theMap));
+                enemiesArraylist.add(new MinionSimple(tool, theMap));
+                enemiesArraylist.get(1).coord.fixatedX = 3;
+                enemiesArraylist.get(1).coord.realX = 3 * enemiesArraylist.get(1).characterW;
+                break;
             case TUTORIAL1:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
                 break;

@@ -34,6 +34,13 @@ public class PlayerOne extends MovableCharacter {
         this.dir=Direction.UP;
         stillAlive=true;
         switch (map.type) {
+            case DEBUG_ENEMY:
+                this.coord = new DoubleCoordSystem(0,
+                        2 * this.characterW,
+                        0,
+                        2,
+                        this.characterW);
+                break;
             case TUTORIAL1:
                 this.coord = new DoubleCoordSystem(0,
                         2 * this.characterW,

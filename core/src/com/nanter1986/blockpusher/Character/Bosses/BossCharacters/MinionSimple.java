@@ -33,6 +33,13 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
         this.level = 1;
         moveReducerLimit = 64;
         switch (map.type) {
+            case DEBUG_ENEMY:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
             case TUTORIAL1:
                 this.coord = new DoubleCoordSystem(4 * this.characterW,
                         2 * this.characterW,

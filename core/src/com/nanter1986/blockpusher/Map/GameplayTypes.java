@@ -7,5 +7,6 @@ package com.nanter1986.blockpusher.Map;
 public enum GameplayTypes {
     REGULAR,
     TUTORIAL1,
-    TUTORIAL2
+    TUTORIAL2,
+    DEBUG_ENEMY
 }

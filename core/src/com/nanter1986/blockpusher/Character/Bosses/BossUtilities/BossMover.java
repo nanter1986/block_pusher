@@ -20,15 +20,11 @@ public class BossMover {
     }
 
     public void moveBoss(GeneralMap map, ArrayList<MovableCharacter> enemies) {
-        if (character.moveReducer > 1) {
+        if (character.moveReducer > 0) {
             character.moveReducer--;
             character.increaseByStep(map);
             Gdx.app.log("reduce enemy moveReducer,step", character.moveReducer + "," + character.getStep());
-        } else if (character.moveReducer == 1) {
-            //character.fixatePosition();
-            character.moveReducer--;
-            Gdx.app.log("fixate enemy position", character.moveReducer + "");
-        }else{
+        } else {
             character.stepSequenceRunning = false;
             character.fixatePosition();
             if(new BossFrontBlockChecker(character).checkIfBlockAtTheFront(map,enemies)){
