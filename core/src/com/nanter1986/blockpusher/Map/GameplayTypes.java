@@ -8,5 +8,6 @@ public enum GameplayTypes {
     REGULAR,
     TUTORIAL1,
     TUTORIAL2,
-    DEBUG_ENEMY
+    DEBUG_ENEMY,
+    DEBUG_NITAR
 }

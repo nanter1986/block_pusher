@@ -107,6 +107,9 @@ class Gameplay implements Screen, InputProcessor {
 
     private void spawnBombs() {
         switch (theMap.type) {
+            case DEBUG_NITAR:
+
+                break;
             case DEBUG_ENEMY:
 
                 break;
@@ -126,6 +129,9 @@ class Gameplay implements Screen, InputProcessor {
 
     private void spawnEnemies() {
         switch (theMap.type) {
+            case DEBUG_NITAR:
+                enemiesArraylist.add(new Nitar(tool, theMap));
+                break;
             case DEBUG_ENEMY:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
                 enemiesArraylist.add(new MinionSimple(tool, theMap));

@@ -5,7 +5,7 @@ import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossIsMovableCharacterInFront;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossWhatIsTheFrontBlock;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
-import com.nanter1986.blockpusher.Map.MapOne;
+import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.ArrayList;
 
@@ -16,8 +16,9 @@ import java.util.ArrayList;
 public class BlockSmash implements BossSkill{
 
     @Override
-    public void executeSkill(int level, MovableCharacter character, MapOne map, ArrayList<MovableCharacter> enemies) {
+    public void executeSkill(int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies) {
         BlockGeneral block = new BossWhatIsTheFrontBlock().whatIsTheFrontBlock(level, character, map);
+
         if (block == null) {
 
         } else {

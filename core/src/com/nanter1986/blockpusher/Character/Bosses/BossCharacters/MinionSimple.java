@@ -26,8 +26,6 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
     public MinionSimple(DisplayToolkit tool, GeneralMap map) {
         this.texture = playerOne;
-
-
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;

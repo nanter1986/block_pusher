@@ -26,30 +26,53 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
     public Nitar(DisplayToolkit tool, GeneralMap map) {
-        Gdx.app.log("constructor nitar", "in constructor");
         this.texture = playerOne;
+        this.level = 2;
+        moveReducerLimit = 32;
+        this.characterW = tool.universalWidthFactor;
+        this.characterH = tool.universalWidthFactor;
+        this.skills = skillSet();
         boolean freeBlockFound = false;
-        while (freeBlockFound == false) {
-            int theX = new Random().nextInt(map.width);
-            int theY = new Random().nextInt(map.height);
-            Gdx.app.log("rXY", theX + "/" + theY);
-            if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
-                freeBlockFound = true;
+        switch (map.type) {
+            case DEBUG_NITAR:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
+            case DEBUG_ENEMY:
 
-                this.characterW = tool.universalWidthFactor;
-                this.characterH = tool.universalWidthFactor;
-                this.coord = new DoubleCoordSystem(theX * this.characterW,
-                        theY * this.characterW,
-                        theX,
-                        theY, this.characterW);
+                break;
+            case TUTORIAL1:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
+            case TUTORIAL2:
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
+                        4,
+                        2,
+                        this.characterW);
+                break;
+            default:
+                while (freeBlockFound == false) {
+                    int theX = new Random().nextInt(map.width);
+                    int theY = new Random().nextInt(map.height);
+                    if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
+                        freeBlockFound = true;
+                        this.coord = new DoubleCoordSystem(theX * this.characterW,
+                                theY * this.characterW,
+                                theX,
+                                theY,
+                                this.characterW);
 
-                this.level = 2;
-                moveReducerLimit = 32;
-                this.skills = skillSet();
-                Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
-                        "\nat y:" + this.getFixatedY());
-            }
+                    }
 
+                }
         }
 
     }

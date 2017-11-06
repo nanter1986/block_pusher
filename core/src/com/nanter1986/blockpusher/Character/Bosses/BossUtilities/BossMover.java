@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
-import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Map.GeneralMap;
@@ -59,14 +58,13 @@ public class BossMover {
 
                 }
                 character.moveReducer = character.moveReducerLimit;
-                Gdx.app.log("enemy walked to:", +character.getFixatedX() + "/" + character.getFixatedY());
             }else{
                 new RandomBossDirectioner(character).getRandomDirection();
                 character.moveReducer = character.moveReducerLimit;
             }
             ArrayList<BossSkill> skills = character.skills;
             for (BossSkill bs : skills) {
-                //bs.executeSkill(character.level, character, map, enemies);
+                bs.executeSkill(character.level, character, map, enemies);
             }
 
         }
