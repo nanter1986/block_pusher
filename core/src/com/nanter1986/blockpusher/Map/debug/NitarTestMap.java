@@ -31,10 +31,10 @@ public class NitarTestMap extends GeneralMap {
         mapArray[3][1] = new BlockGeneral(3, 1, BlockGeneral.Blocktypes.STONE);
         mapArray[4][1] = new BlockGeneral(4, 1, BlockGeneral.Blocktypes.STONE);
 
-        mapArray[0][2] = new BlockGeneral(0, 2, BlockGeneral.Blocktypes.AIR);
+        mapArray[0][2] = new BlockGeneral(0, 2, BlockGeneral.Blocktypes.STONE);
         mapArray[1][2] = new BlockGeneral(1, 2, BlockGeneral.Blocktypes.STONE);
-        mapArray[2][2] = new BlockGeneral(2, 2, BlockGeneral.Blocktypes.AIR);
-        mapArray[3][2] = new BlockGeneral(3, 2, BlockGeneral.Blocktypes.AIR);
+        mapArray[2][2] = new BlockGeneral(2, 2, BlockGeneral.Blocktypes.STONE);
+        mapArray[3][2] = new BlockGeneral(3, 2, BlockGeneral.Blocktypes.STONE);
         mapArray[4][2] = new BlockGeneral(4, 2, BlockGeneral.Blocktypes.AIR);
 
         mapArray[0][3] = new BlockGeneral(0, 3, BlockGeneral.Blocktypes.STONE);

@@ -17,6 +17,7 @@ public class BlockSmash implements BossSkill{
 
     @Override
     public void executeSkill(int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies) {
+
         BlockGeneral block = new BossWhatIsTheFrontBlock().whatIsTheFrontBlock(level, character, map);
 
         if (block == null) {
