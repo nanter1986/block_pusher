@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
-import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Map.GeneralMap;
@@ -17,7 +16,6 @@ public class BossWhatIsTheFrontBlock {
             case UP:
                 int xToCheckUp = (character.getFixatedX());
                 int yToCheckUp = character.getFixatedY() + howFar;
-                Gdx.app.log("in skill execute", howFar + "/" + xToCheckUp + "/" + yToCheckUp);
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && yToCheckUp >= 0) {
                     block = map.mapArray[xToCheckUp][yToCheckUp];
 

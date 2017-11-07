@@ -65,17 +65,23 @@ public class BossCrushChecker {
 
         }
         BlockGeneral.Blocktypes type = map.mapArray[xForArray][yForArray].type;
-        Gdx.app.log("crush check int", xForArray + "/" + yForArray +
-                "------" + character.coord.fixatedX + "/" + character.coord.fixatedY +
-                " dir:" + character.dir + " type" + type.toString());
-        if (type != BlockGeneral.Blocktypes.AIR) {
+        whatToDoBasedOnBlockType(type);
+
+
+
+    }
+
+    private void whatToDoBasedOnBlockType(BlockGeneral.Blocktypes bt) {
+        if (bt == BlockGeneral.Blocktypes.AIR) {
+
+        } else if (bt == BlockGeneral.Blocktypes.STONE) {
             character.crushed = true;
-            character.explodedStarted=true;
-            Gdx.app.log("enemy crushed:", character.crushed + " is dead");
-        }else{
-            Gdx.app.log("enemy crushed:", character.crushed + " still alive");
+            character.explodedStarted = true;
+        } else if (bt == BlockGeneral.Blocktypes.ICE) {
+
+        } else if (bt == BlockGeneral.Blocktypes.WATER) {
+            character.crushed = true;
+            character.explodedStarted = true;
         }
-
-
     }
 }

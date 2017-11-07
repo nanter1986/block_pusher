@@ -13,35 +13,38 @@ import java.util.ArrayList;
  * Created by user on 2/10/2017.
  */
 
-public class BlockSmash implements BossSkill{
+public class BlockSmash implements BossSkill {
 
     @Override
     public void executeSkill(int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies) {
 
-        BlockGeneral block = new BossWhatIsTheFrontBlock().whatIsTheFrontBlock(level, character, map);
+        for (int i = 0; i < level; i++) {
+            BlockGeneral block = new BossWhatIsTheFrontBlock().whatIsTheFrontBlock(i + 1, character, map);
 
-        if (block == null) {
+            if (block == null) {
 
-        } else {
-            for (int i = 0; i < level; i++) {
-                if (block.type == BlockGeneral.Blocktypes.STONE) {
-                    block.type = BlockGeneral.Blocktypes.AIR;
-                    Gdx.app.log("skill execution: ", "stone to air");
-                } else if (block.type == BlockGeneral.Blocktypes.WATER) {
-                    block.type = BlockGeneral.Blocktypes.ICE;
-                    Gdx.app.log("skill execution: ", "water to ice");
-                } else if (block.type == BlockGeneral.Blocktypes.AIR) {
-                    MovableCharacter c = new BossIsMovableCharacterInFront(character).isMovableCharacterInFront(i, enemies, map);
-                    if (c == null) {
+            } else if (block.type == BlockGeneral.Blocktypes.STONE) {
+                map.mapArray[block.blockX][block.blockY].type = BlockGeneral.Blocktypes.AIR;
+                map.mapArray[block.blockX][block.blockY].setTile();
+                Gdx.app.log("skill execution: ", "stone to air");
+            } else if (block.type == BlockGeneral.Blocktypes.WATER) {
+                map.mapArray[block.blockX][block.blockY].type = BlockGeneral.Blocktypes.ICE;
+                map.mapArray[block.blockX][block.blockY].setTile();
+                Gdx.app.log("skill execution: ", "water to ice");
+            } else if (block.type == BlockGeneral.Blocktypes.AIR) {
+                MovableCharacter c = new BossIsMovableCharacterInFront(character).isMovableCharacterInFront(i, enemies, map);
+                if (c == null) {
 
-                    } else {
-                        c.crushed = true;
-                        c.explodedStarted = true;
-                    }
+                } else {
+                    c.crushed = true;
+                    c.explodedStarted = true;
                     Gdx.app.log("skill execution: ", "kill movable");
                 }
+
             }
+
         }
+
 
     }
 }
