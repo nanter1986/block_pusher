@@ -242,6 +242,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
+        theMap.updatePositionBelow(tool);
         for (MovableCharacter e : enemiesArraylist) {
             boolean exploding = e.explodedStarted && e.explodedEnd == false;
             if (exploding) {
@@ -267,7 +268,7 @@ class Gameplay implements Screen, InputProcessor {
             Gdx.app.log("item in inventory", item.getClass().toString());
         }
 
-        theMap.updatePosition(tool);
+        theMap.updatePositionAbove(tool);
         theWall.drawSelf(theMap);
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, stage);
         if (android) {
