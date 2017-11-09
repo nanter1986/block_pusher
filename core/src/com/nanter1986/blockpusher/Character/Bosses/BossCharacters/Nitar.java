@@ -13,6 +13,7 @@ import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSyst
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
+import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -141,8 +142,8 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies) {
-        new BossMover(this).moveBoss(map, enemies);
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles) {
+        new BossMover(this).moveBoss(map, enemies, projectiles);
     }
 
     @Override

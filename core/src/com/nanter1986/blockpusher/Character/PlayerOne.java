@@ -8,6 +8,7 @@ import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSyst
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
 import com.nanter1986.blockpusher.PowerUps.Item;
+import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -183,7 +184,7 @@ public class PlayerOne extends MovableCharacter {
     }
 
     @Override
-    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies) {
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles) {
 
     }
 

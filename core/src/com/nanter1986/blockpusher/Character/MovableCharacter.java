@@ -8,6 +8,7 @@ import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSyst
 import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
+import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public abstract class MovableCharacter {
 
     public abstract void bloodAnimation(DisplayToolkit tool);
 
-    public abstract void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies);
+    public abstract void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles);
 
     public abstract void checkIfcrushed(GeneralMap map);
 

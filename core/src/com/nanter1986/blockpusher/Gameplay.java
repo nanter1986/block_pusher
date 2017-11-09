@@ -21,6 +21,7 @@ import com.nanter1986.blockpusher.MenuFragments.DialogChooser;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
+import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,7 @@ class Gameplay implements Screen, InputProcessor {
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
+    ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
     boolean isStageDevidedByBossFrecuency;
@@ -211,7 +213,7 @@ class Gameplay implements Screen, InputProcessor {
         for (MovableCharacter e : enemiesArraylist) {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
-                e.moveCharacter(theMap, enemiesArraylist);
+                e.moveCharacter(theMap, enemiesArraylist, projectiles);
             }
 
         }
