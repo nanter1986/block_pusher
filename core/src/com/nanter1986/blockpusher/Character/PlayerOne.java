@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.StepIncreaser;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
 import com.nanter1986.blockpusher.PowerUps.Item;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -112,7 +112,7 @@ public class PlayerOne extends MovableCharacter {
     public void collectItems(ArrayList<Item>allItems){
         ArrayList<Item>toMoveToInventory=new ArrayList<Item>();
         for(Item item:allItems){
-            if (getFixatedX() == item.itemX && getFixatedY() == item.itemY) {
+            if (coord.getFixatedX() == item.itemX && coord.getFixatedY() == item.itemY) {
                 toMoveToInventory.add(item);
             }
         }
@@ -124,7 +124,7 @@ public class PlayerOne extends MovableCharacter {
 
     public void checkIfAlive(ArrayList<MovableCharacter> eArray) {
         for (MovableCharacter e : eArray) {
-            if (e.explodedStarted == false && stillAlive && this.getFixatedX() == e.getFixatedX() && this.getFixatedY() == e.getFixatedY()) {
+            if (e.explodedStarted == false && stillAlive && this.coord.getFixatedX() == e.coord.getFixatedX() && this.coord.getFixatedY() == e.coord.getFixatedY()) {
                 stillAlive=false;
                 explodedStarted = true;
             }
@@ -159,8 +159,8 @@ public class PlayerOne extends MovableCharacter {
     public void bloodAnimation(DisplayToolkit tool) {
         int widthOfBlood = tool.scW;
         int heightOfBlood = tool.scW;
-        int whereToExplodeX = getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
-        int whereToExplodeY = getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
+        int whereToExplodeX = coord.getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
+        int whereToExplodeY = coord.getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
         if (bloodDelayNumber > 0) {
             bloodDelayNumber--;
         } else {
@@ -184,18 +184,24 @@ public class PlayerOne extends MovableCharacter {
     }
 
     @Override
-    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles) {
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
 
     }
+
 
     @Override
     public void checkIfcrushed(GeneralMap map) {
 
     }
 
+    @Override
+    public void increaseByStep(GeneralMap map) {
+        new StepIncreaser(this).increaseByStep(map);
+    }
+
     public boolean reachedTopWall(int mapH){
         boolean reached=false;
-        if (getFixatedY() >= mapH * characterH - characterH) {
+        if (coord.getFixatedY() >= mapH * characterH - characterH) {
             this.coord.realY = mapH * characterH - characterH;
             reached=true;
         }
@@ -204,7 +210,7 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedBottomWall(){
         boolean reached=false;
-        if (getFixatedY() <= 0) {
+        if (coord.getFixatedY() <= 0) {
             this.coord.realY = 0;
             reached=true;
         }
@@ -213,7 +219,7 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedLeftWall(){
         boolean reached=false;
-        if (getFixatedX() <= 0) {
+        if (coord.getFixatedX() <= 0) {
             this.coord.realX = 0;
             reached=true;
         }
@@ -222,7 +228,7 @@ public class PlayerOne extends MovableCharacter {
 
     public boolean reachedRightWall(int mapW){
         boolean reached=false;
-        if (getFixatedX() >= mapW * characterW - characterW) {
+        if (coord.getFixatedX() >= mapW * characterW - characterW) {
             this.coord.realX = 50 * characterW - characterW;
             reached=true;
         }
@@ -240,8 +246,8 @@ public class PlayerOne extends MovableCharacter {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
-                int xToCheckUp = (getFixatedX());
-                int yToCheckUp = getFixatedY() + 1;
+                int xToCheckUp = (coord.getFixatedX());
+                int yToCheckUp = coord.getFixatedY() + 1;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && xToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -251,8 +257,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                int xToCheckDown = getFixatedX();
-                int yToCheckDown = getFixatedY() - 1;
+                int xToCheckDown = coord.getFixatedX();
+                int yToCheckDown = coord.getFixatedY() - 1;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && xToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -262,8 +268,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                int xToCheckLeft = getFixatedX() - 1;
-                int yToCheckLeft = getFixatedY();
+                int xToCheckLeft = coord.getFixatedX() - 1;
+                int yToCheckLeft = coord.getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && xToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -275,8 +281,8 @@ public class PlayerOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                int xToCheckRight = getFixatedX() + 1;
-                int yToCheckRight = getFixatedY();
+                int xToCheckRight = coord.getFixatedX() + 1;
+                int yToCheckRight = coord.getFixatedY();
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && xToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
@@ -295,9 +301,9 @@ public class PlayerOne extends MovableCharacter {
         boolean notWater=true;
         switch (dir) {
             case UP:
-                if (getFixatedY() < map.height - 2) {
-                    if (map.mapArray[getFixatedX()][getFixatedY() + 1].type == BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[getFixatedX()][getFixatedY() + 2].type == BlockGeneral.Blocktypes.WATER) {
+                if (coord.getFixatedY() < map.height - 2) {
+                    if (map.mapArray[coord.getFixatedX()][coord.getFixatedY() + 1].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[coord.getFixatedX()][coord.getFixatedY() + 2].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -305,9 +311,9 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                if (getFixatedY() > 1) {
-                    if (map.mapArray[getFixatedX()][getFixatedY() - 1].type == BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[getFixatedX()][getFixatedY() - 2].type == BlockGeneral.Blocktypes.WATER) {
+                if (coord.getFixatedY() > 1) {
+                    if (map.mapArray[coord.getFixatedX()][coord.getFixatedY() - 1].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[coord.getFixatedX()][coord.getFixatedY() - 2].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -315,18 +321,18 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                if (getFixatedX() > 1) {
-                    if (map.mapArray[getFixatedX() - 1][getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[getFixatedX() - 2][getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
+                if (coord.getFixatedX() > 1) {
+                    if (map.mapArray[coord.getFixatedX() - 1][coord.getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[coord.getFixatedX() - 2][coord.getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
 
                 break;
             case RIGHT:
-                if (getFixatedX() < map.width - 2) {
-                    if (map.mapArray[getFixatedX() + 1][getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
-                            map.mapArray[getFixatedX() + 2][getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
+                if (coord.getFixatedX() < map.width - 2) {
+                    if (map.mapArray[coord.getFixatedX() + 1][coord.getFixatedY()].type == BlockGeneral.Blocktypes.WATER ||
+                            map.mapArray[coord.getFixatedX() + 2][coord.getFixatedY()].type == BlockGeneral.Blocktypes.WATER) {
                         notWater=false;
                     }
                 }
@@ -341,8 +347,8 @@ public class PlayerOne extends MovableCharacter {
         boolean isFreeToPass=true;
         switch (dir){
             case UP:
-                int xToCheckUp = (getFixatedX());
-                int yToCheckUp = getFixatedY() + 2;
+                int xToCheckUp = (coord.getFixatedX());
+                int yToCheckUp = coord.getFixatedY() + 2;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && yToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -352,8 +358,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case DOWN:
-                int xToCheckDown = getFixatedX();
-                int yToCheckDown = getFixatedY() - 2;
+                int xToCheckDown = coord.getFixatedX();
+                int yToCheckDown = coord.getFixatedY() - 2;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -363,8 +369,8 @@ public class PlayerOne extends MovableCharacter {
 
                 break;
             case LEFT:
-                int xToCheckLeft = getFixatedX() - 2;
-                int yToCheckLeft = getFixatedY();
+                int xToCheckLeft = coord.getFixatedX() - 2;
+                int yToCheckLeft = coord.getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     if(bt!= BlockGeneral.Blocktypes.AIR){
@@ -376,8 +382,8 @@ public class PlayerOne extends MovableCharacter {
                 break;
 
             case RIGHT:
-                int xToCheckRight = getFixatedX() + 2;
-                int yToCheckRight = getFixatedY();
+                int xToCheckRight = coord.getFixatedX() + 2;
+                int yToCheckRight = coord.getFixatedY();
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && yToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;

@@ -21,7 +21,6 @@ import com.nanter1986.blockpusher.MenuFragments.DialogChooser;
 import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 import com.nanter1986.blockpusher.PowerUps.Bomb;
 import com.nanter1986.blockpusher.PowerUps.Item;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -48,7 +47,7 @@ class Gameplay implements Screen, InputProcessor {
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
     ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
-    ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    ArrayList<MovableCharacter> projectiles = new ArrayList<MovableCharacter>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
     boolean isStageDevidedByBossFrecuency;
@@ -90,7 +89,7 @@ class Gameplay implements Screen, InputProcessor {
         if (android) {
             dirpad = TouchableButton.dirPad(tool);
         }
-        theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY()].type = BlockGeneral.Blocktypes.AIR;
+        theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY()].type = BlockGeneral.Blocktypes.AIR;
         winConditionsMet = false;
         cameraFollowPlayer=true;
 
@@ -198,7 +197,9 @@ class Gameplay implements Screen, InputProcessor {
             playerone.collectItems(itemsArraylist);
             getPlayerInputIfMoveReducerIsZero(delta);
             moveEnemies();
+            moveProjectiles();
             removeEnemies();
+            removeProjectiles();
             cameraOnPlayer();
             infoPatch.stealPosition(tool);
             drawEverythingHere();
@@ -211,6 +212,16 @@ class Gameplay implements Screen, InputProcessor {
 
     private void moveEnemies() {
         for (MovableCharacter e : enemiesArraylist) {
+            boolean enemyAlive = e.explodedStarted == false;
+            if (enemyAlive) {
+                e.moveCharacter(theMap, enemiesArraylist, projectiles);
+            }
+
+        }
+    }
+
+    private void moveProjectiles() {
+        for (MovableCharacter e : projectiles) {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
                 e.moveCharacter(theMap, enemiesArraylist, projectiles);
@@ -259,8 +270,14 @@ class Gameplay implements Screen, InputProcessor {
         for (MovableCharacter e : enemiesArraylist) {
             boolean enemyAlive = e.explodedStarted == false;
             if (enemyAlive) {
-                //e.moveCharacter(theMap, enemiesArraylist);
                 e.updatePosition(tool.batch, theMap, enemiesArraylist);
+            }
+
+        }
+        for (MovableCharacter p : projectiles) {
+            boolean enemyAlive = p.explodedStarted == false;
+            if (enemyAlive) {
+                p.updatePosition(tool.batch, theMap, enemiesArraylist);
             }
 
         }
@@ -313,6 +330,23 @@ class Gameplay implements Screen, InputProcessor {
         }
     }
 
+    private void removeProjectiles() {
+        ArrayList<MovableCharacter> toRemoveIfCrushed = new ArrayList<MovableCharacter>();
+        for (MovableCharacter p : projectiles) {
+            p.checkIfcrushed(theMap);
+            boolean crushedAndAnimatedBlood = p.crushed && p.explodedEnd;
+            if (crushedAndAnimatedBlood) {
+
+                toRemoveIfCrushed.add(p);
+            }
+        }
+        for (MovableCharacter e : toRemoveIfCrushed) {
+
+            enemiesArraylist.remove(e);
+
+        }
+    }
+
     private void getPlayerInputIfMoveReducerIsZero(float delta) {
 
         if (playerone.moveReducer > 1) {
@@ -320,7 +354,7 @@ class Gameplay implements Screen, InputProcessor {
 
             playerone.increaseByStep(theMap);
         } else if (playerone.moveReducer == 1) {
-            playerone.fixatePosition();
+            playerone.coord.fixatePosition();
             playerone.moveReducer -= 1;
         } else {
 
@@ -378,59 +412,59 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     public void desktopControls() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.getFixatedX() > 0) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && playerone.coord.getFixatedX() > 0) {
             playerone.dir = MovableCharacter.Direction.LEFT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
 
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedX() > 1) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedX() > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX() - 1][playerone.getFixatedY()];
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX() - 2][playerone.getFixatedY()];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX() - 1][playerone.coord.getFixatedY()];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX() - 2][playerone.coord.getFixatedY()];
                 blockSwitcher(next, nextNext);
             }
 
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerone.getFixatedX() < theMap.width - 1) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && playerone.coord.getFixatedX() < theMap.width - 1) {
             playerone.dir = MovableCharacter.Direction.RIGHT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedX() < theMap.width - 2) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedX() < theMap.width - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX() + 2][playerone.getFixatedY()];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX() + 1][playerone.getFixatedY()];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX() + 2][playerone.coord.getFixatedY()];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX() + 1][playerone.coord.getFixatedY()];
                 blockSwitcher(next, nextNext);
             }
 
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && playerone.getFixatedY() < theMap.height - 1) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && playerone.coord.getFixatedY() < theMap.height - 1) {
             playerone.dir = MovableCharacter.Direction.UP;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedY() < theMap.height - 2) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedY() < theMap.height - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() + 2];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() + 1];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() + 2];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() + 1];
                 blockSwitcher(next, nextNext);
             }
 
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && playerone.getFixatedY() > 0) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && playerone.coord.getFixatedY() > 0) {
             playerone.dir = MovableCharacter.Direction.DOWN;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedY() > 1) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedY() > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() - 2];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() - 1];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() - 2];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() - 1];
                 blockSwitcher(next, nextNext);
             }
 
@@ -446,8 +480,8 @@ class Gameplay implements Screen, InputProcessor {
             if (enemyLocatorIndex >= enemiesArraylist.size()) {
                 enemyLocatorIndex = 0;
             }
-            tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).getFixatedX() * tool.universalWidthFactor,
-                    enemiesArraylist.get(enemyLocatorIndex).getFixatedY() * tool.universalWidthFactor,
+            tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).coord.getFixatedX() * tool.universalWidthFactor,
+                    enemiesArraylist.get(enemyLocatorIndex).coord.getFixatedY() * tool.universalWidthFactor,
                     0);
             enemyLocatorIndex++;
 
@@ -469,57 +503,57 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     public void androidControls() {
-        if (dirpad.get(2).isButtonTouched() && playerone.getFixatedX() > 0) {
+        if (dirpad.get(2).isButtonTouched() && playerone.coord.getFixatedX() > 0) {
             playerone.dir = MovableCharacter.Direction.LEFT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedX() > 1) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedX() > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX() - 1][playerone.getFixatedY()];
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX() - 2][playerone.getFixatedY()];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX() - 1][playerone.coord.getFixatedY()];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX() - 2][playerone.coord.getFixatedY()];
                 blockSwitcher(next, nextNext);
 
             }
 
-        } else if (dirpad.get(3).isButtonTouched() && playerone.getFixatedX() < theMap.width - 1) {
+        } else if (dirpad.get(3).isButtonTouched() && playerone.coord.getFixatedX() < theMap.width - 1) {
             playerone.dir = MovableCharacter.Direction.RIGHT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedX() < theMap.width - 2) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedX() < theMap.width - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX() + 2][playerone.getFixatedY()];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX() + 1][playerone.getFixatedY()];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX() + 2][playerone.coord.getFixatedY()];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX() + 1][playerone.coord.getFixatedY()];
                 blockSwitcher(next, nextNext);
             }
-        } else if (dirpad.get(0).isButtonTouched() && playerone.getFixatedY() < theMap.height - 1) {
+        } else if (dirpad.get(0).isButtonTouched() && playerone.coord.getFixatedY() < theMap.height - 1) {
             playerone.dir = MovableCharacter.Direction.UP;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
 
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedY() < theMap.height - 2) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedY() < theMap.height - 2) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() + 2];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() + 1];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() + 2];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() + 1];
                 blockSwitcher(next, nextNext);
 
             }
-        } else if (dirpad.get(1).isButtonTouched() && playerone.getFixatedY() > 0) {
+        } else if (dirpad.get(1).isButtonTouched() && playerone.coord.getFixatedY() > 0) {
             playerone.dir = MovableCharacter.Direction.DOWN;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
 
-            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.getFixatedY() > 1) {
+            } else if (playerone.checkIfAirBehindBlock(theMap) && playerone.checkIfWater(theMap) && playerone.coord.getFixatedY() > 1) {
                 playerone.stepSequenceRunning = true;
                 addOneStep();
-                BlockGeneral nextNext = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() - 2];
-                BlockGeneral next = theMap.mapArray[playerone.getFixatedX()][playerone.getFixatedY() - 1];
+                BlockGeneral nextNext = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() - 2];
+                BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY() - 1];
                 blockSwitcher(next, nextNext);
             }
 
@@ -534,8 +568,8 @@ class Gameplay implements Screen, InputProcessor {
             if (enemyLocatorIndex >= enemiesArraylist.size()) {
                 enemyLocatorIndex = 0;
             }
-            tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).getFixatedX() * tool.universalWidthFactor,
-                    enemiesArraylist.get(enemyLocatorIndex).getFixatedY() * tool.universalWidthFactor,
+            tool.camera.position.set(enemiesArraylist.get(enemyLocatorIndex).coord.getFixatedX() * tool.universalWidthFactor,
+                    enemiesArraylist.get(enemyLocatorIndex).coord.getFixatedY() * tool.universalWidthFactor,
                     0);
             enemyLocatorIndex++;
 
@@ -571,6 +605,7 @@ class Gameplay implements Screen, InputProcessor {
                 && theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.WATER) {
             theMap.mapArray[xToCheck][yToCheck].explodedStart = true;
             theMap.mapArray[xToCheck][yToCheck].type = BlockGeneral.Blocktypes.AIR;
+            theMap.mapArray[xToCheck][yToCheck].setTile();
             playerone.collectedItems.remove(0);
 
         }
@@ -579,31 +614,31 @@ class Gameplay implements Screen, InputProcessor {
     private void useBombOnBlock() {
         switch (playerone.dir) {
             case UP:
-                int blockY = playerone.getFixatedY() + 1;
-                boolean yLessThanTop = playerone.getFixatedY() + 1 < theMap.height;
+                int blockY = playerone.coord.getFixatedY() + 1;
+                boolean yLessThanTop = playerone.coord.getFixatedY() + 1 < theMap.height;
                 if (yLessThanTop) {
-                    checkIfBlockRemovableAndRemove(playerone.getFixatedX(), playerone.getFixatedY() + 1);
+                    checkIfBlockRemovableAndRemove(playerone.coord.getFixatedX(), playerone.coord.getFixatedY() + 1);
                 }
                 break;
             case DOWN:
-                int blockYdown = playerone.getFixatedY() + 1;
-                boolean yMoreThanBottom = playerone.getFixatedY() - 1 >= 0;
+                int blockYdown = playerone.coord.getFixatedY() + 1;
+                boolean yMoreThanBottom = playerone.coord.getFixatedY() - 1 >= 0;
                 if (yMoreThanBottom) {
-                    checkIfBlockRemovableAndRemove(playerone.getFixatedX(), playerone.getFixatedY() - 1);
+                    checkIfBlockRemovableAndRemove(playerone.coord.getFixatedX(), playerone.coord.getFixatedY() - 1);
                 }
                 break;
             case LEFT:
-                int blockXleft = playerone.getFixatedX() - 1;
-                boolean xMoreThanLeftLimit = playerone.getFixatedX() - 1 >= 0;
+                int blockXleft = playerone.coord.getFixatedX() - 1;
+                boolean xMoreThanLeftLimit = playerone.coord.getFixatedX() - 1 >= 0;
                 if (xMoreThanLeftLimit) {
-                    checkIfBlockRemovableAndRemove(playerone.getFixatedX() - 1, playerone.getFixatedY());
+                    checkIfBlockRemovableAndRemove(playerone.coord.getFixatedX() - 1, playerone.coord.getFixatedY());
                 }
                 break;
             case RIGHT:
-                int blockXright = playerone.getFixatedX() + 1;
-                boolean xLessThanRightLimit = playerone.getFixatedX() + 1 < theMap.width;
+                int blockXright = playerone.coord.getFixatedX() + 1;
+                boolean xLessThanRightLimit = playerone.coord.getFixatedX() + 1 < theMap.width;
                 if (xLessThanRightLimit) {
-                    checkIfBlockRemovableAndRemove(playerone.getFixatedX() + 1, playerone.getFixatedY());
+                    checkIfBlockRemovableAndRemove(playerone.coord.getFixatedX() + 1, playerone.coord.getFixatedY());
                 }
                 break;
 

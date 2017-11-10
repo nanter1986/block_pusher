@@ -9,10 +9,10 @@ import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossMover;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.StepIncreaser;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -70,8 +70,8 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
                 }
         }
-        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.getFixatedX() +
-                "\nat y:" + this.getFixatedY());
+        Gdx.app.log("enemy creation\n", "Enemy created at x:" + this.coord.getFixatedX() +
+                "\nat y:" + this.coord.getFixatedY());
 
     }
 
@@ -81,7 +81,7 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public ArrayList<BossSkill> skillSet() {
+    public ArrayList<BossSkill> skillSet(DisplayToolkit tool) {
         return null;
     }
 
@@ -136,12 +136,17 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles) {
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
         new BossMover(this).moveBoss(map, enemies, projectiles);
     }
 
     @Override
     public void checkIfcrushed(GeneralMap map) {
         new BossCrushChecker(this).checkIfcrushed(map);
+    }
+
+    @Override
+    public void increaseByStep(GeneralMap map) {
+        new StepIncreaser(this).increaseByStep(map);
     }
 }

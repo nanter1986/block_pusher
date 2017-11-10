@@ -34,8 +34,8 @@ public class BossFrontBlockChecker {
 
                 break;
             case DOWN:
-                int xToCheckDown = character.getFixatedX();
-                int yToCheckDown = character.getFixatedY() - 1;
+                int xToCheckDown = character.coord.getFixatedX();
+                int yToCheckDown = character.coord.getFixatedY() - 1;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
                     whatToDoBasedOnBlockType(bt, enemies);
@@ -43,8 +43,8 @@ public class BossFrontBlockChecker {
 
                 break;
             case LEFT:
-                int xToCheckLeft = character.getFixatedX() - 1;
-                int yToCheckLeft = character.getFixatedY();
+                int xToCheckLeft = character.coord.getFixatedX() - 1;
+                int yToCheckLeft = character.coord.getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft > 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     whatToDoBasedOnBlockType(bt, enemies);
@@ -54,8 +54,8 @@ public class BossFrontBlockChecker {
                 break;
 
             case RIGHT:
-                int xToCheckRight = character.getFixatedX() + 1;
-                int yToCheckRight = character.getFixatedY();
+                int xToCheckRight = character.coord.getFixatedX() + 1;
+                int yToCheckRight = character.coord.getFixatedY();
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && yToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
@@ -72,14 +72,14 @@ public class BossFrontBlockChecker {
         if (bt == BlockGeneral.Blocktypes.AIR) {
             Gdx.app.log("currentTest", bt.toString());
             for (MovableCharacter e : enemies) {
-                if (e.getFixatedX() == character.getFixatedX() && e.getFixatedY() == character.getFixatedY() + 1) {
+                if (e.coord.getFixatedX() == character.coord.getFixatedX() && e.coord.getFixatedY() == character.coord.getFixatedY() + 1) {
                     isFreeToPass = false;
                 }
             }
         } else if (bt == BlockGeneral.Blocktypes.ICE) {
             Gdx.app.log("currentTest", bt.toString());
             for (MovableCharacter e : enemies) {
-                if (e.getFixatedX() == character.getFixatedX() && e.getFixatedY() == character.getFixatedY() + 1) {
+                if (e.coord.getFixatedX() == character.coord.getFixatedX() && e.coord.getFixatedY() == character.coord.getFixatedY() + 1) {
                     isFreeToPass = false;
                 }
             }

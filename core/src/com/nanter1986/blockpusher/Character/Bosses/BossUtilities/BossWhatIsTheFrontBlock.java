@@ -14,8 +14,8 @@ public class BossWhatIsTheFrontBlock {
         BlockGeneral block = null;
         switch (character.dir) {
             case UP:
-                int xToCheckUp = (character.getFixatedX());
-                int yToCheckUp = character.getFixatedY() + howFar;
+                int xToCheckUp = (character.coord.getFixatedX());
+                int yToCheckUp = character.coord.getFixatedY() + howFar;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && yToCheckUp >= 0) {
                     block = map.mapArray[xToCheckUp][yToCheckUp];
 
@@ -24,8 +24,8 @@ public class BossWhatIsTheFrontBlock {
 
                 break;
             case DOWN:
-                int xToCheckDown = character.getFixatedX();
-                int yToCheckDown = character.getFixatedY() - howFar;
+                int xToCheckDown = character.coord.getFixatedX();
+                int yToCheckDown = character.coord.getFixatedY() - howFar;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && yToCheckDown >= 0) {
                     block = map.mapArray[xToCheckDown][yToCheckDown];
 
@@ -33,8 +33,8 @@ public class BossWhatIsTheFrontBlock {
 
                 break;
             case LEFT:
-                int xToCheckLeft = character.getFixatedX() - howFar;
-                int yToCheckLeft = character.getFixatedY();
+                int xToCheckLeft = character.coord.getFixatedX() - howFar;
+                int yToCheckLeft = character.coord.getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     block = map.mapArray[xToCheckLeft][yToCheckLeft];
 
@@ -45,8 +45,8 @@ public class BossWhatIsTheFrontBlock {
                 break;
 
             case RIGHT:
-                int xToCheckRight = character.getFixatedX() + howFar;
-                int yToCheckRight = character.getFixatedY();
+                int xToCheckRight = character.coord.getFixatedX() + howFar;
+                int yToCheckRight = character.coord.getFixatedY();
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && yToCheckRight >= 0) {
                     block = map.mapArray[xToCheckRight][yToCheckRight];

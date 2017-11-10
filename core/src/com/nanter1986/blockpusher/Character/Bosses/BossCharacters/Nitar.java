@@ -4,16 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
-import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BlockSmash;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
+import com.nanter1986.blockpusher.Character.Bosses.BossSkills.FireBall;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossMover;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.StepIncreaser;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,7 +32,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         moveReducerLimit = 32;
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
-        this.skills = skillSet();
+        this.skills = skillSet(tool);
         boolean freeBlockFound = false;
         switch (map.type) {
             case DEBUG_NITAR:
@@ -84,9 +84,9 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public ArrayList<BossSkill> skillSet() {
+    public ArrayList<BossSkill> skillSet(DisplayToolkit tool) {
         ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
-        skills.add(new BlockSmash());
+        skills.add(new FireBall(tool));
         return skills;
     }
 
@@ -142,12 +142,17 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles) {
+    public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
         new BossMover(this).moveBoss(map, enemies, projectiles);
     }
 
     @Override
     public void checkIfcrushed(GeneralMap map) {
         new BossCrushChecker(this).checkIfcrushed(map);
+    }
+
+    @Override
+    public void increaseByStep(GeneralMap map) {
+        new StepIncreaser(this).increaseByStep(map);
     }
 }

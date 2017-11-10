@@ -3,7 +3,6 @@ package com.nanter1986.blockpusher.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Projectile;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.DataControl.DataControler;
@@ -45,7 +44,7 @@ public abstract class MovableCharacter {
 
     public abstract void bloodAnimation(DisplayToolkit tool);
 
-    public abstract void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<Projectile> projectiles);
+    public abstract void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles);
 
     public abstract void checkIfcrushed(GeneralMap map);
 
