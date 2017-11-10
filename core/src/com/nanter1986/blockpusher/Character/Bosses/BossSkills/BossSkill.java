@@ -1,8 +1,8 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossSkills;
 
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Projectile;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Map.GeneralMap;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 

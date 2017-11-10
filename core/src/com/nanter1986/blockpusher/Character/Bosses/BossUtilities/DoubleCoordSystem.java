@@ -42,4 +42,19 @@ public class DoubleCoordSystem {
             realY = fixatedY * characterW;
         }
     }
+
+    public int getFixatedX() {
+        return fixatedX;
+
+    }
+
+    public int getFixatedY() {
+        return fixatedY;
+    }
+
+
+    public void fixatePosition() {
+        fixateX();
+        fixateY();
+    }
 }

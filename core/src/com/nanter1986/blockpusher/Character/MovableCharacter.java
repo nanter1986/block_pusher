@@ -3,12 +3,12 @@ package com.nanter1986.blockpusher.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Projectile;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
-import com.nanter1986.blockpusher.projectiles.Projectile;
 
 import java.util.ArrayList;
 
@@ -49,57 +49,9 @@ public abstract class MovableCharacter {
 
     public abstract void checkIfcrushed(GeneralMap map);
 
+    public abstract void increaseByStep(GeneralMap map);
 
-    public void increaseByStep(GeneralMap map) {
-        if (stepSequenceRunning) {
-            switch (dir) {
-                case UP:
-                    if (coord.realY + getStep() <= (map.height - 1) * characterW) {
-                        coord.realY += getStep();
-                    }
-                    break;
-                case DOWN:
-                    if (coord.realY - getStep() > 0) {
-                        coord.realY -= getStep();
-                    }
-                    break;
-                case RIGHT:
 
-                    if (coord.realX + getStep() < (map.width - 1) * characterW) {
-                        coord.realX += getStep();
-                    }
-                    break;
-                case LEFT:
-                    if (coord.realX - getStep() > 0) {
-                        coord.realX -= getStep();
-                    }
-                    break;
-            }
-        }
-
-    }
-
-    public int getFixatedX() {
-        return coord.fixatedX;
-
-    }
-
-    public int getFixatedY() {
-        return coord.fixatedY;
-    }
-
-    public float getStep() {
-        float chW = characterW;
-        float limit = moveReducerLimit;
-        return chW / limit;
-    }
-
-    public void fixatePosition() {
-        Gdx.app.log("before fixate enemy", this.coord.realX + "/" + this.coord.realY);
-        this.coord.fixateX();
-        this.coord.fixateY();
-        Gdx.app.log("after fixate enemy", this.coord.realX + "/" + this.coord.realY);
-    }
 
     public enum Direction{
         UP,
