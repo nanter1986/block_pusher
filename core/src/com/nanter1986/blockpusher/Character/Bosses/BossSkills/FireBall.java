@@ -36,5 +36,7 @@ public class FireBall implements BossSkill {
 
     private void spawnFireball(ArrayList<MovableCharacter> pr, GeneralMap map, MovableCharacter character) {
         pr.add(new FirePr(tool, map, character));
+
+
     }
 }

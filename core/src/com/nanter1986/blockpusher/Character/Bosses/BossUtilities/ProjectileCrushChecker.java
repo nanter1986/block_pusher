@@ -22,11 +22,14 @@ public class ProjectileCrushChecker {
         final float LIMIT = 0.5f;
         float xTocheck = (character.coord.realX % character.characterW) / character.characterW;
         float yTocheck = (character.coord.realY % character.characterW) / character.characterW;
-        Gdx.app.log("crush check", xTocheck + "/" + yTocheck);
-        if (character.coord.realX < 0 || character.coord.realX >= map.width || character.coord.realY < 0 || character.coord.realY >= map.height) {
+        Gdx.app.log("crush check", xTocheck + "/" + yTocheck + "/" + character.getClass());
+        if (character.coord.realX <= 0 || character.coord.realX >= ((map.width - 1) * character.coord.characterW) || character.coord.realY <= 0 || character.coord.realY >= ((map.height - 1) * character.coord.characterW)) {
+            Gdx.app.log("projectile", "in/" + character.coord.realX + "/" + character.coord.realY);
+            Gdx.app.log("projectile", "in/" + map.width + "/" + map.width);
             character.crushed = true;
             character.explodedStarted = true;
         } else {
+            Gdx.app.log("projectile", "in/down");
             switch (character.dir) {
                 case UP:
                     if (yTocheck < LIMIT) {
@@ -83,8 +86,7 @@ public class ProjectileCrushChecker {
         } else if (type == BlockGeneral.Blocktypes.ICE) {
 
         } else if (type == BlockGeneral.Blocktypes.WATER) {
-            character.crushed = true;
-            character.explodedStarted = true;
+
         }
     }
 }

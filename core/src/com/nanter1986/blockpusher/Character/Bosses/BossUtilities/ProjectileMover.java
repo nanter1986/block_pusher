@@ -18,8 +18,9 @@ public class ProjectileMover {
     }
 
     public void moveProjectile(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
-        Gdx.app.log("projectile", "in/" + character.moveReducer);
+
         if (character.moveReducer > 0) {
+            Gdx.app.log("projectile", "in/" + character.moveReducer);
             character.moveReducer--;
             character.increaseByStep(map);
         } else {
