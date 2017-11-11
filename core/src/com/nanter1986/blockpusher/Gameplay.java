@@ -263,6 +263,13 @@ class Gameplay implements Screen, InputProcessor {
             }
 
         }
+        for (MovableCharacter p : projectiles) {
+            boolean exploding = p.explodedStarted && p.explodedEnd == false;
+            if (exploding) {
+                p.bloodAnimation(tool);
+            }
+
+        }
 
         for (Item item : itemsArraylist) {
             item.updatePosition(tool.batch);

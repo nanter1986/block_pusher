@@ -27,7 +27,7 @@ public class FirePr extends MovableCharacter implements Projectile {
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;
-        moveReducerLimit = 64;
+        moveReducerLimit = 16;
         switch (shooter.dir) {
             case UP:
                 this.coord = new DoubleCoordSystem(shooter.coord.fixatedX * this.characterW,
