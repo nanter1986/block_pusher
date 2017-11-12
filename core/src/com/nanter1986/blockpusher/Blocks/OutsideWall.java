@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Blocks;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
@@ -10,12 +9,10 @@ import com.nanter1986.blockpusher.Map.GeneralMap;
  */
 
 public class OutsideWall {
-    public final Texture wallRock = new Texture(Gdx.files.internal("rock.png"));
     public DisplayToolkit tool;
 
     public OutsideWall(DisplayToolkit tool) {
         this.tool=tool;
-        Gdx.app.log("outside wall texture:",wallRock.toString());
     }
 
     public void drawSelf(GeneralMap map) {
@@ -24,9 +21,9 @@ public class OutsideWall {
                 int xLeftWithWidth=xLeft*tool.universalWidthFactor;
                 int yLeftWithWidth=yLeft*tool.universalWidthFactor;
                 //Gdx.app.log("xLeft/yLeft:",xLeftWithWidth+"/"+yLeftWithWidth);
-                tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xLeftWithWidth,yLeft*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xLeftWithWidth, yLeft * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xLeftWithWidth, yLeft * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xLeftWithWidth, yLeft * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
             }
         }
 
@@ -35,9 +32,9 @@ public class OutsideWall {
                 int xRightWithWidth=xRight*tool.universalWidthFactor;
                 int yRightWithWidth=yRight*tool.universalWidthFactor;
                 //Gdx.app.log("xRight/yRight:",xRightWithWidth+"/"+yRightWithWidth);
-                tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xRightWithWidth,yRight*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xRightWithWidth, yRight * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xRightWithWidth, yRight * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xRightWithWidth, yRight * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
             }
         }
 
@@ -46,9 +43,9 @@ public class OutsideWall {
                 int xTopWithWidth=xTop*tool.universalWidthFactor;
                 int yTopWithWidth=yTop*tool.universalWidthFactor;
                 //Gdx.app.log("xTop/yTop:",xTopWithWidth+"/"+yTopWithWidth);
-                tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xTopWithWidth,yTop*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xTopWithWidth, yTop * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xTopWithWidth, yTop * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xTopWithWidth, yTop * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
             }
         }
 
@@ -57,9 +54,9 @@ public class OutsideWall {
                 int xBottomWithWidth=xBottom*tool.universalWidthFactor;
                 int yBottomWithWidth=yBottom*tool.universalWidthFactor;
                 //Gdx.app.log("xTop/yTop:",xBottomWithWidth+"/"+yBottomWithWidth);
-                tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
-                tool.batch.draw(wallRock,xBottomWithWidth,yBottom*tool.universalWidthFactor,tool.universalWidthFactor,tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xBottomWithWidth, yBottom * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xBottomWithWidth, yBottom * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
+                tool.batch.draw(tool.manager.get("rock.png", Texture.class), xBottomWithWidth, yBottom * tool.universalWidthFactor, tool.universalWidthFactor, tool.universalWidthFactor);
             }
         }
 

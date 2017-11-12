@@ -23,10 +23,9 @@ import java.util.Random;
 
 public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
-    public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
     public MinionSimple(DisplayToolkit tool, GeneralMap map) {
-        this.texture = playerOne;
+        this.texture = tool.manager.get("villain.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;

@@ -20,7 +20,6 @@ public class PlayerOne extends MovableCharacter {
     private static final int PLAYER_MOVE_REDUCER_START = 16;
     private static final int LEVELS_PER_SPEED_BOOST = 100;
     private static final int MINIMUM_MOVE_REDUCER = 2;
-    public Texture playerOne = new Texture(Gdx.files.internal("hero.png"));
     public DisplayToolkit tool;
     public  boolean stillAlive;
     public ArrayList<Item>collectedItems=new ArrayList<Item>();
@@ -28,7 +27,7 @@ public class PlayerOne extends MovableCharacter {
     public PlayerOne(DisplayToolkit tool, GeneralMap map) {
         this.tool = tool;
         this.moveReducerLimit = getPlayerMoveReducer();
-        this.texture=playerOne;
+        this.texture = tool.manager.get("hero.png", Texture.class);
 
         this.characterW=tool.universalWidthFactor;
         this.characterH=tool.universalWidthFactor;
@@ -136,17 +135,17 @@ public class PlayerOne extends MovableCharacter {
         if(stillAlive){
             switch (dir){
                 case UP:
-                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
+                    b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
                     break;
                 case DOWN:
-                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1500, 500, 500, false, false);
+                    b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1500, 500, 500, false, false);
                     break;
                 case LEFT:
-                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1000, 500, 500, false, false);
+                    b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1000, 500, 500, false, false);
 
                     break;
                 case RIGHT:
-                    b.draw(playerOne, this.coord.realX, this.coord.realY, characterW, characterH, 0, 500, 500, 500, false, false);
+                    b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 500, 500, 500, false, false);
 
                     break;
 

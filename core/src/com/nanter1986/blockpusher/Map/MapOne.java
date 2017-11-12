@@ -25,11 +25,11 @@ public class MapOne extends GeneralMap {
             for (int j = 0; j < height; j++) {
                 int anInteger=RANDOM.nextInt(100);
                 if(anInteger<50){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.AIR);
+                    mapArray[i][j] = new BlockGeneral(tool, i, j, BlockGeneral.Blocktypes.AIR);
                 }else if(anInteger<60){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.WATER);
+                    mapArray[i][j] = new BlockGeneral(tool, i, j, BlockGeneral.Blocktypes.WATER);
                 }else if(anInteger<100){
-                    mapArray[i][j]=new BlockGeneral(i,j, BlockGeneral.Blocktypes.STONE);
+                    mapArray[i][j] = new BlockGeneral(tool, i, j, BlockGeneral.Blocktypes.STONE);
                 }
             }
         }

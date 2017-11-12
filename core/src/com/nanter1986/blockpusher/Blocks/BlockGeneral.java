@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Blocks;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
@@ -9,16 +8,6 @@ import com.nanter1986.blockpusher.DisplayToolkit;
  */
 
 public class BlockGeneral {
-    public static final Texture airT = new Texture("air.png");
-
-    private static final Texture waterT=new Texture("water.png");
-    private static final Texture iceT = new Texture("food.png");
-
-    private static final Texture stoneT=new Texture("stone.png");
-    private static final Texture rockT=new Texture("rock.png");
-
-
-    private static final Texture explosion=new Texture(Gdx.files.internal("explosion.png"));
     public boolean explodedStart;
     public boolean explodedEnd;
     public int blockX;
@@ -27,8 +16,10 @@ public class BlockGeneral {
     public Texture tile;
     int explosionAnimationX;
     int explosionAnimationY;
+    DisplayToolkit tool;
 
-    public BlockGeneral(int blockX, int blockY, Blocktypes type) {
+    public BlockGeneral(DisplayToolkit tool, int blockX, int blockY, Blocktypes type) {
+        this.tool = tool;
         explosionAnimationX=0;
         explosionAnimationY=0;
         explodedStart=false;
@@ -36,13 +27,13 @@ public class BlockGeneral {
         this.blockX = blockX;
         this.blockY = blockY;
         this.type = type;
-        setTile();
+        setTile(tool);
     }
 
-    public void explode(DisplayToolkit tool){
+    public void explode() {
         int whereToExplodeX=blockX*tool.universalWidthFactor;
         int whereToExplodeY=blockY*tool.universalWidthFactor;
-        tool.batch.draw(explosion,whereToExplodeX,whereToExplodeY,tool.universalWidthFactor,tool.universalWidthFactor,explosionAnimationX*100,500-explosionAnimationY*100,100,100,false,false);
+        tool.batch.draw(tool.manager.get("explosion.png", Texture.class), whereToExplodeX, whereToExplodeY, tool.universalWidthFactor, tool.universalWidthFactor, explosionAnimationX * 100, 500 - explosionAnimationY * 100, 100, 100, false, false);
         explosionAnimationX++;
         if(explosionAnimationX==6){
             explosionAnimationX=0;
@@ -53,19 +44,19 @@ public class BlockGeneral {
         }
     }
 
-    public void setTile() {
+    public void setTile(DisplayToolkit tool) {
         switch (this.type) {
             case AIR:
-                tile = airT;
+                tile = tool.manager.get("air.png", Texture.class);
                 break;
             case STONE:
-                tile = stoneT;
+                tile = tool.manager.get("stone.png", Texture.class);
                 break;
             case WATER:
-                tile = waterT;
+                tile = tool.manager.get("water.png", Texture.class);
                 break;
             case ICE:
-                tile = iceT;
+                tile = tool.manager.get("ice.png", Texture.class);
                 break;
         }
     }

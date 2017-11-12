@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
@@ -20,10 +19,8 @@ import java.util.ArrayList;
 
 public class FirePr extends MovableCharacter implements Projectile {
 
-    public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
-
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
-        this.texture = playerOne;
+        this.texture = tool.manager.get("villain.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;

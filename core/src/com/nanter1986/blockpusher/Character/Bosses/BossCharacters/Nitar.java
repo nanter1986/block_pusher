@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
@@ -24,10 +23,9 @@ import java.util.Random;
 
 public class Nitar extends MovableCharacter implements GeneralBoss {
 
-    public final Texture playerOne = new Texture(Gdx.files.internal("villain.png"));
 
     public Nitar(DisplayToolkit tool, GeneralMap map) {
-        this.texture = playerOne;
+        this.texture = tool.manager.get("villain.png", Texture.class);
         this.level = 2;
         moveReducerLimit = 32;
         this.characterW = tool.universalWidthFactor;

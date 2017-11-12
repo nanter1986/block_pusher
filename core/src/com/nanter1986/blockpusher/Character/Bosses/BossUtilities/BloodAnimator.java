@@ -1,6 +1,6 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
@@ -24,26 +24,21 @@ public class BloodAnimator {
         if(character.bloodDelayNumber>0){
             character.bloodDelayNumber--;
         }else{
-
-
-            Gdx.app.log("blood animation:",whereToExplodeX+"/"+whereToExplodeY+"/"+widthOfBlood);
             character.bloodAnimationX++;
             if(character.bloodAnimationX==2){
                 character.bloodAnimationX=0;
                 character.bloodAnimationY++;
             }
-            Gdx.app.log("showing explosion:",character.bloodAnimationX+" "+character.bloodAnimationY+" "+character.blood.toString()+
-                    " at "+whereToExplodeX+"/"+whereToExplodeY+" width:"+widthOfBlood);
+
             if(character.bloodAnimationY==3){
                 character.explodedEnd=true;
-                Gdx.app.log("explosion ended: ",character.explodedEnd+"");
+
             }
             character.bloodDelayNumber=64;
         }
         int sourceX=character.bloodAnimationX*500;
         int sourceY=character.bloodAnimationY*500;
-        Gdx.app.log("blood source at:",sourceX+"/"+sourceY);
-        tool.batch.draw(character.blood,whereToExplodeX,whereToExplodeY,widthOfBlood,widthOfBlood,sourceX,sourceY,500,500,false,false);
+        tool.batch.draw(tool.manager.get("blood.png", Texture.class), whereToExplodeX, whereToExplodeY, widthOfBlood, widthOfBlood, sourceX, sourceY, 500, 500, false, false);
 
 
 

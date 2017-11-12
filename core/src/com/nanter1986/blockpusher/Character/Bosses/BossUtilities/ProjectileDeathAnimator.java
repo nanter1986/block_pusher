@@ -39,7 +39,7 @@ public class ProjectileDeathAnimator {
         }
         int sourceX = character.bloodAnimationX * DIMENSION;
         int sourceY = character.bloodAnimationY * DIMENSION;
-        tool.batch.draw(MovableCharacter.explosion, whereToExplodeX, whereToExplodeY, widthOfBlood, widthOfBlood, sourceX, sourceY, DIMENSION, DIMENSION, false, false);
+        tool.batch.draw(tool.manager.get("explosion.png", Texture.class), whereToExplodeX, whereToExplodeY, widthOfBlood, widthOfBlood, sourceX, sourceY, DIMENSION, DIMENSION, false, false);
     }
 
 

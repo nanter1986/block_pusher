@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
@@ -16,8 +15,6 @@ import java.util.ArrayList;
  */
 
 public abstract class MovableCharacter {
-    public static final Texture blood = new Texture(Gdx.files.internal("blood.png"));
-    public static final Texture explosion = new Texture(Gdx.files.internal("explosion.png"));
     public Texture texture;
     public DataControler data;
     public DoubleCoordSystem coord;
