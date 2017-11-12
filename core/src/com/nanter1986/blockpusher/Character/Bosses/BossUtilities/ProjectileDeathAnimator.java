@@ -26,7 +26,6 @@ public class ProjectileDeathAnimator {
         if (character.bloodDelayNumber > 0) {
             character.bloodDelayNumber--;
         } else {
-            Gdx.app.log("blood animation:", whereToExplodeX + "/" + whereToExplodeY + "/" + widthOfBlood);
             character.bloodAnimationX++;
             if (character.bloodAnimationX == 6) {
                 character.bloodAnimationX = 0;
@@ -35,7 +34,7 @@ public class ProjectileDeathAnimator {
             if (character.bloodAnimationY == 6) {
                 character.explodedEnd = true;
             }
-            character.bloodDelayNumber = 8;
+            character.bloodDelayNumber = 0;
         }
         int sourceX = character.bloodAnimationX * DIMENSION;
         int sourceY = character.bloodAnimationY * DIMENSION;
