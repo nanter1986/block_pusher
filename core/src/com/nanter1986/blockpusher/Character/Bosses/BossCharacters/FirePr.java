@@ -3,9 +3,9 @@ package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileCrushChecker;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileDeathAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileMover;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.StepIncreaser;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
@@ -92,7 +92,7 @@ public class FirePr extends MovableCharacter implements Projectile {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
-        new BloodAnimator(this).bloodAnimation(tool);
+        new ProjectileDeathAnimator(this).animate(tool);
     }
 
     @Override

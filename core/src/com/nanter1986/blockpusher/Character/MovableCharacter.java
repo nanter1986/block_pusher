@@ -16,7 +16,8 @@ import java.util.ArrayList;
  */
 
 public abstract class MovableCharacter {
-    public final Texture blood = new Texture(Gdx.files.internal("blood.png"));
+    public static final Texture blood = new Texture(Gdx.files.internal("blood.png"));
+    public static final Texture explosion = new Texture(Gdx.files.internal("explosion.png"));
     public Texture texture;
     public DataControler data;
     public DoubleCoordSystem coord;
