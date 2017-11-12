@@ -18,6 +18,10 @@ import java.util.ArrayList;
  */
 
 public class FirePr extends MovableCharacter implements Projectile {
+    ProjectileDeathAnimator deathAnimator;
+    ProjectileCrushChecker crushChecker;
+    StepIncreaser stepIncreaser;
+    ProjectileMover projectileMover;
 
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
         this.texture = tool.manager.get("villain.png", Texture.class);
@@ -25,6 +29,10 @@ public class FirePr extends MovableCharacter implements Projectile {
         this.characterH = tool.universalWidthFactor;
         this.level = 1;
         moveReducerLimit = 16;
+        deathAnimator = new ProjectileDeathAnimator(this);
+        crushChecker = new ProjectileCrushChecker(this);
+        stepIncreaser = new StepIncreaser(this);
+        projectileMover = new ProjectileMover(this);
         switch (shooter.dir) {
             case UP:
                 this.coord = new DoubleCoordSystem(shooter.coord.fixatedX * this.characterW,
@@ -89,21 +97,21 @@ public class FirePr extends MovableCharacter implements Projectile {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
-        new ProjectileDeathAnimator(this).animate(tool);
+        deathAnimator.animate(tool);
     }
 
     @Override
     public void checkIfcrushed(GeneralMap map) {
-        new ProjectileCrushChecker(this).checkIfcrushed(map);
+        crushChecker.checkIfcrushed(map);
     }
 
     @Override
     public void increaseByStep(GeneralMap map) {
-        new StepIncreaser(this).increaseByStep(map);
+        stepIncreaser.increaseByStep(map);
     }
 
     @Override
     public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
-        new ProjectileMover(this).moveProjectile(map, enemies, projectiles);
+        projectileMover.moveProjectile(map, enemies, projectiles);
     }
 }
