@@ -18,8 +18,14 @@ public class ProjectileDeathAnimator {
 
     public void animate(DisplayToolkit tool) {
         int widthOfBlood = character.level * tool.universalWidthFactor;
-        int whereToExplodeX = character.coord.getFixatedX() * tool.universalWidthFactor - widthOfBlood / 2;
-        int whereToExplodeY = character.coord.getFixatedY() * tool.universalWidthFactor - widthOfBlood / 2;
+        float whereToExplodeX = character.coord.realX;
+        float whereToExplodeY = character.coord.realY;
+        if (character.dir == MovableCharacter.Direction.UP) {
+            whereToExplodeY = character.coord.realY + character.coord.characterW;
+        } else if (character.dir == MovableCharacter.Direction.DOWN) {
+            whereToExplodeY = character.coord.realY - character.coord.characterW;
+        }
+
 
 
         character.bloodAnimationX++;

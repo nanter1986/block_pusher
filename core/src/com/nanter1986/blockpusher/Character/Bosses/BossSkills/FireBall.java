@@ -26,7 +26,7 @@ public class FireBall implements BossSkill {
         if (chance < 2) {
             chance = 2;
         }
-        chance = 10;
+        chance = 2;
         int willSpawn = new Random().nextInt(chance);
         if (willSpawn == 0) {
             spawnFireball(pr, map, character);

@@ -26,6 +26,7 @@ public class ProjectileCrushChecker {
         if (character.coord.realX <= 0 || character.coord.realX >= ((map.width - 1) * character.coord.characterW) || character.coord.realY <= 0 || character.coord.realY >= ((map.height - 1) * character.coord.characterW)) {
             character.crushed = true;
             character.explodedStarted = true;
+            character.coord.fixatePosition();
         } else {
             switch (character.dir) {
                 case UP:
