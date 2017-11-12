@@ -2,6 +2,7 @@ package com.nanter1986.blockpusher.Character.Bosses.BossUtilities;
 
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
+import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
 
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ import java.util.ArrayList;
 public class BossMover {
 
     private MovableCharacter character;
+    private DisplayToolkit tool;
 
 
-    public BossMover(MovableCharacter character) {
+    public BossMover(DisplayToolkit tool, MovableCharacter character) {
+        this.tool = tool;
         this.character = character;
     }
 
@@ -65,7 +68,7 @@ public class BossMover {
             }
             ArrayList<BossSkill> skills = character.skills;
             for (BossSkill bs : skills) {
-                bs.executeSkill(character.level, character, map, enemies, projectiles);
+                bs.executeSkill(tool, character.level, character, map, enemies, projectiles);
             }
 
         }

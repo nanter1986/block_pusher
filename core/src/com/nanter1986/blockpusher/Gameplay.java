@@ -413,8 +413,8 @@ class Gameplay implements Screen, InputProcessor {
         bNextNext.type = bNext.type;
         bNext.type = BlockGeneral.Blocktypes.AIR;
 
-        bNextNext.setTile();
-        bNext.setTile();
+        bNextNext.setTile(tool);
+        bNext.setTile(tool);
 
     }
 
@@ -612,7 +612,7 @@ class Gameplay implements Screen, InputProcessor {
                 && theMap.mapArray[xToCheck][yToCheck].type != BlockGeneral.Blocktypes.WATER) {
             theMap.mapArray[xToCheck][yToCheck].explodedStart = true;
             theMap.mapArray[xToCheck][yToCheck].type = BlockGeneral.Blocktypes.AIR;
-            theMap.mapArray[xToCheck][yToCheck].setTile();
+            theMap.mapArray[xToCheck][yToCheck].setTile(tool);
             playerone.collectedItems.remove(0);
 
         }

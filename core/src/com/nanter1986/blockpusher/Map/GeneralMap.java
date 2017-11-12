@@ -34,7 +34,7 @@ public abstract class GeneralMap {
                     if (showExplosion) {
 
                         Gdx.app.log("show explosion: ", showExplosion + "( ' )");
-                        mapArray[i][j].explode(tool);
+                        mapArray[i][j].explode();
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.STONE) {
                         tool.batch.draw(mapArray[i][j].tile, blockX, blockY, blocksize, blocksize);
                     }
@@ -55,7 +55,7 @@ public abstract class GeneralMap {
                     if (showExplosion) {
 
                         Gdx.app.log("show explosion: ", showExplosion + "( ' )");
-                        mapArray[i][j].explode(tool);
+                        mapArray[i][j].explode();
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.AIR) {
                         tool.batch.draw(mapArray[i][j].tile, blockX, blockY, blocksize, blocksize);
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.ICE) {

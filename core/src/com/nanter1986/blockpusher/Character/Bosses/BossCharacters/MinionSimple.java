@@ -22,9 +22,10 @@ import java.util.Random;
  */
 
 public class MinionSimple extends MovableCharacter implements GeneralBoss {
-
+    DisplayToolkit tool;
 
     public MinionSimple(DisplayToolkit tool, GeneralMap map) {
+        this.tool = tool;
         this.texture = tool.manager.get("villain.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
@@ -136,7 +137,7 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
 
     @Override
     public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
-        new BossMover(this).moveBoss(map, enemies, projectiles);
+        new BossMover(tool, this).moveBoss(map, enemies, projectiles);
     }
 
     @Override

@@ -179,7 +179,7 @@ public class PlayerOne extends MovableCharacter {
         int sourceX = bloodAnimationX * 500;
         int sourceY = bloodAnimationY * 500;
         Gdx.app.log("blood source at:", sourceX + "/" + sourceY);
-        tool.batch.draw(blood, whereToExplodeX, whereToExplodeY, widthOfBlood, heightOfBlood, sourceX, sourceY, 500, 500, false, false);
+        tool.batch.draw(tool.manager.get("blood.png", Texture.class), whereToExplodeX, whereToExplodeY, widthOfBlood, heightOfBlood, sourceX, sourceY, 500, 500, false, false);
     }
 
     @Override

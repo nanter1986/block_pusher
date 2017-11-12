@@ -22,9 +22,10 @@ import java.util.Random;
  */
 
 public class Nitar extends MovableCharacter implements GeneralBoss {
-
+    DisplayToolkit tool;
 
     public Nitar(DisplayToolkit tool, GeneralMap map) {
+        this.tool = tool;
         this.texture = tool.manager.get("villain.png", Texture.class);
         this.level = 2;
         moveReducerLimit = 32;
@@ -141,7 +142,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
 
     @Override
     public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
-        new BossMover(this).moveBoss(map, enemies, projectiles);
+        new BossMover(tool, this).moveBoss(map, enemies, projectiles);
     }
 
     @Override

@@ -21,12 +21,12 @@ public class FireBall implements BossSkill {
     }
 
     @Override
-    public void executeSkill(int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
+    public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
         int chance = MAX_LEVEL_THAT_AFFECTS - level;
         if (chance < 2) {
             chance = 2;
         }
-        chance = 2;
+        chance = 10;
         int willSpawn = new Random().nextInt(chance);
         if (willSpawn == 0) {
             spawnFireball(pr, map, character);
