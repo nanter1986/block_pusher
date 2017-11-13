@@ -61,8 +61,8 @@ class Gameplay implements Screen, InputProcessor {
 
     public Gameplay(MainClass game, GeneralMap theMap) {
         this.game = game;
-        this.theMap = theMap;
         this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.theMap = theMap;
         this.tool.camera.update();
     }
 
@@ -255,6 +255,7 @@ class Gameplay implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
+        Gdx.app.log("is drawing", tool.toString() + "/");
         theMap.updatePositionBelow(tool);
         for (MovableCharacter e : enemiesArraylist) {
             boolean exploding = e.explodedStarted && e.explodedEnd == false;
@@ -338,18 +339,17 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private void removeProjectiles() {
+        Gdx.app.log("removing projectiles", "in" + projectiles.size());
         ArrayList<MovableCharacter> toRemoveIfCrushed = new ArrayList<MovableCharacter>();
         for (MovableCharacter p : projectiles) {
             p.checkIfcrushed(theMap);
             boolean crushedAndAnimatedBlood = p.crushed && p.explodedEnd;
             if (crushedAndAnimatedBlood) {
-
                 toRemoveIfCrushed.add(p);
             }
         }
         for (MovableCharacter e : toRemoveIfCrushed) {
-
-            enemiesArraylist.remove(e);
+            projectiles.remove(e);
 
         }
     }

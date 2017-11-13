@@ -14,7 +14,6 @@ public class MapOne extends GeneralMap {
 
 
     public MapOne(DisplayToolkit tool) {
-        super(tool);
         type = GameplayTypes.REGULAR;
         width = calculateWidth(tool);
         height = calculateHeight(tool);
@@ -33,7 +32,7 @@ public class MapOne extends GeneralMap {
                 }
             }
         }
-        //logSelf();
+
     }
 
     private int calculateHeight(DisplayToolkit tool) {

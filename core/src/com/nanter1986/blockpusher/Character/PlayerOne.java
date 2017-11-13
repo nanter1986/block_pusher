@@ -96,6 +96,8 @@ public class PlayerOne extends MovableCharacter {
                     (map.height - 1) / 2,
                     this.characterW);
         }
+        map.mapArray[coord.fixatedX][coord.fixatedY].type = BlockGeneral.Blocktypes.AIR;
+        map.mapArray[coord.fixatedX][coord.fixatedY].setTile(tool);
     }
 
     private int getPlayerMoveReducer() {

@@ -16,10 +16,9 @@ public class BlockGeneral {
     public Texture tile;
     int explosionAnimationX;
     int explosionAnimationY;
-    DisplayToolkit tool;
+
 
     public BlockGeneral(DisplayToolkit tool, int blockX, int blockY, Blocktypes type) {
-        this.tool = tool;
         explosionAnimationX=0;
         explosionAnimationY=0;
         explodedStart=false;
@@ -30,7 +29,7 @@ public class BlockGeneral {
         setTile(tool);
     }
 
-    public void explode() {
+    public void explode(DisplayToolkit tool) {
         int whereToExplodeX=blockX*tool.universalWidthFactor;
         int whereToExplodeY=blockY*tool.universalWidthFactor;
         tool.batch.draw(tool.manager.get("explosion.png", Texture.class), whereToExplodeX, whereToExplodeY, tool.universalWidthFactor, tool.universalWidthFactor, explosionAnimationX * 100, 500 - explosionAnimationY * 100, 100, 100, false, false);

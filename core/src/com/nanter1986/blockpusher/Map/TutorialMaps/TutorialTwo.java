@@ -15,7 +15,6 @@ public class TutorialTwo extends GeneralMap {
 
 
     public TutorialTwo(DisplayToolkit tool) {
-        super(tool);
         type = GameplayTypes.TUTORIAL2;
         this.width = MAP_WIDTH_IN_BLOCKS;
         this.height = MAP_HEIGHT_IN_BLOCKS;

@@ -13,15 +13,13 @@ import java.util.Random;
 
 public abstract class GeneralMap {
     public static final Random RANDOM = new Random();
+    //DisplayToolkit tool;
     public GameplayTypes type;
     public int width;
     public int height;
     public int blocksize;
     public BlockGeneral[][] mapArray;
 
-    public GeneralMap(DisplayToolkit tool) {
-        this.blocksize = tool.universalWidthFactor;
-    }
 
     public void updatePositionAbove(DisplayToolkit tool) {
 
@@ -32,9 +30,7 @@ public abstract class GeneralMap {
                 if (CheckIfInScreenToDraw.checkIfInScreen(tool, blockX, blockY)) {
                     boolean showExplosion = mapArray[i][j].explodedStart && mapArray[i][j].explodedEnd == false;
                     if (showExplosion) {
-
-                        Gdx.app.log("show explosion: ", showExplosion + "( ' )");
-                        mapArray[i][j].explode();
+                        mapArray[i][j].explode(tool);
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.STONE) {
                         tool.batch.draw(mapArray[i][j].tile, blockX, blockY, blocksize, blocksize);
                     }
@@ -45,7 +41,7 @@ public abstract class GeneralMap {
     }
 
     public void updatePositionBelow(DisplayToolkit tool) {
-
+        Gdx.app.log("is drawing below", tool.toString() + "/");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 float blockX = mapArray[i][j].blockX * blocksize;
@@ -53,9 +49,7 @@ public abstract class GeneralMap {
                 if (CheckIfInScreenToDraw.checkIfInScreen(tool, blockX, blockY)) {
                     boolean showExplosion = mapArray[i][j].explodedStart && mapArray[i][j].explodedEnd == false;
                     if (showExplosion) {
-
-                        Gdx.app.log("show explosion: ", showExplosion + "( ' )");
-                        mapArray[i][j].explode();
+                        mapArray[i][j].explode(tool);
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.AIR) {
                         tool.batch.draw(mapArray[i][j].tile, blockX, blockY, blocksize, blocksize);
                     } else if (mapArray[i][j].type == BlockGeneral.Blocktypes.ICE) {

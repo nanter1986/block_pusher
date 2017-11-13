@@ -23,6 +23,10 @@ import java.util.Random;
 
 public class Nitar extends MovableCharacter implements GeneralBoss {
     DisplayToolkit tool;
+    BloodAnimator bloodAnimator;
+    BossMover bossMover;
+    BossCrushChecker bossCrushChecker;
+    StepIncreaser stepIncreaser;
 
     public Nitar(DisplayToolkit tool, GeneralMap map) {
         this.tool = tool;
@@ -33,6 +37,10 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         this.characterH = tool.universalWidthFactor;
         this.skills = skillSet(tool);
         boolean freeBlockFound = false;
+        bloodAnimator = new BloodAnimator(this);
+        bossMover = new BossMover(tool, this);
+        bossCrushChecker = new BossCrushChecker(this);
+        stepIncreaser = new StepIncreaser(this);
         switch (map.type) {
             case DEBUG_NITAR:
                 this.coord = new DoubleCoordSystem(4 * this.characterW,
@@ -137,21 +145,21 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
 
     @Override
     public void bloodAnimation(DisplayToolkit tool) {
-        new BloodAnimator(this).bloodAnimation(tool);
+        bloodAnimator.bloodAnimation(tool);
     }
 
     @Override
     public void moveCharacter(GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> projectiles) {
-        new BossMover(tool, this).moveBoss(map, enemies, projectiles);
+        bossMover.moveBoss(map, enemies, projectiles);
     }
 
     @Override
     public void checkIfcrushed(GeneralMap map) {
-        new BossCrushChecker(this).checkIfcrushed(map);
+        bossCrushChecker.checkIfcrushed(map);
     }
 
     @Override
     public void increaseByStep(GeneralMap map) {
-        new StepIncreaser(this).increaseByStep(map);
+        stepIncreaser.increaseByStep(map);
     }
 }

@@ -15,7 +15,6 @@ public class NitarTestMap extends GeneralMap {
     public final int MAP_HEIGHT_IN_BLOCKS = 5;
 
     public NitarTestMap(DisplayToolkit tool) {
-        super(tool);
         type = GameplayTypes.DEBUG_NITAR;
         this.width = MAP_WIDTH_IN_BLOCKS;
         this.height = MAP_HEIGHT_IN_BLOCKS;

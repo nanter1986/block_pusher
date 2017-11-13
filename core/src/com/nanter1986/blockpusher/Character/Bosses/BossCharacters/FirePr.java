@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by user on 10/11/2017.
  */
 
-public class FirePr extends MovableCharacter implements Projectile {
+public class FirePr extends MovableCharacter {
     ProjectileDeathAnimator deathAnimator;
     ProjectileCrushChecker crushChecker;
     StepIncreaser stepIncreaser;
