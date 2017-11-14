@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Map;
 
-import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.InScreenDrawer.CheckIfInScreenToDraw;
@@ -41,7 +40,6 @@ public abstract class GeneralMap {
     }
 
     public void updatePositionBelow(DisplayToolkit tool) {
-        Gdx.app.log("is drawing below", tool.toString() + "/");
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 float blockX = mapArray[i][j].blockX * blocksize;
@@ -61,6 +59,15 @@ public abstract class GeneralMap {
 
             }
         }
+    }
+
+    public void setAllTiles(DisplayToolkit tool) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                mapArray[i][j].setTile(tool);
+            }
+        }
+
     }
 
 

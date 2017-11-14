@@ -22,6 +22,7 @@ import java.util.Random;
  */
 
 public class MinionSimple extends MovableCharacter implements GeneralBoss {
+    public static final Random RANDOM = new Random();
     DisplayToolkit tool;
     BloodAnimator bloodAnimator;
     BossMover bossMover;
@@ -64,8 +65,8 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
             default:
                 boolean freeBlockFound = false;
                 while (freeBlockFound == false) {
-                    int theX = new Random().nextInt(map.width);
-                    int theY = new Random().nextInt(map.height);
+                    int theX = RANDOM.nextInt(map.width);
+                    int theY = RANDOM.nextInt(map.height);
                     if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
                         freeBlockFound = true;
                         this.coord = new DoubleCoordSystem(theX * this.characterW,

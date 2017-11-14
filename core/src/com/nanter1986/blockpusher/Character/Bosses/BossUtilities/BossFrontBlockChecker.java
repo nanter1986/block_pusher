@@ -45,7 +45,7 @@ public class BossFrontBlockChecker {
             case LEFT:
                 int xToCheckLeft = character.coord.getFixatedX() - 1;
                 int yToCheckLeft = character.coord.getFixatedY();
-                if (xToCheckLeft < map.width && xToCheckLeft > 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
+                if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && yToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
                     whatToDoBasedOnBlockType(bt, enemies);
                 }
