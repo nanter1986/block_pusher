@@ -90,7 +90,7 @@ public class MinionSimple extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public ArrayList<BossSkill> skillSet(DisplayToolkit tool) {
+    public ArrayList<BossSkill> skillSet(DisplayToolkit tool, MovableCharacter targetPlayer) {
         return null;
     }
 

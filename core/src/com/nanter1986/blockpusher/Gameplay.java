@@ -131,7 +131,7 @@ class Gameplay implements Screen, InputProcessor {
     private void spawnEnemies() {
         switch (theMap.type) {
             case DEBUG_NITAR:
-                enemiesArraylist.add(new Nitar(tool, theMap));
+                enemiesArraylist.add(new Nitar(tool, theMap, playerone));
                 break;
             case DEBUG_ENEMY:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
@@ -148,7 +148,7 @@ class Gameplay implements Screen, InputProcessor {
             default:
                 if (isStageDevidedByBossFrecuency) {
                     for (int i = 0; i < enemiesToGenerate; i++) {
-                        enemiesArraylist.add(new Nitar(tool, theMap));
+                        enemiesArraylist.add(new Nitar(tool, theMap, playerone));
                     }
                 } else {
                     for (int i = 0; i < enemiesToGenerate; i++) {

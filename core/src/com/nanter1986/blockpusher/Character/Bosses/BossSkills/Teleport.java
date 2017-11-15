@@ -17,16 +17,21 @@ public class Teleport implements BossSkill {
     public static final Random RANDOM = new Random();
     public static final Random CHANCE = new Random();
 
+    MovableCharacter targetPlayer;
+
+    public Teleport(MovableCharacter targetPlayer) {
+        this.targetPlayer = targetPlayer;
+    }
+
     @Override
     public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
         if (CHANCE.nextInt(5) == 0) {
             boolean freeBlockFound = false;
             while (freeBlockFound == false) {
-
                 int theX = RANDOM.nextInt(map.width);
                 int theY = RANDOM.nextInt(map.height);
-                Gdx.app.log("teleport test", "in" + theX + "/" + theY + "/" + map.mapArray[theX][theY].type);
-                if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR) {
+                boolean fallsOnTargetPlayer = theX == targetPlayer.coord.fixatedX && theY == targetPlayer.coord.fixatedY;
+                if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR && !fallsOnTargetPlayer) {
                     Gdx.app.log("teleport test", "in" +
                             "/" + character.coord.realX +
                             "/" + character.coord.realY +

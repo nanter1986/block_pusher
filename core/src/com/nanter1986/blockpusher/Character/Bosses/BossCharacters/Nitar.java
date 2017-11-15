@@ -28,14 +28,14 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     BossCrushChecker bossCrushChecker;
     StepIncreaser stepIncreaser;
 
-    public Nitar(DisplayToolkit tool, GeneralMap map) {
+    public Nitar(DisplayToolkit tool, GeneralMap map, MovableCharacter targetPlayer) {
         this.tool = tool;
         this.texture = tool.manager.get("villain.png", Texture.class);
         this.level = 2;
         moveReducerLimit = 32;
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
-        this.skills = skillSet(tool);
+        this.skills = skillSet(tool, targetPlayer);
         boolean freeBlockFound = false;
         bloodAnimator = new BloodAnimator(this);
         bossMover = new BossMover(tool, this);
@@ -91,9 +91,9 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     }
 
     @Override
-    public ArrayList<BossSkill> skillSet(DisplayToolkit tool) {
+    public ArrayList<BossSkill> skillSet(DisplayToolkit tool, MovableCharacter targetPlayer) {
         ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
-        skills.add(new Teleport());
+        skills.add(new Teleport(targetPlayer));
         return skills;
     }
 

@@ -1,6 +1,7 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
+import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public interface GeneralBoss {
     String nameOfBoss();
 
-    ArrayList<BossSkill> skillSet(DisplayToolkit tool);
+    ArrayList<BossSkill> skillSet(DisplayToolkit tool, MovableCharacter targetPlayer);
 
     String firstDialog();
 
