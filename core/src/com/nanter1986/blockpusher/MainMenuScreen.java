@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(MainClass game) {
         this.game = game;
-        this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.tool = game.tool;
         data = new DataControler(tool);
         screenLineHeight = tool.scH / 10;
         this.tool.camera.update();
@@ -51,7 +51,7 @@ public class MainMenuScreen implements Screen {
 
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game, new NitarTestMap(tool));
+            Gameplay gameplay = new Gameplay(game, new NitarTestMap(game.tool), game.tool);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
@@ -91,6 +91,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        tool.batch.dispose();
     }
 }

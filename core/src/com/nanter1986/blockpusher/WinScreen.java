@@ -78,7 +78,7 @@ public class WinScreen implements Screen{
 
     private void androidControls() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
+            Gameplay gameplay = new Gameplay(game, new MapOne(tool), game.tool);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
@@ -89,17 +89,17 @@ public class WinScreen implements Screen{
             tool.prefs.flush();
             switch (previosGameplayType) {
                 case TUTORIAL1:
-                    Gameplay tut2 = new Gameplay(game, new TutorialTwo(tool));
+                    Gameplay tut2 = new Gameplay(game, new TutorialTwo(tool), game.tool);
                     Gdx.app.log("setting new screen to game: ", tut2.toString());
                     game.setScreen(tut2);
                     break;
                 case TUTORIAL2:
-                    Gameplay regular1 = new Gameplay(game, new MapOne(tool));
+                    Gameplay regular1 = new Gameplay(game, new MapOne(tool), game.tool);
                     Gdx.app.log("setting new screen to game: ", regular1.toString());
                     game.setScreen(regular1);
                     break;
                 case REGULAR:
-                    Gameplay regular2 = new Gameplay(game, new MapOne(tool));
+                    Gameplay regular2 = new Gameplay(game, new MapOne(tool), game.tool);
                     Gdx.app.log("setting new screen to game: ", regular2.toString());
                     game.setScreen(regular2);
                     break;

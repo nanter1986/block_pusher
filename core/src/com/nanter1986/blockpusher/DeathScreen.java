@@ -64,7 +64,7 @@ public class DeathScreen implements Screen {
 
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game, new MapOne(tool));
+            Gameplay gameplay = new Gameplay(game, new MapOne(tool), game.tool);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }

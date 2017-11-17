@@ -59,9 +59,9 @@ class Gameplay implements Screen, InputProcessor {
     private boolean doneInitialStop;
 
 
-    public Gameplay(MainClass game, GeneralMap theMap) {
+    public Gameplay(MainClass game, GeneralMap theMap, DisplayToolkit tool) {
         this.game = game;
-        this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.tool = tool;
         this.theMap = theMap;
         this.tool.camera.update();
     }

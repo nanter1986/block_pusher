@@ -3,8 +3,8 @@ package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
-import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BlockGeneration;
 import com.nanter1986.blockpusher.Character.Bosses.BossSkills.BossSkill;
+import com.nanter1986.blockpusher.Character.Bosses.BossSkills.LineOblideration;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BloodAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.BossMover;
@@ -93,7 +93,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
     @Override
     public ArrayList<BossSkill> skillSet(DisplayToolkit tool, MovableCharacter targetPlayer) {
         ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
-        skills.add(new BlockGeneration(targetPlayer));
+        skills.add(new LineOblideration());
         return skills;
     }
 
