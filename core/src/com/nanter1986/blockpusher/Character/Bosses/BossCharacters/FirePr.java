@@ -1,12 +1,14 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossCharacters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileDeathAnimator;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileMover;
-import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.StepIncreaser;
+import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileStepIncreaser;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
@@ -20,8 +22,9 @@ import java.util.ArrayList;
 public class FirePr extends MovableCharacter {
     ProjectileDeathAnimator deathAnimator;
     ProjectileCrushChecker crushChecker;
-    StepIncreaser stepIncreaser;
+    ProjectileStepIncreaser stepIncreaser;
     ProjectileMover projectileMover;
+    ParticleEffect effect;
 
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
         this.texture = tool.manager.get("villain.png", Texture.class);
@@ -31,8 +34,12 @@ public class FirePr extends MovableCharacter {
         moveReducerLimit = 16;
         deathAnimator = new ProjectileDeathAnimator(this);
         crushChecker = new ProjectileCrushChecker(this);
-        stepIncreaser = new StepIncreaser(this);
+        stepIncreaser = new ProjectileStepIncreaser(this);
         projectileMover = new ProjectileMover(this);
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("fireball.parti"), Gdx.files.internal(""));
+        effect.scaleEffect(0.4f);
+
         switch (shooter.dir) {
             case UP:
                 this.coord = new DoubleCoordSystem(shooter.coord.fixatedX * this.characterW,
@@ -68,6 +75,8 @@ public class FirePr extends MovableCharacter {
                 break;
 
         }
+        effect.getEmitters().first().setPosition(coord.realX, coord.realY);
+        effect.start();
 
 
     }
@@ -76,22 +85,10 @@ public class FirePr extends MovableCharacter {
 
     @Override
     public void updatePosition(SpriteBatch b, GeneralMap map, ArrayList<MovableCharacter> characters) {
-        switch (dir) {
-            case UP:
-                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 0, 500, 500, false, false);
-                break;
-            case DOWN:
-                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1500, 500, 500, false, false);
-                break;
-            case LEFT:
-                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 1000, 500, 500, false, false);
-                break;
-            case RIGHT:
-                b.draw(texture, this.coord.realX, this.coord.realY, characterW, characterH, 0, 500, 500, 500, false, false);
+        effect.getEmitters().first().setPosition(coord.realX + characterW / 2, coord.realY + characterW / 2);
+        effect.update(Gdx.graphics.getDeltaTime());
+        effect.draw(b);
 
-                break;
-
-        }
 
     }
 

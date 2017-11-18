@@ -28,22 +28,22 @@ public class ProjectileMover {
             character.stepSequenceRunning = false;
             switch (character.dir) {
                 case UP:
-                    if (character.coord.getFixatedY() < map.height - 1) {
+                    if (character.coord.getFixatedY() < map.height) {
                         character.stepSequenceRunning = true;
                     }
                     break;
                 case DOWN:
-                    if (character.coord.getFixatedY() > 0) {
+                    if (character.coord.getFixatedY() >= 0) {
                         character.stepSequenceRunning = true;
                     }
                     break;
                 case LEFT:
-                    if (character.coord.getFixatedX() > 0) {
+                    if (character.coord.getFixatedX() >= 0) {
                         character.stepSequenceRunning = true;
                     }
                     break;
                 case RIGHT:
-                    if (character.coord.getFixatedX() < map.width - 1) {
+                    if (character.coord.getFixatedX() < map.width) {
                         character.stepSequenceRunning = true;
                     }
                     break;
