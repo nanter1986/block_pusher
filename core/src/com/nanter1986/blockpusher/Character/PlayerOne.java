@@ -123,10 +123,16 @@ public class PlayerOne extends MovableCharacter {
         }
     }
 
-    public void checkIfAlive(ArrayList<MovableCharacter> eArray) {
+    public void checkIfAlive(ArrayList<MovableCharacter> eArray, ArrayList<MovableCharacter> pArray) {
         for (MovableCharacter e : eArray) {
             if (e.explodedStarted == false && stillAlive && this.coord.getFixatedX() == e.coord.getFixatedX() && this.coord.getFixatedY() == e.coord.getFixatedY()) {
                 stillAlive=false;
+                explodedStarted = true;
+            }
+        }
+        for (MovableCharacter p : pArray) {
+            if (p.explodedStarted == false && stillAlive && this.coord.getFixatedX() == p.coord.getFixatedX() && this.coord.getFixatedY() == p.coord.getFixatedY()) {
+                stillAlive = false;
                 explodedStarted = true;
             }
         }

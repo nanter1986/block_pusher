@@ -43,10 +43,10 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         stepIncreaser = new StepIncreaser(this);
         switch (map.type) {
             case DEBUG_NITAR:
-                this.coord = new DoubleCoordSystem(1 * this.characterW,
-                        4 * this.characterW,
-                        1,
+                this.coord = new DoubleCoordSystem(4 * this.characterW,
+                        2 * this.characterW,
                         4,
+                        2,
                         this.characterW);
                 break;
             case DEBUG_ENEMY:

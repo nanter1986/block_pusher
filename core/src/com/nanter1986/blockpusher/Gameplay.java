@@ -193,7 +193,7 @@ class Gameplay implements Screen, InputProcessor {
             }
         } else {
             checkIfWinConditionsAreMet();
-            playerone.checkIfAlive(enemiesArraylist);
+            playerone.checkIfAlive(enemiesArraylist, projectiles);
             playerone.collectItems(itemsArraylist);
             getPlayerInputIfMoveReducerIsZero(delta);
             moveEnemies();
