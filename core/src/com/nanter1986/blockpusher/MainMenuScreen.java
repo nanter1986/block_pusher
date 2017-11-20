@@ -40,7 +40,7 @@ public class MainMenuScreen implements Screen {
     public void show() {
         android = Gdx.app.getType() == Application.ApplicationType.Android;
         buttons.add(new MainMenuPlayButton(tool));
-        tool.prefs.clear();
+        //tool.prefs.clear();
     }
 
     @Override

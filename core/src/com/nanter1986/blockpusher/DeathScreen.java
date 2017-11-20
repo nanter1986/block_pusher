@@ -28,11 +28,10 @@ public class DeathScreen implements Screen {
 
     public DeathScreen(MainClass game) {
         this.game = game;
-        this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.tool = game.tool;
         data = new DataControler(tool);
         screenLineHeight = tool.scH / 10;
         this.tool.camera.update();
-        Gdx.app.log("death screen created for game: ", game.toString());
         Gdx.app.log("screen line height:", screenLineHeight + "");
     }
 

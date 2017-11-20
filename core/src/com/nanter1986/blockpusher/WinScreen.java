@@ -38,7 +38,7 @@ public class WinScreen implements Screen{
 
     public WinScreen(MainClass game) {
         this.game = game;
-        this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.tool = game.tool;
         data = new DataControler(tool);
         screenLineHeight=tool.scH/10;
         this.tool.camera.update();
