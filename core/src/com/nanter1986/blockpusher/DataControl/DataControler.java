@@ -12,7 +12,7 @@ public class DataControler {
     public final int STEPS_PER_ENEMY = 50;
     public final int BOMBS_MULTIPLIER = 50;
     public final int MORE_ENEMIES_EVERY_X_STAGES = 10;
-    public final int MORE_BOMBS_EVERY_X_STAGES = 20;
+    public final int MORE_BOMBS_EVERY_X_STAGES = 10;
     DisplayToolkit tool;
 
     public DataControler(DisplayToolkit tool) {

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 
 class Gameplay implements Screen, InputProcessor {
     private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
-    private final int BOSS_FREQUENCY = 20;
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     int stage;
@@ -82,7 +81,6 @@ class Gameplay implements Screen, InputProcessor {
         stepsGoingToBonus = enemiesToGenerate * tool.data.STEPS_PER_ENEMY;
         theWall = new OutsideWall(tool);
         playerone = new PlayerOne(tool, theMap);
-        isStageDevidedByBossFrecuency = stage % BOSS_FREQUENCY == 0;
         spawnEnemies();
         spawnBombs();
         playerGetsItems();
@@ -146,7 +144,11 @@ class Gameplay implements Screen, InputProcessor {
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
                 break;
             default:
-                if (isStageDevidedByBossFrecuency) {
+                if (stage == 20 || stage == 40 || stage == 60 || stage == 80 || stage == 100) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new Nitar(tool, theMap, playerone));
+                    }
+                } else if (stage == 120 || stage == 140 || stage == 160 || stage == 180 || stage == 200) {
                     for (int i = 0; i < enemiesToGenerate; i++) {
                         enemiesArraylist.add(new Nitar(tool, theMap, playerone));
                     }
@@ -161,7 +163,7 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private int howManyBombsToGenerate() {
-        int numOfBombs = (stage / tool.data.MORE_BOMBS_EVERY_X_STAGES) + 5;
+        int numOfBombs = (stage / tool.data.MORE_BOMBS_EVERY_X_STAGES) + 2;
         return numOfBombs;
     }
 
