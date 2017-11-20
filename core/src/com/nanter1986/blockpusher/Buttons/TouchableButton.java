@@ -3,7 +3,6 @@ package com.nanter1986.blockpusher.Buttons;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.DisplayToolkit;
-import com.nanter1986.blockpusher.MenuFragments.InfoPatch;
 
 import java.util.ArrayList;
 
@@ -13,11 +12,11 @@ import java.util.ArrayList;
 
 public abstract class TouchableButton {
     public final Texture texture = new Texture(Gdx.files.internal("dirbuttons.png"));
+    public DisplayToolkit tool;
     public int buttonX;
     public int buttonY;
     public int buttonW;
     public int buttonH;
-    public boolean touchedOnce;
     public float screenW;
     public float screenH;
     public Texture specificTexture;
@@ -27,6 +26,7 @@ public abstract class TouchableButton {
 
 
     public TouchableButton(DisplayToolkit tool) {
+        this.tool = tool;
         this.screenH = tool.scH;
         this.screenW = tool.scW;
         this.specificTexture = texture;
@@ -46,33 +46,27 @@ public abstract class TouchableButton {
 
     public boolean isButtonTouched() {
         boolean t = false;
+        int buttonOnscreenXleft = buttonX;
+        int buttonOnscreenXright = buttonX + buttonW;
+        int buttonOnscreenYtop = (int) (screenH - buttonY);
+        int buttonOnscreenYbottom = (int) (screenH - buttonY - buttonH);
         int x = Gdx.input.getX();
         int y = Gdx.input.getY();
-
-        if (Gdx.input.isTouched() && x > buttonX && x < buttonX + buttonW && y < screenH - buttonY && y > screenH - buttonY - buttonH) {
+        Gdx.app.log("touch", x + "/" + y);
+        Gdx.app.log("buttonX", buttonOnscreenXleft + "/" + buttonOnscreenXright);
+        Gdx.app.log("buttonY", buttonOnscreenYtop + "/" + buttonOnscreenYbottom);
+        if (Gdx.input.isTouched() && x > buttonOnscreenXleft && x < buttonOnscreenXright && y < buttonOnscreenYtop && y > buttonOnscreenYbottom) {
             t = true;
         }
         return t;
 
     }
 
-    public void drawSelf(DisplayToolkit tool, InfoPatch info) {
-        float xToDraw = tool.camera.position.x - tool.scW / 2 + this.buttonX;
-        float yToDraw = tool.camera.position.y - tool.scH / 2 + this.buttonY;
-        /*Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
-                "\n" + xToDraw + "/" + yToDraw +
-                "\n" + buttonW +
-                "\n" + srcX + "/" + srcY);*/
-        tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
+    public void drawSelf(DisplayToolkit tool) {
+        int toDrawX = (int) (tool.camera.position.x - screenW / 2 + this.buttonX);
+        int toDrawY = (int) (tool.camera.position.y - screenW / 2 + this.buttonY);
+        tool.batch.draw(specificTexture, toDrawX, toDrawY, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
 
-    public void drawSelf(DisplayToolkit tool) {
-        float xToDraw = this.buttonX;
-        float yToDraw = this.buttonY;
-        /*Gdx.app.log("draw self", "drawing button:" + this.getClass().toString() +
-                "\n" + xToDraw + "/" + yToDraw +
-                "\n" + buttonW +
-                "\n" + srcX + "/" + srcY);*/
-        tool.batch.draw(specificTexture, xToDraw, yToDraw, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
-    }
+
 }

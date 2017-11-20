@@ -41,9 +41,8 @@ public class WinScreen implements Screen{
         this.tool = game.tool;
         data = new DataControler(tool);
         screenLineHeight=tool.scH/10;
+        this.tool.camera.position.set(tool.scW / 2, tool.scH / 2, 100);
         this.tool.camera.update();
-        Gdx.app.log("win screen created for game: ",game.toString());
-        Gdx.app.log("screen line height:",screenLineHeight+"");
     }
 
     @Override
@@ -79,7 +78,6 @@ public class WinScreen implements Screen{
     private void androidControls() {
         if (buttons.get(0).isButtonTouched()) {
             Gameplay gameplay = new Gameplay(game, new MapOne(tool), game.tool);
-            Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
     }
@@ -87,22 +85,24 @@ public class WinScreen implements Screen{
     private void desktopControls() {
         if (buttons.get(0).isButtonTouched()) {
             tool.prefs.flush();
+            Gdx.app.log("istouched", "in" + previosGameplayType);
             switch (previosGameplayType) {
                 case TUTORIAL1:
                     Gameplay tut2 = new Gameplay(game, new TutorialTwo(tool), game.tool);
-                    Gdx.app.log("setting new screen to game: ", tut2.toString());
                     game.setScreen(tut2);
                     break;
                 case TUTORIAL2:
                     Gameplay regular1 = new Gameplay(game, new MapOne(tool), game.tool);
-                    Gdx.app.log("setting new screen to game: ", regular1.toString());
                     game.setScreen(regular1);
                     break;
                 case REGULAR:
                     Gameplay regular2 = new Gameplay(game, new MapOne(tool), game.tool);
-                    Gdx.app.log("setting new screen to game: ", regular2.toString());
                     game.setScreen(regular2);
                     break;
+                default:
+                    Gameplay regular = new Gameplay(game, new MapOne(tool), game.tool);
+                    game.setScreen(regular);
+
             }
 
 

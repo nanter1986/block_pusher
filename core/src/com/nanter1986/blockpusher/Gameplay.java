@@ -302,7 +302,7 @@ class Gameplay implements Screen, InputProcessor {
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, stage);
         if (android) {
             for (TouchableButton t : dirpad) {
-                t.drawSelf(tool, infoPatch);
+                t.drawSelf(tool);
             }
         }
         if (playerone.explodedStarted) {
