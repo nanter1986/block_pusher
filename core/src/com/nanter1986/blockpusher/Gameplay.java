@@ -12,6 +12,7 @@ import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.WaterKing;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
 import com.nanter1986.blockpusher.DataControl.DataControler;
@@ -149,6 +150,10 @@ class Gameplay implements Screen, InputProcessor {
                         enemiesArraylist.add(new Nitar(tool, theMap, playerone));
                     }
                 } else if (stage == 120 || stage == 140 || stage == 160 || stage == 180 || stage == 200) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new WaterKing(tool, theMap, playerone));
+                    }
+                } else if (stage == 220 || stage == 240 || stage == 260 || stage == 280 || stage == 300) {
                     for (int i = 0; i < enemiesToGenerate; i++) {
                         enemiesArraylist.add(new Nitar(tool, theMap, playerone));
                     }
