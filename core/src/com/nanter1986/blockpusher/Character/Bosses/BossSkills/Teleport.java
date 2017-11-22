@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossSkills;
 
+import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
@@ -37,6 +38,11 @@ public class Teleport implements BossSkill {
                     character.coord.realY = theY * character.characterW;
                     character.coord.fixatedX = theX;
                     character.coord.fixatedY = theY;
+                    Gdx.app.log("teleport", map.mapArray[theX][theY].type + "");
+                    Gdx.app.log("teleport", character.coord.realX + "");
+                    Gdx.app.log("teleport", character.coord.realY + "");
+                    Gdx.app.log("teleport", character.coord.fixatedX + "");
+                    Gdx.app.log("teleport", character.coord.fixatedY + "");
 
 
                 }
