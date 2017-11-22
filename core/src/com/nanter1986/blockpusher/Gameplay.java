@@ -12,6 +12,8 @@ import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.ShooterOne;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Teleporter;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.WaterKing;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.Character.PlayerOne;
@@ -155,7 +157,11 @@ class Gameplay implements Screen, InputProcessor {
                     }
                 } else if (stage == 220 || stage == 240 || stage == 260 || stage == 280 || stage == 300) {
                     for (int i = 0; i < enemiesToGenerate; i++) {
-                        enemiesArraylist.add(new Nitar(tool, theMap, playerone));
+                        enemiesArraylist.add(new Teleporter(tool, theMap, playerone));
+                    }
+                } else if (stage == 320 || stage == 340 || stage == 460 || stage == 380 || stage == 400) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new ShooterOne(tool, theMap, playerone));
                     }
                 } else {
                     for (int i = 0; i < enemiesToGenerate; i++) {
