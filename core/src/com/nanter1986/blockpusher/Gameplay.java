@@ -12,6 +12,7 @@ import com.nanter1986.blockpusher.Blocks.OutsideWall;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.MinionSimple;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nitar;
+import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Nuker;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.ShooterOne;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.Teleporter;
 import com.nanter1986.blockpusher.Character.Bosses.BossCharacters.WaterKing;
@@ -132,7 +133,7 @@ class Gameplay implements Screen, InputProcessor {
     private void spawnEnemies() {
         switch (theMap.type) {
             case DEBUG_NITAR:
-                enemiesArraylist.add(new Nitar(tool, theMap, playerone));
+                enemiesArraylist.add(new Teleporter(tool, theMap, playerone));
                 break;
             case DEBUG_ENEMY:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
@@ -159,9 +160,13 @@ class Gameplay implements Screen, InputProcessor {
                     for (int i = 0; i < enemiesToGenerate; i++) {
                         enemiesArraylist.add(new Teleporter(tool, theMap, playerone));
                     }
-                } else if (stage == 320 || stage == 340 || stage == 460 || stage == 380 || stage == 400) {
+                } else if (stage == 320 || stage == 340 || stage == 360 || stage == 380 || stage == 400) {
                     for (int i = 0; i < enemiesToGenerate; i++) {
                         enemiesArraylist.add(new ShooterOne(tool, theMap, playerone));
+                    }
+                } else if (stage == 420 || stage == 440 || stage == 460 || stage == 480 || stage == 500) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
+                        enemiesArraylist.add(new Nuker(tool, theMap, playerone));
                     }
                 } else {
                     for (int i = 0; i < enemiesToGenerate; i++) {

@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Character.Bosses.BossSkills;
 
-import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.Character.MovableCharacter;
 import com.nanter1986.blockpusher.DisplayToolkit;
@@ -31,27 +30,13 @@ public class Teleport implements BossSkill {
                 int theX = RANDOM.nextInt(map.width);
                 int theY = RANDOM.nextInt(map.height);
                 boolean fallsOnTargetPlayer = theX == targetPlayer.coord.fixatedX && theY == targetPlayer.coord.fixatedY;
-                if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR && !fallsOnTargetPlayer) {
-                    Gdx.app.log("teleport test", "in" +
-                            "/" + character.coord.realX +
-                            "/" + character.coord.realY +
-                            "/" + character.coord.fixatedX +
-                            "/" + character.coord.fixatedY +
-                            "/" + map.mapArray[character.coord.fixatedX][character.coord.fixatedY].type
-                    );
+                boolean targetAreaIsAir = map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR;
+                if (targetAreaIsAir && !fallsOnTargetPlayer) {
                     freeBlockFound = true;
-                    Gdx.app.log("teleport test", "in" + theX + "/" + theY + "/" + map.mapArray[theX][theY].type);
                     character.coord.realX = theX * character.characterW;
                     character.coord.realY = theY * character.characterW;
                     character.coord.fixatedX = theX;
                     character.coord.fixatedY = theY;
-                    Gdx.app.log("teleport test", "in" +
-                            "/" + character.coord.realX +
-                            "/" + character.coord.realY +
-                            "/" + character.coord.fixatedX +
-                            "/" + character.coord.fixatedY +
-                            "/" + map.mapArray[character.coord.fixatedX][character.coord.fixatedY].type
-                    );
 
 
                 }

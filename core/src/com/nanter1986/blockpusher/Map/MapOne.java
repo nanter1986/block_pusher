@@ -11,6 +11,7 @@ public class MapOne extends GeneralMap {
 
     public final int MAP_MIN_WIDTH_IN_BLOCKS = 10;
     public final int MAP_MIN_HEIGHT_IN_BLOCKS = 10;
+    public final int MAP_STAGE_DIVIDER = 20;
 
 
     public MapOne(DisplayToolkit tool) {
@@ -37,13 +38,13 @@ public class MapOne extends GeneralMap {
 
     private int calculateHeight(DisplayToolkit tool) {
         int stage = tool.data.readStage();
-        int height = MAP_MIN_HEIGHT_IN_BLOCKS + stage / 10;
+        int height = MAP_MIN_HEIGHT_IN_BLOCKS + stage / MAP_STAGE_DIVIDER;
         return height;
     }
 
     private int calculateWidth(DisplayToolkit tool) {
         int stage = tool.data.readStage();
-        int width = MAP_MIN_WIDTH_IN_BLOCKS + stage / 10;
+        int width = MAP_MIN_WIDTH_IN_BLOCKS + stage / MAP_STAGE_DIVIDER;
         return width;
     }
 
