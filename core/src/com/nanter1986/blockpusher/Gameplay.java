@@ -157,7 +157,7 @@ class Gameplay implements Screen, InputProcessor {
                         enemiesArraylist.add(new WaterKing(tool, theMap, playerone));
                     }
                 } else if (stage == 220 || stage == 240 || stage == 260 || stage == 280 || stage == 300) {
-                    for (int i = 0; i < 1; i++) {
+                    for (int i = 0; i < enemiesToGenerate; i++) {
                         enemiesArraylist.add(new Teleporter(tool, theMap, playerone));
                     }
                 } else if (stage == 320 || stage == 340 || stage == 360 || stage == 380 || stage == 400) {

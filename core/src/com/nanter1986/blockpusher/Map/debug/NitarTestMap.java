@@ -23,17 +23,17 @@ public class NitarTestMap extends GeneralMap {
         mapArray[1][0] = new BlockGeneral(tool, 1, 0, BlockGeneral.Blocktypes.WATER);
         mapArray[2][0] = new BlockGeneral(tool, 2, 0, BlockGeneral.Blocktypes.WATER);
         mapArray[3][0] = new BlockGeneral(tool, 3, 0, BlockGeneral.Blocktypes.AIR);
-        mapArray[4][0] = new BlockGeneral(tool, 4, 0, BlockGeneral.Blocktypes.WATER);
+        mapArray[4][0] = new BlockGeneral(tool, 4, 0, BlockGeneral.Blocktypes.AIR);
         mapArray[0][1] = new BlockGeneral(tool, 0, 1, BlockGeneral.Blocktypes.WATER);
         mapArray[1][1] = new BlockGeneral(tool, 1, 1, BlockGeneral.Blocktypes.WATER);
         mapArray[2][1] = new BlockGeneral(tool, 2, 1, BlockGeneral.Blocktypes.AIR);
-        mapArray[3][1] = new BlockGeneral(tool, 3, 1, BlockGeneral.Blocktypes.WATER);
+        mapArray[3][1] = new BlockGeneral(tool, 3, 1, BlockGeneral.Blocktypes.AIR);
         mapArray[4][1] = new BlockGeneral(tool, 4, 1, BlockGeneral.Blocktypes.WATER);
 
         mapArray[0][2] = new BlockGeneral(tool, 0, 2, BlockGeneral.Blocktypes.AIR);
         mapArray[1][2] = new BlockGeneral(tool, 1, 2, BlockGeneral.Blocktypes.WATER);
         mapArray[2][2] = new BlockGeneral(tool, 2, 2, BlockGeneral.Blocktypes.WATER);
-        mapArray[3][2] = new BlockGeneral(tool, 3, 2, BlockGeneral.Blocktypes.WATER);
+        mapArray[3][2] = new BlockGeneral(tool, 3, 2, BlockGeneral.Blocktypes.AIR);
         mapArray[4][2] = new BlockGeneral(tool, 4, 2, BlockGeneral.Blocktypes.AIR);
 
         mapArray[0][3] = new BlockGeneral(tool, 0, 3, BlockGeneral.Blocktypes.WATER);
