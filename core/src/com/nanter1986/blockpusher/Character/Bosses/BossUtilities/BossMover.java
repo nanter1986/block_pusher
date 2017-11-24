@@ -29,6 +29,10 @@ public class BossMover {
         } else {
             character.coord.fixatePosition();
             character.stepSequenceRunning = false;
+            ArrayList<BossSkill> skills = character.skills;
+            for (BossSkill bs : skills) {
+                bs.executeSkill(tool, character.level, character, map, enemies, projectiles);
+            }
             if(new BossFrontBlockChecker(character).checkIfBlockAtTheFront(map,enemies)){
                 switch (character.dir){
                     case UP:
@@ -66,10 +70,7 @@ public class BossMover {
                 new RandomBossDirectioner(character).getRandomDirection();
                 character.moveReducer = character.moveReducerLimit;
             }
-            ArrayList<BossSkill> skills = character.skills;
-            for (BossSkill bs : skills) {
-                bs.executeSkill(tool, character.level, character, map, enemies, projectiles);
-            }
+
 
         }
     }
