@@ -24,7 +24,7 @@ public class WaterKing extends Nitar {
     @Override
     public ArrayList<BossSkill> skillSet(DisplayToolkit tool, MovableCharacter targetPlayer) {
         ArrayList<BossSkill> skills = new ArrayList<BossSkill>();
-        skills.add(new Flooding());
+        skills.add(new Flooding(targetPlayer));
         return skills;
     }
 }
