@@ -133,7 +133,7 @@ class Gameplay implements Screen, InputProcessor {
     private void spawnEnemies() {
         switch (theMap.type) {
             case DEBUG_NITAR:
-                enemiesArraylist.add(new WaterKing(tool, theMap, playerone));
+                enemiesArraylist.add(new ShooterOne(tool, theMap, playerone));
                 break;
             case DEBUG_ENEMY:
                 enemiesArraylist.add(new MinionSimple(tool, theMap));
