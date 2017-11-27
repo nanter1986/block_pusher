@@ -51,7 +51,7 @@ public class MainMenuScreen implements Screen {
 
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
-            data.putStage(299);
+            data.putStage(399);
             Gameplay gameplay = new Gameplay(game, new NitarTestMap(game.tool), game.tool);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
