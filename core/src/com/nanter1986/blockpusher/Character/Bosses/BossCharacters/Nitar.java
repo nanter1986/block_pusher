@@ -44,9 +44,9 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
         switch (map.type) {
             case DEBUG_NITAR:
                 this.coord = new DoubleCoordSystem(4 * this.characterW,
-                        2 * this.characterW,
+                        3 * this.characterW,
                         4,
-                        2,
+                        3,
                         this.characterW);
                 break;
             case DEBUG_ENEMY:

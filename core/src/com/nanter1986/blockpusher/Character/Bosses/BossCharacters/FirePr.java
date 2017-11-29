@@ -26,8 +26,12 @@ public class FirePr extends MovableCharacter {
     ProjectileStepIncreaser stepIncreaser;
     ProjectileMover projectileMover;
     int frameCounter;
+    int timeOfEachFrame;
     Sprite sprite;
     DisplayToolkit tool;
+    TextureAtlas atlas;
+    float xToDraw;
+    float yToDraw;
 
 
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
@@ -35,7 +39,9 @@ public class FirePr extends MovableCharacter {
         this.texture = tool.manager.get("villain.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
+        this.atlas = tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class);
         this.level = 1;
+        this.timeOfEachFrame = 5;
         moveReducerLimit = 16;
         frameCounter = 0;
         deathAnimator = new ProjectileDeathAnimator(this);
@@ -92,7 +98,9 @@ public class FirePr extends MovableCharacter {
     @Override
     public void updatePosition(SpriteBatch b, GeneralMap map, ArrayList<MovableCharacter> characters) {
         frameSetter();
-        b.draw(sprite, this.coord.realX, this.coord.realY, characterW, characterH);
+        xToDraw = this.coord.realX + (tool.universalWidthFactor - characterW);
+        yToDraw = this.coord.realY + (tool.universalWidthFactor - characterW);
+        b.draw(sprite, this.coord.realX, this.coord.realY, characterW, characterW);
 
 
     }
@@ -101,69 +109,73 @@ public class FirePr extends MovableCharacter {
         Gdx.app.log("frame", frameCounter + " " + sprite.getOriginX());
         switch (dir) {
             case UP:
-                if (frameCounter >= 0 && frameCounter < 6) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite.setRegion(atlas.findRegion("flameUp0"));
+                if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
+                    characterW = tool.universalWidthFactor;
                     frameCounter++;
-                } else if (frameCounter >= 6 && frameCounter < 11) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 2 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
                     frameCounter++;
-                } else if (frameCounter >= 11 && frameCounter < 16) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp2"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 3 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.5);
                     frameCounter++;
-                } else if (frameCounter >= 16 && frameCounter < 21) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
-                    frameCounter = 0;
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
+                    frameCounter++;
                 } else {
                     frameCounter = 0;
                 }
                 break;
             case DOWN:
-                if (frameCounter >= 0 && frameCounter < 6) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite.setRegion(atlas.findRegion("flameDown0"));
+                if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
+                    characterW = tool.universalWidthFactor;
                     frameCounter++;
-                } else if (frameCounter >= 6 && frameCounter < 11) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 2 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
                     frameCounter++;
-                } else if (frameCounter >= 11 && frameCounter < 16) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp2"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 3 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.5);
                     frameCounter++;
-                } else if (frameCounter >= 16 && frameCounter < 21) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
-                    frameCounter = 0;
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
+                    frameCounter++;
                 } else {
                     frameCounter = 0;
                 }
                 break;
             case LEFT:
-                if (frameCounter >= 0 && frameCounter < 6) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite.setRegion(atlas.findRegion("flameLeft0"));
+                if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
+                    characterW = tool.universalWidthFactor;
                     frameCounter++;
-                } else if (frameCounter >= 6 && frameCounter < 11) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 2 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
                     frameCounter++;
-                } else if (frameCounter >= 11 && frameCounter < 16) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp2"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 3 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.5);
                     frameCounter++;
-                } else if (frameCounter >= 16 && frameCounter < 21) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
-                    frameCounter = 0;
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
+                    frameCounter++;
                 } else {
                     frameCounter = 0;
                 }
                 break;
             case RIGHT:
-                if (frameCounter >= 0 && frameCounter < 6) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite.setRegion(atlas.findRegion("flameRight0"));
+                if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
+                    characterW = tool.universalWidthFactor;
                     frameCounter++;
-                } else if (frameCounter >= 6 && frameCounter < 11) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 2 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
                     frameCounter++;
-                } else if (frameCounter >= 11 && frameCounter < 16) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp2"));
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= 3 * timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.5);
                     frameCounter++;
-                } else if (frameCounter >= 16 && frameCounter < 21) {
-                    sprite.setRegion(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp1"));
-                    frameCounter = 0;
+                } else if (frameCounter > timeOfEachFrame && frameCounter <= timeOfEachFrame) {
+                    characterW = (int) (tool.universalWidthFactor * 0.75);
+                    frameCounter++;
                 } else {
                     frameCounter = 0;
                 }
