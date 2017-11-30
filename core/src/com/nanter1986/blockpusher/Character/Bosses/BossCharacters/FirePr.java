@@ -98,15 +98,15 @@ public class FirePr extends MovableCharacter {
     @Override
     public void updatePosition(SpriteBatch b, GeneralMap map, ArrayList<MovableCharacter> characters) {
         frameSetter();
-        xToDraw = this.coord.realX + (tool.universalWidthFactor - characterW);
-        yToDraw = this.coord.realY + (tool.universalWidthFactor - characterW);
-        b.draw(sprite, this.coord.realX, this.coord.realY, characterW, characterW);
+        Gdx.app.log("frame", characterW + " ");
+        xToDraw = this.coord.realX + (tool.universalWidthFactor - characterW) / 2;
+        yToDraw = this.coord.realY + (tool.universalWidthFactor - characterW) / 2;
+        b.draw(sprite, xToDraw, yToDraw, characterW, characterW);
 
 
     }
 
     private void frameSetter() {
-        Gdx.app.log("frame", frameCounter + " " + sprite.getOriginX());
         switch (dir) {
             case UP:
                 sprite.setRegion(atlas.findRegion("flameUp0"));
