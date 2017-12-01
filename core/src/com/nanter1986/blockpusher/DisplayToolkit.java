@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 
 /**
@@ -55,7 +54,7 @@ public class DisplayToolkit {
         manager.load("blood.png", Texture.class);
         manager.load("explosion.png", Texture.class);
         manager.load("waterkingSheet.png", Texture.class);
-        manager.load("flameSheet/pack.atlas", TextureAtlas.class);
+        //manager.load("pack.atlas", TextureAtlas.class);
         manager.finishLoading();
 
 

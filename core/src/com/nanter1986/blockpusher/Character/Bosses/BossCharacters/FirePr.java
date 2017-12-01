@@ -39,7 +39,7 @@ public class FirePr extends MovableCharacter {
         this.texture = tool.manager.get("villain.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
-        this.atlas = tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class);
+        this.atlas = tool.manager.get("pack.atlas", TextureAtlas.class);
         this.level = 1;
         this.timeOfEachFrame = 5;
         moveReducerLimit = 16;
@@ -58,7 +58,7 @@ public class FirePr extends MovableCharacter {
                         (shooter.coord.fixatedY + 1),
                         this.characterW);
                 this.dir = Direction.UP;
-                sprite = new Sprite(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
                 break;
             case DOWN:
                 this.coord = new DoubleCoordSystem(shooter.coord.fixatedX * this.characterW,
@@ -67,7 +67,7 @@ public class FirePr extends MovableCharacter {
                         (shooter.coord.fixatedY - 1),
                         this.characterW);
                 this.dir = Direction.DOWN;
-                sprite = new Sprite(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameDown0"));
+                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameDown0"));
                 break;
             case LEFT:
                 this.coord = new DoubleCoordSystem((shooter.coord.fixatedX - 1) * this.characterW,
@@ -76,7 +76,7 @@ public class FirePr extends MovableCharacter {
                         shooter.coord.fixatedY,
                         this.characterW);
                 this.dir = Direction.LEFT;
-                sprite = new Sprite(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameLeft0"));
+                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameLeft0"));
                 break;
             case RIGHT:
                 this.coord = new DoubleCoordSystem((shooter.coord.fixatedX + 1) * this.characterW,
@@ -85,7 +85,7 @@ public class FirePr extends MovableCharacter {
                         shooter.coord.fixatedY,
                         this.characterW);
                 this.dir = Direction.RIGHT;
-                sprite = new Sprite(tool.manager.get("flameSheet/pack.atlas", TextureAtlas.class).findRegion("flameRight0"));
+                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameRight0"));
                 break;
 
         }
