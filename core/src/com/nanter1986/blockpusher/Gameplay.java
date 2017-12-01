@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 
 class Gameplay implements Screen, InputProcessor {
-    private static final Color BACKGROUND_COLOR = new Color(0.5f, 1f, 0f, 1.0f);
+    private static final Color BACKGROUND_COLOR = new Color(0.1f, 0.4f, 0.1f, 1.0f);
     public int pauseReducer = 0;
     public int numOfSteps = 0;
     int stage;

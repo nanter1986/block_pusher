@@ -54,6 +54,7 @@ public class DisplayToolkit {
         manager.load("villain.png", Texture.class);
         manager.load("blood.png", Texture.class);
         manager.load("explosion.png", Texture.class);
+        manager.load("waterkingSheet.png", Texture.class);
         manager.load("flameSheet/pack.atlas", TextureAtlas.class);
         manager.finishLoading();
 

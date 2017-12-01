@@ -24,14 +24,15 @@ public class Flooding implements BossSkill {
 
     @Override
     public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
-        if (CHANCE.nextInt(5) == 0) {
+        if (CHANCE.nextInt(10) == 0) {
             boolean freeBlockFound = false;
             while (freeBlockFound == false) {
                 int theX = RANDOM.nextInt(map.width);
                 int theY = RANDOM.nextInt(map.height);
                 boolean fallsOnTargetPlayer = theX == targetPlayer.coord.fixatedX && theY == targetPlayer.coord.fixatedY;
                 boolean fallsOnSelf = theX == character.coord.fixatedX && theY == character.coord.fixatedY;
-                if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR && !fallsOnTargetPlayer && !fallsOnSelf) {
+                boolean fallsOnEnemy = checkIfItFallsOnEnemy(theX, theY, enemies);
+                if (map.mapArray[theX][theY].type == BlockGeneral.Blocktypes.AIR && !fallsOnTargetPlayer && !fallsOnSelf && !fallsOnEnemy) {
                     freeBlockFound = true;
                     map.mapArray[theX][theY].type = BlockGeneral.Blocktypes.WATER;
                     map.mapArray[theX][theY].setTile(tool);
@@ -40,5 +41,15 @@ public class Flooding implements BossSkill {
 
             }
         }
+    }
+
+    private boolean checkIfItFallsOnEnemy(int theX, int theY, ArrayList<MovableCharacter> enemies) {
+        boolean fallsOn = false;
+        for (MovableCharacter m : enemies) {
+            if (theX == m.coord.fixatedX && theY == m.coord.fixatedY) {
+                fallsOn = true;
+            }
+        }
+        return fallsOn;
     }
 }

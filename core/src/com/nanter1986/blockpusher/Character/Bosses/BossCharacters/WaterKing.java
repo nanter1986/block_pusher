@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class WaterKing extends Nitar {
     public WaterKing(DisplayToolkit tool, GeneralMap map, MovableCharacter targetPlayer) {
         super(tool, map, targetPlayer);
-        this.texture = tool.manager.get("villain.png", Texture.class);
+        this.texture = tool.manager.get("waterkingSheet.png", Texture.class);
         this.level = 3;
         moveReducerLimit = 28;
     }
