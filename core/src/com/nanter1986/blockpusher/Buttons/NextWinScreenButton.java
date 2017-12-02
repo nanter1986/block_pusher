@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.Buttons;
 
-import com.badlogic.gdx.Gdx;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 /**
@@ -16,12 +15,5 @@ public class NextWinScreenButton extends TouchableButton {
         this.buttonY = 0;
         this.srcX = 0;
         this.srcY = 1500;
-        Gdx.app.log("next button", tool.camera.position.x + "/" +
-                tool.camera.position.y + "/" +
-                buttonX + "/" +
-                buttonX + "/" +
-                buttonY + "/" +
-                buttonY + "/"
-        );
     }
 }

@@ -10,9 +10,9 @@ public class LeftButton extends TouchableButton {
     public LeftButton(DisplayToolkit tool) {
         super(tool);
 
-        this.buttonW = (int) screenW / 9;
-        this.buttonX = (int) screenW - 3 * this.buttonW;
-        this.buttonH = (int) screenW / 9;
+        this.buttonW = (int) screenW / 8;
+        this.buttonX = 0;
+        this.buttonH = (int) screenW / 8;
         this.buttonY = this.buttonW;
         this.srcX = 0;
         this.srcY = 1000;

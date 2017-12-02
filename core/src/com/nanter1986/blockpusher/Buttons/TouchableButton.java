@@ -52,9 +52,6 @@ public abstract class TouchableButton {
         int buttonOnscreenYbottom = (int) (screenH - buttonY - buttonH);
         int x = Gdx.input.getX();
         int y = Gdx.input.getY();
-        Gdx.app.log("touch", x + "/" + y);
-        Gdx.app.log("buttonX", buttonOnscreenXleft + "/" + buttonOnscreenXright);
-        Gdx.app.log("buttonY", buttonOnscreenYtop + "/" + buttonOnscreenYbottom);
         if (Gdx.input.isTouched() && x > buttonOnscreenXleft && x < buttonOnscreenXright && y < buttonOnscreenYtop && y > buttonOnscreenYbottom) {
             t = true;
         }
@@ -64,7 +61,7 @@ public abstract class TouchableButton {
 
     public void drawSelf(DisplayToolkit tool) {
         int toDrawX = (int) (tool.camera.position.x - screenW / 2 + this.buttonX);
-        int toDrawY = (int) (tool.camera.position.y - screenW / 2 + this.buttonY);
+        int toDrawY = (int) (tool.camera.position.y - screenH / 2 + this.buttonY);
         tool.batch.draw(specificTexture, toDrawX, toDrawY, this.buttonW, this.buttonW, this.srcX, this.srcY, 500, 500, false, false);
     }
 

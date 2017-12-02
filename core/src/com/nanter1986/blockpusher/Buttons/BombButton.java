@@ -12,9 +12,9 @@ public class BombButton extends TouchableButton {
     public BombButton(DisplayToolkit tool) {
         super(tool);
         this.specificTexture = new Texture(Gdx.files.internal("bombbutton.png"));
-        this.buttonW = (int) screenW / 3;
-        this.buttonX = 0;
-        this.buttonH = (int) screenW / 3;
+        this.buttonW = (int) screenW / 4;
+        this.buttonX = (int) screenW - this.buttonW;
+        this.buttonH = (int) screenW / 4;
         this.buttonY = 0;
         this.srcX = 0;
         this.srcY = 0;

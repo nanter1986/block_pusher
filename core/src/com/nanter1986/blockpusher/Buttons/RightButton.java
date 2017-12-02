@@ -12,9 +12,9 @@ public class RightButton extends TouchableButton {
 
         super(tool);
 
-        this.buttonW = (int) screenW / 9;
-        this.buttonX = (int) screenW - this.buttonW;
-        this.buttonH = (int) screenW / 9;
+        this.buttonW = (int) screenW / 8;
+        this.buttonX = 2 * this.buttonW;
+        this.buttonH = (int) screenW / 8;
         this.buttonY = this.buttonW;
         this.srcX = 0;
         this.srcY = 1500;

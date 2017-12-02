@@ -11,9 +11,9 @@ public class DownButton extends TouchableButton {
     public DownButton(DisplayToolkit tool) {
         super(tool);
 
-        this.buttonW = (int) screenW / 9;
-        this.buttonX = (int) screenW - 2 * this.buttonW;
-        this.buttonH = (int) screenW / 9;
+        this.buttonW = (int) screenW / 8;
+        this.buttonX = this.buttonW;
+        this.buttonH = (int) screenW / 8;
         this.buttonY = 0;
         this.srcX = 0;
         this.srcY = 500;
