@@ -49,7 +49,7 @@ class Gameplay implements Screen, InputProcessor {
     OutsideWall theWall;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
-    ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
+
     ArrayList<MovableCharacter> projectiles = new ArrayList<MovableCharacter>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
@@ -88,9 +88,6 @@ class Gameplay implements Screen, InputProcessor {
         spawnEnemies();
         spawnBombs();
         playerGetsItems();
-        if (android) {
-            dirpad = TouchableButton.dirPad(tool);
-        }
         theMap.mapArray[playerone.coord.getFixatedX()][playerone.coord.getFixatedY()].type = BlockGeneral.Blocktypes.AIR;
         winConditionsMet = false;
         cameraFollowPlayer=true;
@@ -317,7 +314,7 @@ class Gameplay implements Screen, InputProcessor {
         theWall.drawSelf(theMap);
         infoPatch.drawSelf(tool, enemiesArraylist, playerone.collectedItems, playerone, stage);
         if (android) {
-            for (TouchableButton t : dirpad) {
+            for (TouchableButton t : tool.dirpad) {
                 t.drawSelf(tool);
             }
         }
@@ -528,7 +525,7 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     public void androidControls() {
-        if (dirpad.get(2).isButtonTouched() && playerone.coord.getFixatedX() > 0) {
+        if (tool.dirpad.get(2).isButtonTouched() && playerone.coord.getFixatedX() > 0) {
             playerone.dir = MovableCharacter.Direction.LEFT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
@@ -542,7 +539,7 @@ class Gameplay implements Screen, InputProcessor {
 
             }
 
-        } else if (dirpad.get(3).isButtonTouched() && playerone.coord.getFixatedX() < theMap.width - 1) {
+        } else if (tool.dirpad.get(3).isButtonTouched() && playerone.coord.getFixatedX() < theMap.width - 1) {
             playerone.dir = MovableCharacter.Direction.RIGHT;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
@@ -554,7 +551,7 @@ class Gameplay implements Screen, InputProcessor {
                 BlockGeneral next = theMap.mapArray[playerone.coord.getFixatedX() + 1][playerone.coord.getFixatedY()];
                 blockSwitcher(next, nextNext);
             }
-        } else if (dirpad.get(0).isButtonTouched() && playerone.coord.getFixatedY() < theMap.height - 1) {
+        } else if (tool.dirpad.get(0).isButtonTouched() && playerone.coord.getFixatedY() < theMap.height - 1) {
             playerone.dir = MovableCharacter.Direction.UP;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
@@ -568,7 +565,7 @@ class Gameplay implements Screen, InputProcessor {
                 blockSwitcher(next, nextNext);
 
             }
-        } else if (dirpad.get(1).isButtonTouched() && playerone.coord.getFixatedY() > 0) {
+        } else if (tool.dirpad.get(1).isButtonTouched() && playerone.coord.getFixatedY() > 0) {
             playerone.dir = MovableCharacter.Direction.DOWN;
             if (playerone.checkIfBlockAtTheFront(theMap)) {
                 playerone.stepSequenceRunning = true;
@@ -586,7 +583,7 @@ class Gameplay implements Screen, InputProcessor {
 
             gamePaused = true;
             pauseReducer = 8;
-        } else if (dirpad.get(4).isButtonTouched() && playerone.collectedItems.size() > 0) {
+        } else if (tool.dirpad.get(4).isButtonTouched() && playerone.collectedItems.size() > 0) {
             useBombOnBlock();
         } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
             cameraFollowPlayer = false;

@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
@@ -7,7 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
+
+import java.util.ArrayList;
 
 /**
  * Created by user on 29/8/2017.
@@ -23,10 +27,13 @@ public class DisplayToolkit {
     public int scH;
     public int universalWidthFactor;
     public DataControler data;
+    public ArrayList<TouchableButton> dirpad = new ArrayList<TouchableButton>();
+    private boolean android;
 
     public DisplayToolkit(int screenWidth,int screenHeight) {
         manager = new AssetManager();
         prefs= Gdx.app.getPreferences("Pusher");
+        android = Gdx.app.getType() == Application.ApplicationType.Android;
         scW=screenWidth;
         scH=screenHeight;
         universalWidthFactor=screenWidth/20;
@@ -39,6 +46,9 @@ public class DisplayToolkit {
 
         font = new BitmapFont(Gdx.files.internal("weird.fnt"));
         font.setColor(0.9f, 0.1f, 0.1f, 1.0f);
+        if (android) {
+            dirpad = TouchableButton.dirPad(this);
+        }
         Gdx.app.log("display toolkit created:","scW:"+scW+" scH:"+scH+" universal width factor:"+universalWidthFactor+" camera position:"+camera.position);
     }
 
