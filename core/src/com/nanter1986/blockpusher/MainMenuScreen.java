@@ -92,6 +92,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        tool.batch.dispose();
+        this.tool.dispose();
     }
 }

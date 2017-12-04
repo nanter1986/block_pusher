@@ -91,6 +91,6 @@ public class DeathScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        this.tool.dispose();
     }
 }

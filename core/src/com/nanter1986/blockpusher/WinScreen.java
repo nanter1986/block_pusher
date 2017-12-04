@@ -170,6 +170,6 @@ public class WinScreen implements Screen{
 
     @Override
     public void dispose() {
-
+        this.tool.dispose();
     }
 }

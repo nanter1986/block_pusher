@@ -193,7 +193,6 @@ class Gameplay implements Screen, InputProcessor {
             tool.prefs.flush();
             DeathScreen deathScreen = new DeathScreen(game);
             game.setScreen(deathScreen);
-            this.dispose();
         } else if (winConditionsMet) {
             doAfterWinConditionsHaveMet();
 
@@ -420,9 +419,10 @@ class Gameplay implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        if (android) {
-            tool.dispose();
-        }
+        game.dispose();
+        theMap.dispose();
+        tool.dispose();
+
     }
 
     public void blockSwitcher(BlockGeneral bNext, BlockGeneral bNextNext) {

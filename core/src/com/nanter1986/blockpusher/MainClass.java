@@ -17,4 +17,10 @@ public class MainClass extends Game {
 		this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		setScreen(new MainMenuScreen(game));
 	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		this.tool.dispose();
+	}
 }

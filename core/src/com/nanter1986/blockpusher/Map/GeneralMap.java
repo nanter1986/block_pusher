@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher.Map;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.InScreenDrawer.CheckIfInScreenToDraw;
@@ -10,9 +11,8 @@ import java.util.Random;
  * Created by user on 25/10/2017.
  */
 
-public abstract class GeneralMap {
+public abstract class GeneralMap implements Disposable {
     public static final Random RANDOM = new Random();
-    //DisplayToolkit tool;
     public GameplayTypes type;
     public int width;
     public int height;
@@ -37,6 +37,11 @@ public abstract class GeneralMap {
 
             }
         }
+    }
+
+    @Override
+    public void dispose() {
+        mapArray = null;
     }
 
     public void updatePositionBelow(DisplayToolkit tool) {
