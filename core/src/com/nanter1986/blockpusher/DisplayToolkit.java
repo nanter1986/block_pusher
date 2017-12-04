@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * Created by user on 29/8/2017.
  */
 
-public class DisplayToolkit {
+public class DisplayToolkit implements Disposable {
     public AssetManager manager;
     public Preferences prefs;
     public SpriteBatch batch;
@@ -68,5 +69,12 @@ public class DisplayToolkit {
         manager.finishLoading();
 
 
+    }
+
+    @Override
+    public void dispose() {
+        manager.dispose();
+        batch.dispose();
+        font.dispose();
     }
 }

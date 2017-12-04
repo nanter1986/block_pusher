@@ -420,7 +420,9 @@ class Gameplay implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        if (android) {
+            tool.dispose();
+        }
     }
 
     public void blockSwitcher(BlockGeneral bNext, BlockGeneral bNextNext) {
