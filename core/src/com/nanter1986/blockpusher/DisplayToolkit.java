@@ -64,6 +64,8 @@ public class DisplayToolkit implements Disposable {
         manager.load("villain.png", Texture.class);
         manager.load("blood.png", Texture.class);
         manager.load("explosion.png", Texture.class);
+        manager.load("bomb.png", Texture.class);
+        manager.load("blackinfopatch.png", Texture.class);
         manager.load("waterkingSheet.png", Texture.class);
         //manager.load("pack.atlas", TextureAtlas.class);
         manager.finishLoading();
@@ -73,6 +75,8 @@ public class DisplayToolkit implements Disposable {
 
     @Override
     public void dispose() {
+        dirpad = null;
+        data.dispose();
         manager.dispose();
         batch.dispose();
         font.dispose();

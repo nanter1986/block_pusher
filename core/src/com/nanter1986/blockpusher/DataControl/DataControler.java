@@ -1,5 +1,6 @@
 package com.nanter1986.blockpusher.DataControl;
 
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GameplayTypes;
 
@@ -7,7 +8,7 @@ import com.nanter1986.blockpusher.Map.GameplayTypes;
  * Created by user on 12/10/2017.
  */
 
-public class DataControler {
+public class DataControler implements Disposable {
 
     public final int STEPS_PER_ENEMY = 50;
     public final int BOMBS_MULTIPLIER = 50;
@@ -79,5 +80,10 @@ public class DataControler {
 
     public String readGameplayType() {
         return tool.prefs.getString("gameplayType", "");
+    }
+
+    @Override
+    public void dispose() {
+        this.tool = null;
     }
 }

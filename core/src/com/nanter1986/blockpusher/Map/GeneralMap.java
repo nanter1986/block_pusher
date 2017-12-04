@@ -41,6 +41,12 @@ public abstract class GeneralMap implements Disposable {
 
     @Override
     public void dispose() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                mapArray[i][j].dispose();
+                mapArray[i][j] = null;
+            }
+        }
         mapArray = null;
     }
 

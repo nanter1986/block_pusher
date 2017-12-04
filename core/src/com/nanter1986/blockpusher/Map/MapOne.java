@@ -48,5 +48,9 @@ public class MapOne extends GeneralMap {
         return width;
     }
 
-
+    @Override
+    public void dispose() {
+        super.dispose();
+        this.type = null;
+    }
 }

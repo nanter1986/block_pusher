@@ -8,14 +8,14 @@ public class MainClass extends Game {
 	DisplayToolkit tool;
 	
 	public MainClass(){
+        this.game = this;
 
-		game=this;
 	}
 
 	@Override
 	public void create() {
-		this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		setScreen(new MainMenuScreen(game));
+        this.tool = new DisplayToolkit(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        setScreen(new MainMenuScreen(game));
 	}
 
 	@Override

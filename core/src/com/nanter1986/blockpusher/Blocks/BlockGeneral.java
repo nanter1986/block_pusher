@@ -1,13 +1,14 @@
 package com.nanter1986.blockpusher.Blocks;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 /**
  * Created by user on 29/8/2017.
  */
 
-public class BlockGeneral {
+public class BlockGeneral implements Disposable {
     public boolean explodedStart;
     public boolean explodedEnd;
     public int blockX;
@@ -58,6 +59,12 @@ public class BlockGeneral {
                 tile = tool.manager.get("food.png", Texture.class);
                 break;
         }
+    }
+
+    @Override
+    public void dispose() {
+        this.type = null;
+        tile = null;
     }
 
     public enum Blocktypes {

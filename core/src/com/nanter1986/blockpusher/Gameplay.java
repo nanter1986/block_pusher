@@ -49,7 +49,6 @@ class Gameplay implements Screen, InputProcessor {
     OutsideWall theWall;
     ArrayList<MovableCharacter> enemiesArraylist = new ArrayList<MovableCharacter>();
     ArrayList<Item> itemsArraylist = new ArrayList<Item>();
-
     ArrayList<MovableCharacter> projectiles = new ArrayList<MovableCharacter>();
     InfoPatch infoPatch;
     boolean gamePaused = false;
@@ -422,6 +421,16 @@ class Gameplay implements Screen, InputProcessor {
         game.dispose();
         theMap.dispose();
         tool.dispose();
+        game = null;
+        tool = null;
+        theMap = null;
+        dialog = null;
+        theWall = null;
+        enemiesArraylist = null;
+        itemsArraylist = null;
+        projectiles = null;
+        infoPatch = null;
+
 
     }
 

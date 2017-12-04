@@ -1,6 +1,7 @@
 package com.nanter1986.blockpusher.Blocks;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.DisplayToolkit;
 import com.nanter1986.blockpusher.Map.GeneralMap;
 
@@ -8,7 +9,7 @@ import com.nanter1986.blockpusher.Map.GeneralMap;
  * Created by user on 28/9/2017.
  */
 
-public class OutsideWall {
+public class OutsideWall implements Disposable {
     public DisplayToolkit tool;
 
     public OutsideWall(DisplayToolkit tool) {
@@ -61,5 +62,10 @@ public class OutsideWall {
         }
 
 
+    }
+
+    @Override
+    public void dispose() {
+        this.tool = null;
     }
 }

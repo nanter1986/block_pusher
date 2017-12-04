@@ -2,13 +2,14 @@ package com.nanter1986.blockpusher.MenuFragments;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Disposable;
 import com.nanter1986.blockpusher.DisplayToolkit;
 
 /**
  * Created by user on 28/10/2017.
  */
 
-public abstract class GeneralMenuFragement {
+public abstract class GeneralMenuFragement implements Disposable {
     public Texture texture;
     public int height;
     public int width;
@@ -28,4 +29,8 @@ public abstract class GeneralMenuFragement {
         tool.batch.draw(texture, positionX, positionY, width, height);
     }
 
+    @Override
+    public void dispose() {
+        this.texture = null;
+    }
 }

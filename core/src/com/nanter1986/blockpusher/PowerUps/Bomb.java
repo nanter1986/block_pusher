@@ -14,14 +14,13 @@ import java.util.Random;
  */
 
 public class Bomb extends Item{
-    public final Texture playerOne = new Texture(Gdx.files.internal("bomb.png"));
-
     public Bomb(DisplayToolkit tool, GeneralMap map) {
 
         this.itemW = tool.universalWidthFactor;
         this.itemH = tool.universalWidthFactor;
         this.collected = false;
         this.used = false;
+        this.texture = tool.manager.get("bomb.png", Texture.class);
         switch (map.type) {
             case TUTORIAL1:
 
@@ -50,7 +49,7 @@ public class Bomb extends Item{
 
     @Override
     public void updatePosition(SpriteBatch b) {
-        b.draw(playerOne,itemX*itemW,itemY*itemW,itemW,itemH);
+        b.draw(texture, itemX * itemW, itemY * itemW, itemW, itemH);
         Gdx.app.log("item drawn at:",itemX+"/"+itemY);
     }
 }
