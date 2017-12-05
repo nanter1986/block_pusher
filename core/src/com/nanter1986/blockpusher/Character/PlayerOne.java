@@ -257,7 +257,7 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckUp = coord.getFixatedY() + 1;
                 if (xToCheckUp < map.width && xToCheckUp >= 0 && yToCheckUp < map.height && xToCheckUp >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckUp][yToCheckUp].type;
-                    if(bt!= BlockGeneral.Blocktypes.AIR){
+                    if (bt != BlockGeneral.Blocktypes.AIR && bt != BlockGeneral.Blocktypes.ICE) {
                         isFreeToPass=false;
                     }
                 }
@@ -268,7 +268,7 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckDown = coord.getFixatedY() - 1;
                 if (xToCheckDown < map.width && xToCheckDown >= 0 && yToCheckDown < map.height && xToCheckDown >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckDown][yToCheckDown].type;
-                    if(bt!= BlockGeneral.Blocktypes.AIR){
+                    if (bt != BlockGeneral.Blocktypes.AIR && bt != BlockGeneral.Blocktypes.ICE) {
                         isFreeToPass=false;
                     }
                 }
@@ -279,7 +279,7 @@ public class PlayerOne extends MovableCharacter {
                 int yToCheckLeft = coord.getFixatedY();
                 if (xToCheckLeft < map.width && xToCheckLeft >= 0 && yToCheckLeft < map.height && xToCheckLeft >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckLeft][yToCheckLeft].type;
-                    if(bt!= BlockGeneral.Blocktypes.AIR){
+                    if (bt != BlockGeneral.Blocktypes.AIR && bt != BlockGeneral.Blocktypes.ICE) {
                         isFreeToPass=false;
                     }
                 }
@@ -293,7 +293,7 @@ public class PlayerOne extends MovableCharacter {
 
                 if (xToCheckRight < map.width && xToCheckRight >= 0 && yToCheckRight < map.height && xToCheckRight >= 0) {
                     BlockGeneral.Blocktypes bt=map.mapArray[xToCheckRight][yToCheckRight].type;
-                    if(bt!= BlockGeneral.Blocktypes.AIR){
+                    if (bt != BlockGeneral.Blocktypes.AIR && bt != BlockGeneral.Blocktypes.ICE) {
                         isFreeToPass=false;
                     }
                 }

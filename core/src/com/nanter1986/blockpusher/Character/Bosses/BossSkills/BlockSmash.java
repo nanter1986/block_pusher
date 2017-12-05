@@ -27,6 +27,7 @@ public class BlockSmash implements BossSkill {
             } else if (block.type == BlockGeneral.Blocktypes.STONE) {
                 map.mapArray[block.blockX][block.blockY].type = BlockGeneral.Blocktypes.AIR;
                 map.mapArray[block.blockX][block.blockY].setTile(tool);
+                map.mapArray[block.blockX][block.blockY].explodedStart = true;
                 Gdx.app.log("skill execution: ", "stone to air");
             } else if (block.type == BlockGeneral.Blocktypes.WATER) {
                 map.mapArray[block.blockX][block.blockY].type = BlockGeneral.Blocktypes.ICE;

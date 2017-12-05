@@ -57,7 +57,7 @@ public class DisplayToolkit implements Disposable {
         manager.load("weird.fnt", BitmapFont.class);
         manager.load("air.png", Texture.class);
         manager.load("water.png", Texture.class);
-        manager.load("food.png", Texture.class);
+        manager.load("ice.png", Texture.class);
         manager.load("stone.png", Texture.class);
         manager.load("rock.png", Texture.class);
         manager.load("hero.png", Texture.class);

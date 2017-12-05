@@ -56,7 +56,7 @@ public class BlockGeneral implements Disposable {
                 tile = tool.manager.get("water.png", Texture.class);
                 break;
             case ICE:
-                tile = tool.manager.get("food.png", Texture.class);
+                tile = tool.manager.get("ice.png", Texture.class);
                 break;
         }
     }
