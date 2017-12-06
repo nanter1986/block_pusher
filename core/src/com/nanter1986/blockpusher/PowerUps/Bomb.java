@@ -1,6 +1,5 @@
 package com.nanter1986.blockpusher.PowerUps;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.nanter1986.blockpusher.Blocks.BlockGeneral;
@@ -42,14 +41,11 @@ public class Bomb extends Item{
 
                 }
         }
-        Gdx.app.log("item created:", "item x:" + this.itemX +
-                " item y:" + this.itemY +
-                " item type:" + this.getClass().toString());
+
     }
 
     @Override
     public void updatePosition(SpriteBatch b) {
         b.draw(texture, itemX * itemW, itemY * itemW, itemW, itemH);
-        Gdx.app.log("item drawn at:",itemX+"/"+itemY);
     }
 }

@@ -212,6 +212,7 @@ class Gameplay implements Screen, InputProcessor {
             moveEnemies();
             moveProjectiles();
             removeEnemies();
+            removeItems();
             removeProjectiles();
             cameraOnPlayer();
             infoPatch.stealPosition(tool);
@@ -347,6 +348,22 @@ class Gameplay implements Screen, InputProcessor {
         for (MovableCharacter e : toRemoveIfCrushed) {
 
             enemiesArraylist.remove(e);
+
+        }
+    }
+
+    private void removeItems() {
+        ArrayList<Item> toRemoveIfCrushed = new ArrayList<Item>();
+        for (Item i : itemsArraylist) {
+            i.checkIfcrushed(theMap);
+            boolean crushed = i.checkIfcrushed(theMap);
+            if (crushed) {
+                toRemoveIfCrushed.add(i);
+            }
+        }
+        for (Item e : toRemoveIfCrushed) {
+
+            itemsArraylist.remove(e);
 
         }
     }
