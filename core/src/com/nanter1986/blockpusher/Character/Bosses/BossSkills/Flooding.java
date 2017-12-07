@@ -15,6 +15,7 @@ import java.util.Random;
 public class Flooding implements BossSkill {
     public static final Random RANDOM = new Random();
     public static final Random CHANCE = new Random();
+    private final int CHANCE_OF_FLOODING = 20;
 
     MovableCharacter targetPlayer;
 
@@ -24,7 +25,7 @@ public class Flooding implements BossSkill {
 
     @Override
     public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
-        if (CHANCE.nextInt(10) == 0) {
+        if (CHANCE.nextInt(CHANCE_OF_FLOODING) == 0) {
             boolean freeBlockFound = false;
             while (freeBlockFound == false) {
                 int theX = RANDOM.nextInt(map.width);
