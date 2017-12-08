@@ -30,7 +30,7 @@ public class Nitar extends MovableCharacter implements GeneralBoss {
 
     public Nitar(DisplayToolkit tool, GeneralMap map, MovableCharacter targetPlayer) {
         this.tool = tool;
-        this.texture = tool.manager.get("villain.png", Texture.class);
+        this.texture = tool.manager.get("nitarSheet.png", Texture.class);
         this.level = 2;
         moveReducerLimit = 32;
         this.characterW = tool.universalWidthFactor;
