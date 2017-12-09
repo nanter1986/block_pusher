@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Teleporter extends Nitar {
     public Teleporter(DisplayToolkit tool, GeneralMap map, MovableCharacter targetPlayer) {
         super(tool, map, targetPlayer);
-        this.texture = tool.manager.get("villain.png", Texture.class);
+        this.texture = tool.manager.get("teleporterSheet.png", Texture.class);
         this.level = 4;
         moveReducerLimit = 26;
     }

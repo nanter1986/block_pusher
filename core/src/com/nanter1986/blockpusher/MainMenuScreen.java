@@ -52,7 +52,7 @@ public class MainMenuScreen implements Screen {
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
             tool.prefs.clear();
-            data.putStage(20);
+            data.putStage(220);
             Gameplay gameplay = new Gameplay(game, new MapOne(game.tool), game.tool);
             Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
