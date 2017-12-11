@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ShooterOne extends Nitar {
     public ShooterOne(DisplayToolkit tool, GeneralMap map, MovableCharacter targetPlayer) {
         super(tool, map, targetPlayer);
-        this.texture = tool.manager.get("villain.png", Texture.class);
+        this.texture = tool.manager.get("shooterSheet.png", Texture.class);
         this.level = 5;
         moveReducerLimit = 24;
     }

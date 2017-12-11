@@ -29,17 +29,15 @@ public class FirePr extends MovableCharacter {
     int timeOfEachFrame;
     Sprite sprite;
     DisplayToolkit tool;
-    TextureAtlas atlas;
     float xToDraw;
     float yToDraw;
 
 
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
         this.tool = tool;
-        this.texture = tool.manager.get("villain.png", Texture.class);
+        this.texture = tool.manager.get("flameSheet.png", Texture.class);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
-        this.atlas = tool.manager.get("pack.atlas", TextureAtlas.class);
         this.level = 1;
         this.timeOfEachFrame = 5;
         moveReducerLimit = 16;
