@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.DoubleCoordSystem;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileCrushChecker;
 import com.nanter1986.blockpusher.Character.Bosses.BossUtilities.ProjectileDeathAnimator;
@@ -31,11 +31,19 @@ public class FirePr extends MovableCharacter {
     DisplayToolkit tool;
     float xToDraw;
     float yToDraw;
+    TextureRegion upRegion;
+    TextureRegion downRegion;
+    TextureRegion leftRegion;
+    TextureRegion rightRegion;
 
 
     public FirePr(DisplayToolkit tool, GeneralMap map, MovableCharacter shooter) {
         this.tool = tool;
         this.texture = tool.manager.get("flameSheet.png", Texture.class);
+        upRegion = new TextureRegion(texture, 0, 0, 500, 500);
+        downRegion = new TextureRegion(texture, 0, 1500, 500, 500);
+        leftRegion = new TextureRegion(texture, 0, 1000, 500, 500);
+        rightRegion = new TextureRegion(texture, 0, 500, 500, 500);
         this.characterW = tool.universalWidthFactor;
         this.characterH = tool.universalWidthFactor;
         this.level = 1;
@@ -56,7 +64,7 @@ public class FirePr extends MovableCharacter {
                         (shooter.coord.fixatedY + 1),
                         this.characterW);
                 this.dir = Direction.UP;
-                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameUp0"));
+                sprite = new Sprite(upRegion);
                 break;
             case DOWN:
                 this.coord = new DoubleCoordSystem(shooter.coord.fixatedX * this.characterW,
@@ -65,7 +73,7 @@ public class FirePr extends MovableCharacter {
                         (shooter.coord.fixatedY - 1),
                         this.characterW);
                 this.dir = Direction.DOWN;
-                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameDown0"));
+                sprite = new Sprite(downRegion);
                 break;
             case LEFT:
                 this.coord = new DoubleCoordSystem((shooter.coord.fixatedX - 1) * this.characterW,
@@ -74,7 +82,7 @@ public class FirePr extends MovableCharacter {
                         shooter.coord.fixatedY,
                         this.characterW);
                 this.dir = Direction.LEFT;
-                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameLeft0"));
+                sprite = new Sprite(leftRegion);
                 break;
             case RIGHT:
                 this.coord = new DoubleCoordSystem((shooter.coord.fixatedX + 1) * this.characterW,
@@ -83,7 +91,7 @@ public class FirePr extends MovableCharacter {
                         shooter.coord.fixatedY,
                         this.characterW);
                 this.dir = Direction.RIGHT;
-                sprite = new Sprite(tool.manager.get("pack.atlas", TextureAtlas.class).findRegion("flameRight0"));
+                sprite = new Sprite(rightRegion);
                 break;
 
         }
@@ -107,7 +115,7 @@ public class FirePr extends MovableCharacter {
     private void frameSetter() {
         switch (dir) {
             case UP:
-                sprite.setRegion(atlas.findRegion("flameUp0"));
+                sprite.setRegion(upRegion);
                 if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
                     characterW = tool.universalWidthFactor;
                     frameCounter++;
@@ -125,7 +133,7 @@ public class FirePr extends MovableCharacter {
                 }
                 break;
             case DOWN:
-                sprite.setRegion(atlas.findRegion("flameDown0"));
+                sprite.setRegion(downRegion);
                 if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
                     characterW = tool.universalWidthFactor;
                     frameCounter++;
@@ -143,7 +151,7 @@ public class FirePr extends MovableCharacter {
                 }
                 break;
             case LEFT:
-                sprite.setRegion(atlas.findRegion("flameLeft0"));
+                sprite.setRegion(leftRegion);
                 if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
                     characterW = tool.universalWidthFactor;
                     frameCounter++;
@@ -161,7 +169,7 @@ public class FirePr extends MovableCharacter {
                 }
                 break;
             case RIGHT:
-                sprite.setRegion(atlas.findRegion("flameRight0"));
+                sprite.setRegion(rightRegion);
                 if (frameCounter >= 0 && frameCounter <= timeOfEachFrame) {
                     characterW = tool.universalWidthFactor;
                     frameCounter++;
