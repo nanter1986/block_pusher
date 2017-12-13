@@ -16,14 +16,16 @@ public class ProjectileCrushChecker {
     }
 
     public void checkIfcrushed(GeneralMap map) {
-        if (character.coord.realX < 0 || character.coord.realX >= ((map.width) * character.coord.characterW) || character.coord.realY < 0 || character.coord.realY >= ((map.height) * character.coord.characterW)) {
+        if (character.crushed == true) {
+
+        } else if (character.coord.realX < 0 || character.coord.realX >= ((map.width) * character.coord.characterW) || character.coord.realY < 0 || character.coord.realY >= ((map.height) * character.coord.characterW)) {
             character.crushed = true;
             character.explodedStarted = true;
             character.coord.fixatePosition();
+        } else {
+            BlockGeneral.Blocktypes type = map.mapArray[character.coord.fixatedX][character.coord.fixatedY].type;
+            whatToDoBasedOnBlockType(type);
         }
-        //BlockGeneral.Blocktypes type = map.mapArray[character.coord.fixatedX][character.coord.fixatedY].type;
-        //whatToDoBasedOnBlockType(type);
-
 
 
     }

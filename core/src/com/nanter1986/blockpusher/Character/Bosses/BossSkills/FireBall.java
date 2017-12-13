@@ -13,7 +13,7 @@ import java.util.Random;
  */
 
 public class FireBall implements BossSkill {
-    private final int MAX_LEVEL_THAT_AFFECTS = 50;
+    private final int MAX_LEVEL_THAT_AFFECTS = 500;
     DisplayToolkit tool;
 
     public FireBall(DisplayToolkit tool) {
@@ -26,7 +26,6 @@ public class FireBall implements BossSkill {
         if (chance < 2) {
             chance = 2;
         }
-        chance = 2;
         int willSpawn = new Random().nextInt(chance);
         if (/*willSpawn == 0*/true) {
             spawnFireball(pr, map, character);
