@@ -72,6 +72,8 @@ public class DisplayToolkit implements Disposable {
         manager.load("nukerSheet.png", Texture.class);
         manager.load("shooterSheet.png", Texture.class);
         manager.load("flameSheet.png", Texture.class);
+        manager.load("play2.png", Texture.class);
+        manager.load("frontImage.png", Texture.class);
         //manager.load("pack.atlas", TextureAtlas.class);
         manager.finishLoading();
 
