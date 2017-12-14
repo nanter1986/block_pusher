@@ -36,6 +36,20 @@ public class ProjectileCrushChecker {
         } else if (type == BlockGeneral.Blocktypes.STONE) {
             character.crushed = true;
             character.explodedStarted = true;
+            /*switch (character.dir){
+                case UP:
+                    character.coord.fixatedY-=2;
+                    break;
+                case DOWN:
+                    character.coord.fixatedY++;
+                    break;
+                case LEFT:
+                    character.coord.fixatedX++;
+                    break;
+                case RIGHT:
+                    character.coord.fixatedX--;
+                    break;
+            }*/
         } else if (type == BlockGeneral.Blocktypes.ICE) {
 
         } else if (type == BlockGeneral.Blocktypes.WATER) {

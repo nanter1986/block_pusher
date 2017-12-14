@@ -21,9 +21,13 @@ public class ProjectileDeathAnimator {
         float whereToExplodeX = character.coord.realX;
         float whereToExplodeY = character.coord.realY;
         if (character.dir == MovableCharacter.Direction.UP) {
-            whereToExplodeY = character.coord.realY + character.coord.characterW;
-        } else if (character.dir == MovableCharacter.Direction.DOWN) {
             whereToExplodeY = character.coord.realY - character.coord.characterW;
+        } else if (character.dir == MovableCharacter.Direction.DOWN) {
+            whereToExplodeY = character.coord.realY + character.coord.characterW;
+        } else if (character.dir == MovableCharacter.Direction.LEFT) {
+            whereToExplodeX = character.coord.realX + character.coord.characterW;
+        } else if (character.dir == MovableCharacter.Direction.RIGHT) {
+            whereToExplodeX = character.coord.realX - character.coord.characterW;
         }
 
 
