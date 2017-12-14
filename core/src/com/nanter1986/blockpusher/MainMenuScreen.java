@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.nanter1986.blockpusher.Buttons.MainMenuPlayButton;
 import com.nanter1986.blockpusher.Buttons.TouchableButton;
 import com.nanter1986.blockpusher.DataControl.DataControler;
@@ -24,7 +25,9 @@ public class MainMenuScreen implements Screen {
     DataControler data;
     int screenLineHeight;
     ArrayList<TouchableButton> buttons = new ArrayList<TouchableButton>();
+    Texture frontImage;
     private boolean android;
+    private float drawingWidth;
 
     public MainMenuScreen(MainClass game) {
         this.game = game;
@@ -32,14 +35,26 @@ public class MainMenuScreen implements Screen {
         data = new DataControler(tool);
         screenLineHeight = tool.scH / 10;
         this.tool.camera.update();
-        Gdx.app.log("main menu created for game: ", game.toString());
-        Gdx.app.log("screen line height:", screenLineHeight + "");
+        android = Gdx.app.getType() == Application.ApplicationType.Android;
+        buttons.add(new MainMenuPlayButton(tool));
+        frontImage = tool.manager.get("frontImage.png", Texture.class);
+        drawingWidth = calculateDrawingWidth();
+    }
+
+    private float calculateDrawingWidth() {
+        float result;
+        if (tool.scH - buttons.get(0).buttonH < tool.scW) {
+            result = tool.scH - buttons.get(0).buttonH;
+        } else {
+            result = tool.scW;
+
+        }
+        return result;
     }
 
     @Override
     public void show() {
-        android = Gdx.app.getType() == Application.ApplicationType.Android;
-        buttons.add(new MainMenuPlayButton(tool));
+
         //tool.prefs.clear();
     }
 
@@ -65,6 +80,7 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tool.batch.setProjectionMatrix(tool.camera.combined);
         tool.batch.begin();
+        tool.batch.draw(frontImage, 0, buttons.get(0).buttonH, drawingWidth, drawingWidth);
         for (TouchableButton t : buttons) {
             t.drawSelf(tool);
         }
