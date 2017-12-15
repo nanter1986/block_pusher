@@ -77,8 +77,28 @@ public class WinScreen implements Screen{
 
     private void androidControls() {
         if (buttons.get(0).isButtonTouched()) {
-            Gameplay gameplay = new Gameplay(game, new MapOne(tool), game.tool);
-            game.setScreen(gameplay);
+            tool.prefs.flush();
+            Gdx.app.log("istouched", "in" + previosGameplayType);
+            switch (previosGameplayType) {
+                case TUTORIAL1:
+                    Gameplay tut2 = new Gameplay(game, new TutorialTwo(tool), game.tool);
+                    game.setScreen(tut2);
+                    break;
+                case TUTORIAL2:
+                    Gameplay regular1 = new Gameplay(game, new MapOne(tool), game.tool);
+                    game.setScreen(regular1);
+                    break;
+                case REGULAR:
+                    Gameplay regular2 = new Gameplay(game, new MapOne(tool), game.tool);
+                    game.setScreen(regular2);
+                    break;
+                default:
+                    Gameplay regular = new Gameplay(game, new MapOne(tool), game.tool);
+                    game.setScreen(regular);
+
+            }
+
+
         }
     }
 

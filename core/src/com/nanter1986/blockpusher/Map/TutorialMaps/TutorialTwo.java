@@ -15,6 +15,7 @@ public class TutorialTwo extends GeneralMap {
 
 
     public TutorialTwo(DisplayToolkit tool) {
+        this.blocksize = tool.universalWidthFactor;
         type = GameplayTypes.TUTORIAL2;
         this.width = MAP_WIDTH_IN_BLOCKS;
         this.height = MAP_HEIGHT_IN_BLOCKS;
@@ -47,5 +48,6 @@ public class TutorialTwo extends GeneralMap {
         mapArray[2][4] = new BlockGeneral(tool, 2, 4, BlockGeneral.Blocktypes.WATER);
         mapArray[3][4] = new BlockGeneral(tool, 3, 4, BlockGeneral.Blocktypes.WATER);
         mapArray[4][4] = new BlockGeneral(tool, 4, 4, BlockGeneral.Blocktypes.WATER);
+        setAllTiles(tool);
     }
 }

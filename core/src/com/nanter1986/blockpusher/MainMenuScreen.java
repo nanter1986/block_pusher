@@ -69,7 +69,6 @@ public class MainMenuScreen implements Screen {
             tool.prefs.clear();
             data.putStage(1);
             Gameplay gameplay = new Gameplay(game, new TutorialOne(game.tool), game.tool);
-            Gdx.app.log("setting new screen to game: ", gameplay.toString());
             game.setScreen(gameplay);
         }
     }
