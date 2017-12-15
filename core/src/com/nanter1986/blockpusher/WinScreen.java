@@ -141,11 +141,6 @@ public class WinScreen implements Screen{
         int nextStage = data.readStage() + 1;
         data.putStage(nextStage);
         xpForNextLevel = XpPerLevel - data.readXP();
-        Gdx.app.log("winscreen",
-                "next stage:" + nextStage +
-                        "\nlevels:" + levels +
-                        "\nxpTotal:" + data.readXP() +
-                        "\nxp for next level:" + xpForNextLevel);
     }
 
     @Override
