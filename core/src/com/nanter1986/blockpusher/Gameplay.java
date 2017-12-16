@@ -180,7 +180,7 @@ class Gameplay implements Screen, InputProcessor {
     }
 
     private int howManyEnemiesToGenerate() {
-        int numOfEnemies = (stage / tool.data.MORE_ENEMIES_EVERY_X_STAGES) + 1;
+        int numOfEnemies = (stage / tool.data.MORE_ENEMIES_EVERY_X_STAGES) + 3;
         return numOfEnemies;
     }
 
