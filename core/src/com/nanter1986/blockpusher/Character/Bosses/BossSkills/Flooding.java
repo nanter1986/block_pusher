@@ -15,7 +15,7 @@ import java.util.Random;
 public class Flooding implements BossSkill {
     public static final Random RANDOM = new Random();
     public static final Random CHANCE = new Random();
-    private final int CHANCE_OF_FLOODING = 20;
+    private final int CHANCE_OF_FLOODING = 50;
 
     MovableCharacter targetPlayer;
 
