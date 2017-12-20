@@ -15,6 +15,7 @@ import java.util.Random;
 public class Teleport implements BossSkill {
     public static final Random RANDOM = new Random();
     public static final Random CHANCE = new Random();
+    private final int CHANCE_OF_TELEPORTING = 50;
 
     MovableCharacter targetPlayer;
 
@@ -24,7 +25,7 @@ public class Teleport implements BossSkill {
 
     @Override
     public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
-        if (CHANCE.nextInt(5) == 0) {
+        if (CHANCE.nextInt(CHANCE_OF_TELEPORTING) == 0) {
             boolean freeBlockFound = false;
             while (freeBlockFound == false) {
                 int theX = RANDOM.nextInt(map.width);
