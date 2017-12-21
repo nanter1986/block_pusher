@@ -67,7 +67,7 @@ public class MainMenuScreen implements Screen {
     private void takeInput() {
         if (buttons.get(0).isButtonTouched()) {
             tool.prefs.clear();
-            data.putStage(300);
+            data.putStage(400);
             Gameplay gameplay = new Gameplay(game, new MapOne(game.tool), game.tool);
             game.setScreen(gameplay);
         }
