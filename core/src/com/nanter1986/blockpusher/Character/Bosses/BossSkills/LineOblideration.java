@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class LineOblideration implements BossSkill {
     public static final Random CHANCE = new Random();
-    private final int CHANCE_OF_NUKE = 50;
+    private final int CHANCE_OF_NUKE = 50 + 0;
 
     @Override
     public void executeSkill(DisplayToolkit tool, int level, MovableCharacter character, GeneralMap map, ArrayList<MovableCharacter> enemies, ArrayList<MovableCharacter> pr) {
